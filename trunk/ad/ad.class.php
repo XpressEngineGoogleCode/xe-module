@@ -15,7 +15,7 @@
 		var $flash_mime = array('application/x-shockwave-flash');
 
 		// 관리자 페이지에서 사용되는 검색 옵션
-		var $search_option = array('content','user_id','member_srl','user_name','nick_name','is_notice','tags','click_count','regdate','ipaddress');
+		var $search_option = array('content','user_id','member_srl','user_name','nick_name','is_notice','tags', 'regdate','ipaddress');
 
 		/**
 		 * @brief 광고 모듈 설치
@@ -23,7 +23,6 @@
 		 **/
 		function moduleInstall() {
 			$oModuleController = &getController('module');
-			$oModuleController->insertTrigger('moduleHandler.init', 'ad', 'controller', 'triggerNotifyAdTime', 'after');
 			$oModuleController->insertTrigger('module.deleteModule', 'ad', 'controller', 'triggerDeleteModuleAds', 'before');
 
 			return new Object();
@@ -45,10 +44,6 @@
 					$oModuleController->deleteModule($module->module_srl);
 				}
 			}
-
-			/* 트리거 삭제 */
-			if($oModuleModel->getTrigger('moduleHandler.init', 'ad', 'controller', 'triggerNotifyAdTime', 'after'))
-				$oModuleController->deleteTrigger('moduleHandler.init', 'ad', 'controller' , 'triggerNotifyAdTime', 'after');
 
 			if($oModuleModel->getTrigger('module.deleteModule', 'ad', 'controller', 'triggerDeleteModuleAds', 'before'))
 				$oModuleController->deleteTrigger('module.deleteModule', 'ad', 'controller' , 'triggerDeleteModuleAds', 'before');
@@ -74,7 +69,6 @@
 
 			// 트리거 존재 여부 확인
 			$oModuleModel = &getModel('module');
-			if(!$oModuleModel->getTrigger('moduleHandler.init', 'ad', 'controller', 'triggerNotifyAdTime', 'after')) return true;
 			if(!$oModuleModel->getTrigger('module.deleteModule', 'ad', 'controller', 'triggerDeleteModuleAds', 'before')) return true;
 
 			return false;
@@ -144,10 +138,6 @@
 				}
 			}
 
-			// 광고 알림용 트리거 추가
-			if(!$oModuleModel->getTrigger('moduleHandler.init', 'ad', 'controller', 'triggerNotifyAdTime', 'after'))
-				$oModuleController->insertTrigger('moduleHandler.init', 'ad', 'controller', 'triggerNotifyAdTime', 'after');
-
 			// 광고 삭제용 트리거 추가
 			if(!$oModuleModel->getTrigger('module.deleteModule', 'ad', 'controller', 'triggerDeleteModuleAds', 'before'))
 				$oModuleController->insertTrigger('module.deleteModule', 'ad', 'controller', 'triggerDeleteModuleAds', 'before');
@@ -160,16 +150,7 @@
 		 * @return none
 		 **/
 		function recompileCache() {
-			// 모든 캐시 파일을 삭제한다
-			$oAdController = &getController('ad');
-			$oAdController->deleteAllCache();
 		}
-	}
-
-	/**
-	 * @brief 광고 이미지 출력 함수
-	 */
-	function XE_ad_image($document_srl = null, $width = 100, $height = 100) {
 	}
 
 	if(!function_exists('date_parse')) {

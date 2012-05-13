@@ -187,7 +187,7 @@ class adController extends ad
 				}
 			}
 
-			// 광고 시간의 유효성을 확인 (파이어폭스의 Firebug, IE8의 개발자 도구 등을 이용한 조작 방지)
+			// 광고 시간의 유효성을 확인 (Console 플러그인에 의한 조작 방지)
 			if($this->use_time) {
 				$obj->ad_time = (int)$obj->ad_time;
 				$ad_time_range = explode(',',$this->ad_time_range);
@@ -268,7 +268,7 @@ class adController extends ad
 
 
 		/**
-		 * @brief 광고 수정
+		 * @brief 광고 삭제
 		 */
 		function procAdDelete() {
 			$document_srl = Context::get('document_srl');
@@ -318,9 +318,6 @@ class adController extends ad
 			$obj->style = $args->style;
 			$output = executeQuery('ad.insertAd', $obj);
 
-			// cache file update
-			$this->updateListCache($module_srl);
-
 			return $output;
 		}
 
@@ -347,9 +344,6 @@ class adController extends ad
 			$obj->url = $args->url;
 			$obj->url_target = $args->url_target;
 			$output = executeQuery('ad.updateAd', $obj);
-
-			// cache file update
-			$this->updateListCache($module_srl);
 
 			return $output;
 		}
@@ -402,11 +396,6 @@ class adController extends ad
 			$obj->style = $args->style;
 			$output = executeQuery('ad.insertAd', $obj);
 
-			unset($obj);
-
-			// cache file update
-			$this->updateListCache($module_srl);
-
 			return $output;
 		}
 
@@ -439,9 +428,6 @@ class adController extends ad
 			// 광고 삭제
 			$output = executeQuery('ad.deleteAd', $obj);
 
-			// 캐시 파일 업데이트
-			$this->updateListCache($oAd->get('module_srl'));
-
 			return $output;
 		}
 
@@ -472,144 +458,13 @@ class adController extends ad
 			if(count($output->data)) {
 				foreach($output->data as $key => $val) $documents[] = $val->document_srl;
 
-				// 캐시 파일 삭제
-				$this->deleteModuleCache($val->get('module_srl'));
-
 				// 광고 삭제
 				$args->document_srls = join(',',$documents);
 				$output = executeQuery('ad.deleteModuleAds',$args);
 				if(!$output->toBool()) return $output;
 			}
 
-			// 캐시 파일 업데이트
-			$this->updateNotifyModuleCache();
-
 			return new Object();
-		}
-
-		/**
-		 * @brief 광고 알림 모듈 캐쉬 업데이트
-		 * @return none
-		 **/
-		function updateNotifyModuleCache() {
-			// 광고 모듈의 model 객체 생성
-			$oAdModel = &getModel('ad');
-
-			$output = $oAdModel->getNotifyModuleSrls();
-			if(!$output->data) $output->data = array();
-
-			if(count($output->data)) foreach($output->data as $key => $val) if($val->value == 'Y') $modules[] = $val->module_srl;
-
-			if(is_array($modules)) $modules = join(',',$modules);
-
-			$cache = sprintf('<?php exit(); ?>%s', $modules);
-			FileHandler::writeFile('./files/cache/ad/notify_modules.cache.php', $cache);
-		}
-
-		/**
-		 * @brief 목록 캐쉬 업데이트
-		 * @return none
-		 **/
-		function updateListCache($module_srl) {
-			// 광고 모듈의 model 객체 생성
-			$oAdModel = &getModel('ad');
-
-			$args->end_date = date('YmdHis');
-			$args->module_srl = $module_srl;
-
-			$output = $oAdModel->getAdList($args);
-
-			$cache_path = sprintf('./files/cache/ad/%s/',getNumberingPath($module_srl));
-			$cache_file = sprintf('%slist.cache.php', $cache_path);
-
-			$cache = sprintf('<?php exit(); ?>%s', base64_encode(serialize($output->data)));
-			FileHandler::writeFile($cache_file, $cache);
-		}
-
-		/**
-		 * @brief 한 번에 여러 모듈의 목록 캐쉬 업데이트
-		 * @return none
-		 **/
-		function updateListCaches($module_srls = array()) {
-			if(!is_array($module_srls) || !count($module_srls)) return;
-
-			// 광고 모듈의 model 객체 생성
-			$oAdModel = &getModel('ad');
-
-			foreach($module_srls as $key => $val) {
-				if(!$val) continue;
-				$this->updateListCache($val);
-			}
-		}
-
-		/**
-		 * @brief 도움말 캐쉬 업데이트
-		 * @return none
-		 **/
-		function updateHelpCache() {
-			$oAdModel = &getModel('model');
-			$oHelpList = $oAdModel->getHelpList();
-
-			$cache_path = sprintf('./files/cache/ad/');
-			$cache_file = sprintf('%shelp.cache.php', $cache_path);
-
-			$cache = sprintf('<?php exit(); ?>%s', base64_encode(serialize($oHelpList)));
-			FileHandler::writeFile($cache_file, $cache);
-		}
-
-		/**
-		 * @brief 목록 캐쉬 초기화
-		 * @return none
-		 **/
-		function initListCache($module_srl) {
-			$cache_path = sprintf('./files/cache/ad/%s/',getNumberingPath($module_srl));
-			$cache_filename = sprintf('%slist.cache.php', $cache_path);
-			FileHandler::writeFile($cache_filename, '<? php exit(); ?>N;');
-		}
-
-		/**
-		 * @brief 한 번에 여러 모듈의 목록 캐쉬 초기화
-		 * @return none
-		 **/
-		function initListCaches($module_srls = array()) {
-			if(!is_array($module_srls) || !count($module_srls)) return;
-
-			foreach($module_srls as $key => $val) {
-				if(!$val) continue;
-				$this->initListCache($module_srl);
-			}
-		}
-
-		/**
-		 * @brief 목록 캐쉬 파일 삭제
-		 * @return none
-		 **/
-		function deleteListCache($module_srl) {
-			FileHandler::remove(sprintf('./files/cache/ad/%s/list.cache.php',getNumberingPath($module_srl)));
-		}
-
-		/**
-		 * @brief 모듈 캐쉬 삭제
-		 * @return none
-		 **/
-		function deleteModuleCache($module_srl) {
-			FileHandler::removeDir(sprintf('./files/cache/ad/%s/',getNumberingPath($module_srl)));
-		}
-
-		/**
-		 * @brief 광고 알림 모듈 캐쉬 삭제
-		 * @return none
-		 **/
-		function deleteNotifyModuleCache() {
-			FileHandler::removeFile('./files/cache/ad/notify_modules.cache.php');
-		}
-
-		/**
-		 * @brief 모든 캐쉬 삭제
-		 * @return none
-		 **/
-		function deleteAllCache() {
-			FileHandler::removeFilesInDir('./files/cache/ad/');
 		}
 	}
 ?>
