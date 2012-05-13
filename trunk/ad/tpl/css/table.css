@@ -1,0 +1,17 @@
+.insertTable { width:100%; border:1px solid #eee; background:#fff }
+.insertTable .required { color:#ff0000; }
+.insertTable tr th { background:#f9f9f9; padding:5px 0 5px; border-bottom:1px solid #ddd }
+.insertTable tr th.title { background:#eee }
+.insertTable tr th.buttonArea { background:#fff}
+.insertTable tr td { padding:5px 0 5px 5px; border-bottom:1px solid #ddd }
+.insertTable tr td .aboutText { width:auto; position:relative}
+
+.listTable { width:100%; border:1px solid #ccc; background:#fff; text-align:center}
+.listTable tr th { background:#eee; padding:5px 0 5px; border-bottom:1px solid #ccc; }
+.listTable tr th.title { background:#ccc}
+.listTable tr th.buttonArea { background:#fff}
+.listTable tr td { padding:5px 0 5px; border-bottom:1px dashed #eee; line-height:150% }
+.listTable tr td .items { margin:0; padding:0; list-style:none }
+.listTable tr td .items li { margin:0; padding:0; list-style:none }
+.listTable tr td .aboutText { width:auto; position:relative; }
+.listTable tr .itemsRow { padding-left:10px; text-align:left; background-color:#f8f8f8 }

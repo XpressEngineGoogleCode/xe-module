@@ -1,0 +1,21 @@
+<!--%import("../../tpl/js/ad.js")-->
+<!--%import("../../tpl/filter/delete_ad.xml")-->
+<!--#include("header.include.html")-->
+
+{@
+$oModuleModel = &getModel('module');
+$point_config = $oModuleModel->getModuleConfig('point');
+}
+<div class="AdRegister">
+	<form method="post" onsubmit="return procFilter(this, delete_ad)">
+	<input type="hidden" name="document_srl" value="{$oAd->document_srl}" />
+	<dl>
+		<dd><strong>{$lang->ad_content}</strong> : {$oAd->getAdContent()}</dd>
+		<dd><strong>{$lang->remaining_time}</strong> : <!--@if($oAd->getRemainingTime())-->{$oAd->getRemainingTime()}<!--@else-->{$lang->unlimited}<!--@end--></dd>
+		<dd>광고 삭제시 {$point_config->point_name}을(를) 되돌려 받으실 수 없으니 주의하시기 바랍니다.</dd>
+		<dd><span class="button red strong"><input type="submit" value="{$lang->cmd_delete}" /></span> <a href="{getUrl('act', '', 'document_srl', '')}" class="button"><span>{$lang->cmd_back}</span></a></dd>
+	</dl>
+	</form>
+</div>
+
+<!--#include("footer.include.html")-->

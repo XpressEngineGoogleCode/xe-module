@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<grants>
+		<grant name="register_ad" default="member">
+			<title xml:lang="ko">광고 등록</title>
+		</grant>
+		<grant name="highlight_ad" default="member">
+			<title xml:lang="ko">광고 강조</title>
+		</grant>
+		<grant name="url_link" default="member">
+			<title xml:lang="ko">URL 링크</title>
+		</grant>
+		<grant name="unlimited_ad" default="manager">
+			<title xml:lang="ko">무제한 광고</title>
+		</grant>
+	</grants>
+	<permissions />
+	<actions>
+		<action name="rss" type="view" /> 
+
+		<action name="dispAdAdminDashBoard" type="view" standalone="true" admin_index="true" />
+		<action name="dispAdAdminConfig" type="view" standalone="true" />
+		<action name="dispAdAdminUpdate" type="view" standalone="true" />
+
+		<action name="dispAdAdminModuleInfo" type="view" standalone="true" />
+		<action name="dispAdAdminModuleGrantInfo" type="view" standalone="true" />
+		<action name="dispAdAdminModuleSkinInfo" type="view" standalone="true" />
+		<action name="dispAdAdminModuleAdTimeRange" type="view" standalone="true" />
+
+		<action name="dispAdAdminInsertModule" type="view" standalone="true" setup_index="true" />
+		<action name="dispAdAdminDeleteModule" type="view" standalone="true" />
+
+		<action name="dispAdAdminList" type="view" standalone="true" />
+		<action name="dispAdAdminNoticeWrite" type="view" standalone="true" />
+		<action name="dispAdAdminNoticeList" type="view" standalone="true" />
+		<action name="dispAdAdminModuleList" type="view" standalone="true" />
+		<action name="dispAdAdminPluginSetup" type="view" standalone="true" />
+
+		<action name="dispAdAdminFindUserId" type="view" standalone="true" />
+
+		<action name="dispAdContent" type="view" index="true" />
+		<action name="dispAdContentView" type="view" />
+		<action name="dispAdList" type="view" />
+		<action name="dispAdRegister" type="view" />
+		<action name="dispAdModify" type="view" />
+		<action name="dispAdDelete" type="view" />
+		<action name="dispAdExtend" type="view" />
+
+		<action name="procAdRegister" type="controller" />
+		<action name="procAdModify" type="controller" />
+		<action name="procAdDelete" type="controller" />
+		<action name="procAdExtend" type="controller" />
+		<action name="procAdAttachFile" type="controller" />
+
+		<action name="procAdAdminInsertConfig" type="controller" standalone="true" />
+		<action name="procAdAdminInsertModule" type="controller" standalone="true" />
+		<action name="procAdAdminDeleteModule" type="controller" standalone="true" />
+		<action name="procAdAdminDeleteChecked" type="controller" standalone="true" />
+		<action name="procAdAdminNoticeWrite" type="controller" standalone="true" />
+		<action name="procAdAdminDeleteOldConfig" type="controller" standalone="true" />
+	</actions>
+</module>

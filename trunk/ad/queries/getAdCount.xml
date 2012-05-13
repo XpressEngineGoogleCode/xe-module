@@ -1,0 +1,12 @@
+<query id="getAdCount" action="select">
+	<tables>
+		<table name="ad" alias="ad" />
+	</tables>
+	<columns>
+		<column name="count(*)" alias="count" />
+	</columns>
+	<conditions>
+		<condition operation="in" column="ad.module_srl" var="module_srl" filter="number" pipe="and" />
+		<condition operation="more" column="ad.end_date" var="start_date" pipe="and" />
+	</conditions>
+</query>

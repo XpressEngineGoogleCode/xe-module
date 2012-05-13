@@ -1,0 +1,13 @@
+<!--@if($act == 'dispAdRegister')-->
+	<!--#include("header.include.html")-->
+<!--@end-->
+
+<!--@if($module_info->display_register_form != 'N' || $act == 'dispAdRegister')-->
+	<!--#include("register.form.html")-->
+<!--@else-->
+	<p><a href="{getUrl('act','dispAdRegister')}" class="button {$module_info->colorset}"><span>{$lang->ad_reg}</span></a></p>
+<!--@end-->
+
+<!--@if($act == 'dispAdRegister')-->
+	<!--#include("footer.include.html")-->
+<!--@end-->

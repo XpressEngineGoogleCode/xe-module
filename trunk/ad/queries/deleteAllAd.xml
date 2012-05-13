@@ -1,0 +1,6 @@
+<query id="deleteAd" action="delete">
+	<tables>
+		<table name="ad" />
+	</tables>
+	<conditions />
+</query>

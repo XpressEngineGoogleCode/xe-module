@@ -1,0 +1,12 @@
+<filter name="insert_config" module="ad" act="procAdAdminInsertConfig" confirm_msg_code="confirm_save">
+	<form />
+	<parameter>
+		<param name="display_today_ad" target="display_today_ad" />
+		<param name="use_help" target="use_help" />
+		<param name="join_network" target="join_network" />
+  </parameter>
+  <response callback_func="completeInsertConfig">
+      <tag name="error" />
+      <tag name="message" />
+  </response>
+</filter>
