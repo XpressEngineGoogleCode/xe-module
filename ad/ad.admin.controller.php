@@ -1,7 +1,7 @@
 <?php
 	/**
 	* @class  adAdminController
-	* @author SMaker (dowon2308@paran.com)
+	* @author 퍼니엑스이 (admin@funnyxe.com)
 	* @brief  admin controller class of ad module
 	 **/
 

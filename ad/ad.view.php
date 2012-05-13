@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * @class  adView
-	 * @author SMaker (dowon2308@paran.com)
+	 * @author 퍼니엑스이 (admin@funnyxe.com)
 	 * @brief  광고 모듈의 view class
 	 **/
 
@@ -11,7 +11,7 @@
 		 * @brief 초기화
 		 **/
 		function init() {
-			if(!$this->module_srl && $this->act != 'rss') $this->stop('msg_invalid_request');
+			if(!$this->module_srl) $this->stop('msg_invalid_request');
 
 			if(!$this->module_info->ad_type)
 				$this->module_info->ad_type = 'text';
