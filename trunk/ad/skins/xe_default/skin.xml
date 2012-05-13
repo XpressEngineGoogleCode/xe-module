@@ -61,5 +61,19 @@
             광고 유형을 '전광판'으로 했을 시에만 적용됩니다.</description>
         </var>
     </extra_vars>
+	<var name="display_point" type="select">
+		<title xml:lang="ko">보유 포인트 표시</title>
+		<title xml:lang="en">Display point</title>
+		<description xml:lang="ko">로그인 한 회원인 경우 상단에 보유하고 있는 포인트를 출력합니다.</description>
+		<options value="Y">
+			<title xml:lang="ko">표시</title>
+			<title xml:lang="en">Display</title>
+		</options>
+		<options value="N">
+			<title xml:lang="ko">표시 안함</title>
+			<title xml:lang="en">Not Display</title>
+		</options>
+	</var>
+</extra_vars>
 </skin>
 
