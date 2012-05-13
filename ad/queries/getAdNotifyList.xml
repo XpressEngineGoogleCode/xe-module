@@ -1,0 +1,21 @@
+<query id="getAdNotifyList" action="select">
+	<tables>
+		<table name="ad" alias="ad" />
+		<table name="documents" alias="documents" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="in" column="documents.module_srl" var="module_srls" filter="number" pipe="and" />
+		<condition operation="equal" column="documents.document_srl" var="ad.document_srl" pipe="and" />
+		<condition operation="equal" column="documents.member_srl" var="member_srl" filter="number" pipe="and" />
+		<condition operation="less" column="ad.end_date" var="end_date" default="curdate()" pipe="and" />
+		<condition operation="notequal" column="ad.end_date" default="-1" pipe="and" />
+		<condition operation="equal" column="documents.is_notice" var="is_notice" pipe="and" />
+		<condition operation="like" column="documents.content" var="s_content" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="documents.list_order" order="asc" />
+	</navigation>
+</query>

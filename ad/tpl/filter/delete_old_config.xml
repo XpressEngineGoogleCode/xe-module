@@ -1,0 +1,8 @@
+<filter name="delete_old_config" module="ad" act="procAdAdminDeleteOldConfig" confirm_msg_code="msg_delete_old_config" >
+    <form />
+	<parameter />
+    <response callback_func="completeDeleteOldConfig">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

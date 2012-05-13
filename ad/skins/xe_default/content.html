@@ -1,0 +1,38 @@
+<!--#include("header.include.html")-->
+
+<div class="summary">
+	<strong>Total</strong> <em>{$total_count}</em>, Page <strong>{$page}</strong>/{$total_page}
+</div>
+
+<table cellspacing="0" cellpadding="0" class="AdList">
+	<!--@if(count($ad_list))-->
+	<!--@foreach($ad_list as $no => $ad)-->
+	<!--@if($module_info->ad_type == 'text')-->
+	<tr>
+		<td>
+			<span class="author<!--@if($ad->isNotice())--> notice<!--@end-->"<!--@if($ad->isNotice())--> title="{$lang->author} : {$ad->getNickName()}"<!--@end-->><strong>[<!--@if($ad->isNotice())-->{$lang->notice}<!--@else-->{$ad->getNickName()}<!--@end-->]</strong></span> <span class="adContent">{$ad->getAdContent($module_info->content_cut_size, false, 'text')}</span>
+		</td>
+		<td class="regdate">({zdate($ad->get('regdate'))})</td>
+		<td>
+			<!--@if($ad->isGranted())-->&nbsp;<a href="{getUrl('act', 'dispAdDelete', 'document_srl', $ad->get('document_srl'))}" class="button small"><span>{$lang->cmd_delete}</span></a><!--@end-->
+		</td>
+	</tr>
+	<!--@else-->
+	<tr>
+		<td><span class="author<!--@if($ad->isNotice())--> notice<!--@end-->"<!--@if($ad->isNotice())--> title="{$lang->author} : {$ad->getNickName()}"<!--@end-->><strong>[<!--@if($ad->isNotice())-->{$lang->notice}<!--@else-->{$ad->getNickName()}<!--@end-->]</strong></span></td>
+	</tr>
+	<tr>
+		<td><span class="adContent">{$ad->getAdContent($module_info->content_cut_size, false, $module_info->ad_type)}</td>
+		<td class="regdate">({zdate($ad->get('regdate'))})</td>
+	</tr>
+	<!--@end-->
+	<!--@endforeach-->
+	<!--@else-->
+	<tr>
+		<td colspan="2">{$lang->ads->msg->not_exists_remaining_ads}</td>
+	</tr>
+	<!--@end-->
+</table>
+
+<!--#include("register.html")-->
+<!--#include("footer.include.html")-->

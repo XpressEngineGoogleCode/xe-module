@@ -1,0 +1,19 @@
+<query id="getAds" action="select">
+	<tables>
+		<table name="ad" alias="ad" />
+		<table name="documents" alias="documents" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+	<conditions>
+		<condition operation="in" column="documents.module_srl" var="module_srl" notnull="notnull" filter="number" pipe="and" />
+		<condition operation="equal" column="documents.document_srl" var="ad.document_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="documents.member_srl" var="member_srl" filter="number" pipe="and" />
+		<condition operation="more" column="ad.end_date" var="start_date" pipe="and" />
+		<condition operation="equal" column="documents.is_notice" var="is_notice" pipe="and" />
+	</conditions>
+	<navigation>
+		<index var="sort_index" default="documents.list_order" order="asc" />
+	</navigation>
+</query>

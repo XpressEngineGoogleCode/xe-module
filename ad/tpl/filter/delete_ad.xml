@@ -1,0 +1,12 @@
+<filter name="delete_ad" module="ad" act="procAdDelete" confirm_msg_code="confirm_delete">
+	<form>
+		<node target="document_srl" required="true" />
+	</form>
+	<parameter>
+		<param name="document_srl" target="document_srl" />
+  </parameter>
+  <response callback_func="completeDeleteAd">
+      <tag name="error" />
+      <tag name="message" />
+  </response>
+</filter>

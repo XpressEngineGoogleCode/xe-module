@@ -1,0 +1,45 @@
+<filter name="insert_module" module="ad" act="procAdAdminInsertModule" confirm_msg_code="confirm_submit">
+	<form>
+		<node target="mid" required="true" maxlength="40" filter="alpha_number" />
+		<node target="browser_title" required="true" maxlength="250" />
+		<node target="ad_point" required="true" filter="number" />
+		<node target="ad_point_rate" filter="number" />
+		<node target="highlight_point" filter="number" />
+		<node target="ad_time_range" required="true" />
+		<node target="daily_limit" filter="number" />
+	</form>
+	<parameter>
+		<param name="mid" target="mid" />
+		<param name="module_srl" target="module_srl" />
+		<param name="module_category_srl" target="module_category_srl" />
+		<param name="layout_srl" target="layout_srl" />
+		<param name="skin" target="skin" />
+		<param name="browser_title" target="browser_title" />
+		<param name="ad_type" target="ad_type" />
+		<param name="use_time" target="use_time" />
+		<param name="use_option" target="use_option" />
+		<param name="use_color" target="use_color" />
+		<param name="use_bgcolor" target="use_bgcolor" />
+		<param name="ad_point" target="ad_point" />
+		<param name="ad_point_rate" target="ad_point_rate" />
+		<param name="highlight_point" target="highlight_point" />
+		<param name="each_highlight_point" target="each_highlight_point" />
+		<param name="ad_time_range" target="ad_time_range" />
+		<param name="ad_color_range" target="ad_color_range" />
+		<param name="ad_bgcolor_range" target="ad_bgcolor_range" />
+		<param name="ad_limit" target="ad_limit" />
+		<param name="daily_limit" target="daily_limit" />
+		<param name="is_default" target="is_default" />
+		<param name="description" target="description" />
+		<param name="header_text" target="header_text" />
+		<param name="footer_text" target="footer_text" />
+  </parameter>
+  <response callback_func="completeInsertModule">
+		<tag name="error" />
+		<tag name="message" />
+		<tag name="module" />
+		<tag name="act" />
+		<tag name="page" />
+		<tag name="module_srl" />
+  </response>
+</filter>

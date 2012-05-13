@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">광고 모듈 기본 스킨</title>
+    <title xml:lang="en">Ad Module Default Skin</title>
+    <description xml:lang="ko">광고 모듈의 기본 스킨입니다.</description>
+    <description xml:lang="en">This is Default Skin of Ad Module.</description>
+    <version>0.1</version>
+    <date>2009-08-04</date>
+
+    <author email_address="dowon2308@paran.com" link="http://sworld.pe.kr">
+        <name xml:lang="ko">SMaker</name>
+        <name xml:lang="en">SMaker</name>
+    </author>
+
+	<license>GPL</license>
+	<colorset>
+        <color name="white">
+            <title xml:lang="ko">밝은 바탕용</title>
+            <title xml:lang="en">White</title>
+        </color>
+        <color name="black">
+            <title xml:lang="ko">어두운 바탕용</title>
+            <title xml:lang="en">Black</title>
+        </color>
+    </colorset>
+    <extra_vars>
+		<var name="display_regdate" type="select">
+			<title xml:lang="ko">등록일 표시</title>
+            <title xml:lang="en">Display Regdate</title>
+            <options value="Y">
+                <title xml:lang="ko">표시</title>
+                <title xml:lang="en">Display</title>
+            </options>
+            <options value="N">
+                <title xml:lang="ko">표시 안함</title>
+                <title xml:lang="en">Non Display</title>
+            </options>
+        </var>
+        <var name="display_register_form" type="select">
+            <title xml:lang="ko">광고 등록 폼 표시</title>
+            <title xml:lang="en">Display Register Form</title>
+            <options value="Y">
+                <title xml:lang="ko">표시</title>
+                <title xml:lang="en">Display</title>
+            </options>
+            <options value="N">
+                <title xml:lang="ko">표시 안함</title>
+                <title xml:lang="en">Not Display</title>
+            </options>
+            <description xml:lang="ko">광고 등록 폼을 '처음 화면'에 표시합니다.</description>
+            <description xml:lang="en">Display the Ad Register Form.</description>
+        </var>
+        <var name="content_cut_size" type="text">
+            <title xml:lang="ko">내용 글자수</title>
+            <title xml:lang="en">Content Cut Size</title>
+            <description xml:lang="ko">지정된 글자수를 넘어가면 광고 내용을 자릅니다.
+            입력하지 않으면 제한하지 않습니다.
+            광고 유형을 '전광판'으로 했을 시에만 적용됩니다.</description>
+            <description xml:lang="en">지정된 글자수를 넘어가면 광고 내용을 자릅니다.
+            입력하지 않으면 제한하지 않습니다.
+            광고 유형을 '전광판'으로 했을 시에만 적용됩니다.</description>
+        </var>
+    </extra_vars>
+</skin>
+

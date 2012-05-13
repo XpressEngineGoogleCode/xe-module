@@ -1,0 +1,26 @@
+<filter name="modify_ad" module="ad" act="procAdModify" confirm_msg_code="confirm_submit">
+	<form>
+		<node target="banner_image" required="true" />
+		<node target="banner_movie" required="true" />
+		<node target="banner_flash" required="true" />
+		<node target="ad_content" minlength="10" maxlength="100" required="true" />
+		<node target="ad_time" required="true" />
+	</form>
+	<parameter>
+		<param name="banner_image" target="banner_image" />
+		<param name="banner_movie" target="banner_movie" />
+		<param name="banner_flash" target="banner_flash" />
+		<param name="ad_content" target="ad_content" />
+		<param name="ad_time" target="ad_time" />
+		<param name="url" target="url" />
+		<param name="url_target" target="url_target" />
+		<param name="used_style" target="used_style" />
+		<param name="ad_color" target="ad_color" />
+		<param name="ad_bgcolor" target="ad_bgcolor" />
+		<param name="is_notice" target="is_notice" />
+  </parameter>
+  <response callback_func="completeModifyAd">
+      <tag name="error" />
+      <tag name="message" />
+  </response>
+</filter>

@@ -1,0 +1,29 @@
+<!--%import("css/@dashboard.css")-->
+<!--%import("css/@admin.css")-->
+<!--%import("css/boxLayer.css")-->
+<!--%import("css/table.css")-->
+<!--%import("css/button.css")-->
+<!--%import("js/@dashboard.js")-->
+<!--%import("js/ad_admin.js")-->
+
+<div id="adXE">
+    <!--// Header -->
+    <!--#include("DashboardHeader.html")-->
+
+    <!--// Global Navigation Bar-->
+    <div class="gnb">
+        <ul>
+            <!--@foreach($dashboard_menus as $key => $val)-->
+            <li class="{$key}<!--@if($act == $val['act'])--> selected<!--@end-->"><a href="{getUrl('','module','ad','act',$key)}"<!--@if($config->use_help == 'Y')--> title="{$val}"<!--@end-->>{$val}</a></li>
+            <!--@endforeach-->
+    </ul>
+    </div>
+
+    <!--// Content -->
+    <div class="content">
+    {$content}
+    </div>
+
+    <!--// Footer -->
+    <!--#include("DashboardFooter.html")-->
+</div>

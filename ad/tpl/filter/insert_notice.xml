@@ -1,0 +1,35 @@
+<filter name="insert_notice" module="ad" act="procAdAdminNoticeWrite" confirm_msg_code="confirm_submit">
+    <form>
+        <node target="ad_content" maxlength="100" required="true" />
+        <node target="start_date" required="true" />
+        <node target="start_hour" maxlength="2" filter="number" required="true" />
+        <node target="start_minute" maxlength="2" filter="number" required="true" />
+        <node target="start_second" maxlength="2" filter="number" required="true" />
+        <node target="end_hour" maxlength="2" filter="number" />
+        <node target="end_minute" maxlength="2" filter="number" />
+        <node target="end_second" maxlength="2" filter="number" />
+    </form>
+    <parameter>
+        <param name="mid" target="mid" />
+        <param name="module_srl" target="module_srl" />
+        <param name="ad_content" target="ad_content" />
+        <param name="ad_time" target="ad_time" />
+        <param name="url" target="url" />
+        <param name="url_target" target="url_target" />
+        <param name="used_style" target="used_style" />
+        <param name="ad_color" target="ad_color" />
+        <param name="ad_bgcolor" target="ad_bgcolor" />
+        <param name="start_date" target="start_date" />
+        <param name="start_hour" target="start_hour" />
+        <param name="start_minute" target="start_minute" />
+        <param name="start_second" target="start_second" />
+        <param name="end_date" target="end_date" />
+        <param name="end_hour" target="end_hour" />
+        <param name="end_minute" target="end_minute" />
+        <param name="end_second" target="end_second" />
+  </parameter>
+  <response callback_func="completeInsertNotice">
+      <tag name="error" />
+      <tag name="message" />
+  </response>
+</filter>

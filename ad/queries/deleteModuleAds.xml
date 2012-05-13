@@ -1,0 +1,8 @@
+<query id="deleteModuleAds" action="delete">
+	<tables>
+		<table name="ad" />
+	</tables>
+	<conditions>
+		<condition operation="in" column="document_srl" var="document_srls" pipe="and" />
+	</conditions>
+</query>

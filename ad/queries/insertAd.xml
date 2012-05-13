@@ -1,0 +1,17 @@
+<query id="insertAd" action="insert">
+	<tables>
+		<table name="ad" />
+	</tables>
+	<columns>
+		<column name="module_srl" var="module_srl" filter="number" notnull="notnull" />
+		<column name="document_srl" var="document_srl" filter="number" notnull="notnull" />
+		<column name="start_date" var="start_date" notnull="notnull" />
+		<column name="end_date" var="end_date" notnull="notnull" />
+		<column name="ad_time" var="ad_time" notnull="notnull" />
+		<column name="ad_type" var="ad_type" />
+		<column name="url" var="url" />
+		<column name="url_target" var="url_target" default="_blank" />
+		<column name="style" var="style" />
+		<column name="extra_vars" var="extra_vars" />
+	</columns>
+</query>

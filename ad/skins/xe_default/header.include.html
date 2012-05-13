@@ -1,0 +1,23 @@
+<!--%import("css/ad.css")-->
+
+{$module_info->header_text}
+
+<!--// 컬러셋에 따른 CSS 파일 로드 -->
+<!--@if($module_info->colorset == 'white')-->
+    <!--%import("css/white.css")-->
+<!--@elseif($module_info->colorset == 'black')-->
+    <!--%import("css/black.css")-->
+<!--@else-->
+    {@ $module_info->colorset = 'white'}
+    <!--%import("css/white.css")-->
+<!--@end-->
+<div class="adXE">
+    <ul class="localNavigation">
+        <li<!--@if(Context::get('act') == 'dispAdContent' || Context::get('act') == '')--> class="on"<!--@end-->><a href="{getUrl('act','','view_all','')}">{$lang->cmd_homepage}</a></li>
+        <!--@if($is_logged)-->
+        <li<!--@if(Context::get('act') == 'dispAdList')--> class="on"<!--@end-->><a href="{getUrl('act','dispAdList','view_all','')}">{$lang->cmd_my_ad}</a></li>
+        <!--@end-->
+        <!--@if($grant->manager)-->
+        <li><a href="{getUrl('act','dispAdAdminModuleInfo','view_all','')}" onclick="winopen(this.href); return false">{$lang->cmd_setup}</a></li>
+        <!--@end-->
+</ul>

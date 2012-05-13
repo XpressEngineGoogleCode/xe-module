@@ -1,0 +1,18 @@
+<query id="getAdCount" action="select">
+	<tables>
+		<table name="ad" alias="ad" />
+	</tables>
+	<columns>
+		<column name="count(*)" alias="count" />
+	</columns>
+	<conditions>
+		<condition operation="in" column="ad.module_srl" var="module_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="documents.is_notice" var="is_notice" pipe="and" />
+		<condition operation="like" column="documents.content" var="s_content" pipe="and" />
+		<condition operation="like" column="documents.user_id" var="s_user_id" pipe="and" />
+		<condition operation="like" column="documents.user_name" var="s_user_name" pipe="and" />
+		<condition operation="like" column="documents.nick_name" var="s_nick_name" pipe="and" />
+		<condition operation="more" column="documents.readed_count" var="s_click_count" pipe="and" />
+		<condition operation="more" column="ad.end_date" var="start_date" pipe="and" />
+	</conditions>
+</query>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">광고</title>
+	<title xml:lang="en">Ad</title>
+	<description xml:lang="ko">XpressEngine 기반의 광고 프로그램입니다.
+일정한 포인트를 지급하고 일정 시간동안 광고를 할 수 있는 모듈입니다.</description>
+	<version>0.6.0</version>
+	<date>2011-05-09</date>
+	<category>package</category>
+
+	<author email_address="dowon2308@paran.com" link="http://ad.xpressengine.net">
+		<name xml:lang="ko">SMaker</name>
+		<name xml:lang="en">SMaker</name>
+	</author>
+</module>

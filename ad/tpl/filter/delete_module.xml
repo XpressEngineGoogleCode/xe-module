@@ -1,0 +1,10 @@
+<filter name="delete_module" module="ad" act="procAdAdminDeleteModule">
+    <form>
+        <node target="module_srl" required="true" />
+    </form>
+    <response callback_func="completeDeleteModule">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>
