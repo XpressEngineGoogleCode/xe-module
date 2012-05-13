@@ -220,59 +220,6 @@
 		}
 
 		/**
-		 * @brief
-		 */
-		function procAdAdminMigration(){
-			// if exists old linead module info, execute update
-			if(!file_exists(_XE_PATH_.'files/cache/ad/updated')) {
-				$old_config = $oAdModel->getOldConfig();
-				if($old_config) {
-					// first, save the old module config
-					$module_srl = $OldConfig->module_srl;
-
-					// change old linead module to ad module
-					$oAdController->updateModule();
-
-					// save need config.
-					$config_args->ad_point = $OldConfig->ad_point;
-					$config_args->daily_limit = $OldConfig->daily_limit;
-					$oModuleController->insertModulePartConfig('ad',$module_srl,$config_args);
-
-					// delete old config
-					$oAdController = &getController('ad');
-					$oAdController->deleteOldConfig();
-					$args->module = 'linead';
-					$output = executeQuery('module.deleteModuleConfig', $args);
-					if(!$output->toBool()) return $output;
-
-					if($oAdModel->isExistsOldModule()) $oAdController->updateModule();
-
-					// write cache file
-					$cache_path ='./files/cache/ad/updated';
-					FileHandler::writeFile($cache_path, 'Y');
-			} else {
-					// write cache file
-					$cache_path ='./files/cache/ad/updated';
-					FileHandler::writeFile($cache_path, 'Y');
-			}
-
-			if(!file_exists(_XE_PATH_.'files/cache/ad/updated') && $oAdModel->isExistsOldModule()) $oAdController->updateModule();
-			}
-		}
-
-		/**
-		 * @brief 기존 설정 (전광판 모듈 설정) 삭제
-		 */
-		function procAdAdminDeleteOldConfig(){
-			// 기존 설정 삭제
-			$oAdController = &getController('ad');
-			$oAdController->deleteOldConfig();
-
-			// 메시지 지정
-			$this->setMessage('success_deleted');
-		}
-
-		/**
 		 * @brief 광고 시간 범위를 캐시 파일로 저장
 		 **/
 		function makeAdTimeRangeFile($module_srl) {
