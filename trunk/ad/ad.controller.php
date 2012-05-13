@@ -1,7 +1,7 @@
 <?php
 /**
  * @class  adController
- * @author SMaker (dowon2308@paran.com)
+ * @author 퍼니엑스이 (admin@funnyxe.com)
  * @brief  ad 모듈의 controller class
  **/
 

@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * @file ko.lang.php
-	 * @author SMaker (dowon2308@paran.com)
+	 * @author 퍼니엑스이 (admin@funnyxe.com)
 	 * @brief 광고 모듈의 기본 언어팩
 	 **/
 

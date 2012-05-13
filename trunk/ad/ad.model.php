@@ -1,8 +1,8 @@
 <?php
-	/*
+	/**
 	 * @class  adModel
-	 * @author SMaker (dowon2308@paran.com)
-	 * @brief 광고 모듈의 model 객체
+	 * @author 퍼니엑스이 (admin@funnyxe.com)
+	 * @brief  광고 모듈의 model 객체
 	 **/
 
 	require_once(_XE_PATH_.'modules/ad/ad.item.php');
