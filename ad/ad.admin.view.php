@@ -94,80 +94,36 @@
 		 * @brief 대시보드 메인
 		 */
 		function dispAdAdminDashBoard() {
-			// if exists old linead module info, execute update
-			/*if(!file_exists(_XE_PATH_.'files/cache/ad/updated')) {
-				if($oAdModel->getOldConfig()) $need_update = true;
-			}*/
+			// 목록을 구하기 위한 목록 수/ 페이지 목록 수에 대한 옵션 설정
+			$args->list_count = 10;
+			$args->page_count = 1;
 
-			if($this->config->display_today_ad == 'Y') {
-				// 목록을 구하기 위한 목록 수/ 페이지 목록 수에 대한 옵션 설정
-				$args->list_count = 10;
-				$args->page_count = 1;
+			// 오늘 등록된 광고만 뽑아오기
+			$args->start_regdate = date('Ymd').'000000';
 
-				// 오늘 등록된 광고만 뽑아오기
-				$args->start_regdate = date('Ymd').'000000';
+			// 검색과 정렬을 위한 변수 설정
+			$args->sort_index = 'list_order';
+			$args->order_type = 'asc';
 
-				// 검색과 정렬을 위한 변수 설정
-				$args->sort_index = 'list_order';
-				$args->order_type = 'asc';
+			// 공지를 제외한
+			$args->is_notice = 'N';
 
-				// 공지를 제외한
-				$args->is_notice = 'N';
+			// 모든 광고 출력
+			$args->select_all_ad = 'Y';
 
-				// 모든 광고 출력
-				$args->select_all_ad = 'Y';
-
-				// 오늘 등록된 광고 목록 구함
-				$output = $this->oAdModel->getAdList($args);
-				Context::set('today_ad', $output->data);
-				Context::set('total_count', $output->total_count);
-				Context::set('total_page', $output->total_page);
-				Context::set('page', $output->page);
-				Context::set('page_navigation', $output->page_navigation);
-			}
+			// 오늘 등록된 광고 목록 구함
+			$output = $this->oAdModel->getAdList($args);
+			Context::set('today_ad', $output->data);
+			Context::set('total_count', $output->total_count);
+			Context::set('total_page', $output->total_page);
+			Context::set('page', $output->page);
+			Context::set('page_navigation', $output->page_navigation);
 
 			// 브라우저 제목 지정
 			$this->setPageTitle(Context::getLang('_dashboard'));
 
 			// 템플릿 파일 지정
 			$this->setTemplateFile('_dashboard');
-		}
-
-		/**
-		 * @brief 대시보드 > 기본 설정
-		 */
-		function dispAdAdminConfig() {
-			// Javascript Filter 적용
-			Context::addJsFilter($this->module_path.'tpl/filter/','insert_config.xml');
-
-			// 브라우저 제목 지정
-			$this->setPageTitle($this->dashboard_menus[Context::get('act')]);
-
-			// 템플릿 파일 지정
-			$this->setTemplateFile('Config');
-		}
-
-		function dispAdAdminUpdate() {
-			$command = Context::get('command');
-			switch($command) {
-				case 'migration':
-					$title = Context::getLang('cmd_update');
-					$template_file = 'Update';
-					break;
-				case 'delete':
-					$title = Context::getLang('cmd_delete_old_config');
-					$template_file = 'DeleteOldConfig';
-					break;
-				default :
-					return new Object(-1, 'msg_invalid_request');
-			}
-			$title = $command!='update'?'기존 설정 삭제':Context::getLang('cmd_update');
-
-			// 브라우저 제목 지정
-			Context::setBrowserTitle(Context::getBrowserTitle().' > '.$title);
-
-			// 템플릿 파일 지정
-			$this->setTemplateFile($template_file);
 		}
 
 		/**

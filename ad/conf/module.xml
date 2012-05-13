@@ -17,8 +17,6 @@
 	<permissions />
 	<actions>
 		<action name="dispAdAdminDashBoard" type="view" admin_index="true" />
-		<action name="dispAdAdminConfig" type="view" />
-		<action name="dispAdAdminUpdate" type="view" />
 
 		<action name="dispAdAdminModuleInfo" type="view" />
 		<action name="dispAdAdminModuleGrantInfo" type="view" />
