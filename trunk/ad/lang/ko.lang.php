@@ -93,14 +93,6 @@
 	$lang->about_start_date = '광고 시작일을 선택해 주세요.';
 	$lang->about_ad_type = '한 번 설정하시면 변경할 수 없으니 신중히 선택해주세요.';
 	$lang->about_ad_type2= '광고 유형이 바뀌면 기존 데이터에 영향을 끼칠 수 있어 변경하실 수 없습니다.<br />(※ 부득이하게 변경하고자 한다면 phpMyAdmin 등의 툴을 이용하여 변경해 주세요.)';
-
-	// 대시보드에서 사용되는 도움말
-	$lang->help_manage_grant = '대시보드를 사용할 수 있는 회원을 지정할 수 있습니다.';
-	$lang->help_mid = '모듈 이름은 접속 주소와 관련이 있습니다.\n\n예를 들어 모듈 이름을 Test 라고 하면 실제 접속 주소는\n\n'.getFullUrl('','mid','Test').'\n\n가 됩니다.';
-	$lang->help_module_category = '생성된 모듈을 효율적으로 분류하여 관리하기 위한 기능입니다.\n\n그다지 중요하지 않은 항목입니다.';
-	$lang->help_browser_title = '브라우저의 제목에 나타날 모듈의 이름을 입력해 주세요.\n\n위의 모듈 이름과는 다릅니다.';
-	$lang->help_openapi = 'OpenAPI란 누구나 사용할 수 있도록 공개된 API를 말합니다.\n\n광고 서비스를 사이트 외의 다른 사람들에게도 서비스를 할 수 있도록 하는 기능입니다.';
-
 	// 대시보드에서 검색할 대상
 	$lang->_search_target_list = array(
 		'content' => '내용',
@@ -118,7 +110,6 @@
 	// 대시보드 메뉴
 	$lang->_dashboard = '대시보드';
 	$lang->dashboard_menus = array(
-		'DefaultSetup' => array('title' => '기본 설정', 'act' => 'dispAdAdminConfig', 'help' => '대시보드와 관련된 설정을 합니다'),
 		'ManageAd' => array('title' => '광고 관리', 'act' => 'dispAdAdminList', 'is_total' => 'Y', 'help' => '등록된 광고를 관리합니다'),
 		'ManageNotice' => array('title' => '공지 관리', 'act' => 'dispAdAdminNoticeList', 'help' => '등록된 공지를 관리하고 새로운 공지를 등록할 수 있습니다'),
 		'ManageModule' => array('title' => '모듈 관리', 'act' => 'dispAdAdminModuleList', 'help' => '광고를 등록할 수 있는 모듈을 관리합니다'),
@@ -181,7 +172,6 @@
 	/* dashboard */
 	$lang->ads->dashboard = '대시보드';
 	$lang->ads->dashboard_menus = array(
-		'dispAdAdminConfig' => '기본 설정',
 		'dispAdAdminList' => '광고 관리',
 		'dispAdAdminNoticeList' => '공지 관리',
 		'dispAdAdminModuleList' => '모듈 관리'
@@ -273,8 +263,6 @@
 
 	$lang->help_index = '<p>광고 모듈을 처음 사용하세요? 혹은 의문점이 있으시다면 잘 찾아오셨습니다!</p>이곳은 광고 모듈 도움말입니다.';
 	$lang->xe_admin_page = 'XE 관리자 페이지';
-	$lang->cmd_clean_data = '데이터 정리';
-	$lang->cmd_data_init = '데이터 초기화';
 
 	$lang->site_name = '사이트 이름';
 ?>

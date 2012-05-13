@@ -32,30 +32,6 @@
 		}
 
 		/**
-		 * @brief 전광판 모듈 설정 구함 (이전 버전 업데이트용)
-		 **/
-		function getOldConfig() {
-			static $_module_info = null;
-			if(is_null($_module_info)) {
-				// module module_info의 값을 구함
-				$oModuleModel = &getModel('module');
-				$_module_info = $oModuleModel->getModuleConfig('linead');
-
-				unset($_module_info->grants);
-			}
-			return $_module_info;
-		}
-
-		/**
-		 * @brief 전광판 모듈이 존재하는 지 확인 (이전 버전 업데이트용)
-		 **/
-		function isExistsOldModule() {
-			$output = executeQuery('ad.getOldModule');
-			if(count($output->data)) return true;
-			return false;
-		}
-
-		/**
 		 * @brief 광고 객체 구함
 		 * @return new AdItem($document_srl)
 		 **/

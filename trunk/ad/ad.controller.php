@@ -446,15 +446,6 @@ class adController extends ad
 		}
 
 		/**
-		 * @brief linead module convert to ad module
-		 **/
-		function updateModule() {
-			$args->old_module = 'linead';
-			$args->new_module = 'ad';
-			return executeQuery('ad.updateOldModule',$args);
-		}
-
-		/**
 		 * @brief 모듈이 삭제될때 등록된 모든 광고를 삭제하는 trigger
 		 * @return new Object()
 		 **/
@@ -619,15 +610,6 @@ class adController extends ad
 		 **/
 		function deleteAllCache() {
 			FileHandler::removeFilesInDir('./files/cache/ad/');
-		}
-
-		/**
-		 * @brief deleteOldConfig
-		 * @return none
-		 */
-		function deleteOldConfig() {
-			$args->module = 'linead';
-			return executeQuery('module.deleteModuleConfig', $args);
 		}
 	}
 ?>
