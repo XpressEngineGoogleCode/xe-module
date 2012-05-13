@@ -16,25 +16,25 @@
 	</grants>
 	<permissions />
 	<actions>
-		<action name="dispAdAdminDashBoard" type="view" standalone="true" admin_index="true" />
-		<action name="dispAdAdminConfig" type="view" standalone="true" />
-		<action name="dispAdAdminUpdate" type="view" standalone="true" />
+		<action name="dispAdAdminDashBoard" type="view" admin_index="true" />
+		<action name="dispAdAdminConfig" type="view" />
+		<action name="dispAdAdminUpdate" type="view" />
 
-		<action name="dispAdAdminModuleInfo" type="view" standalone="true" />
-		<action name="dispAdAdminModuleGrantInfo" type="view" standalone="true" />
-		<action name="dispAdAdminModuleSkinInfo" type="view" standalone="true" />
-		<action name="dispAdAdminModuleAdTimeRange" type="view" standalone="true" />
+		<action name="dispAdAdminModuleInfo" type="view" />
+		<action name="dispAdAdminModuleGrantInfo" type="view" />
+		<action name="dispAdAdminModuleSkinInfo" type="view" />
+		<action name="dispAdAdminModuleAdTimeRange" type="view" />
 
-		<action name="dispAdAdminInsertModule" type="view" standalone="true" setup_index="true" />
-		<action name="dispAdAdminDeleteModule" type="view" standalone="true" />
+		<action name="dispAdAdminInsertModule" type="view" setup_index="true" />
+		<action name="dispAdAdminDeleteModule" type="view" />
 
-		<action name="dispAdAdminList" type="view" standalone="true" />
-		<action name="dispAdAdminNoticeWrite" type="view" standalone="true" />
-		<action name="dispAdAdminNoticeList" type="view" standalone="true" />
-		<action name="dispAdAdminModuleList" type="view" standalone="true" />
-		<action name="dispAdAdminPluginSetup" type="view" standalone="true" />
+		<action name="dispAdAdminList" type="view" />
+		<action name="dispAdAdminNoticeWrite" type="view" />
+		<action name="dispAdAdminNoticeList" type="view" />
+		<action name="dispAdAdminModuleList" type="view" />
+		<action name="dispAdAdminPluginSetup" type="view" />
 
-		<action name="dispAdAdminFindUserId" type="view" standalone="true" />
+		<action name="dispAdAdminFindUserId" type="view" />
 
 		<action name="dispAdContent" type="view" index="true" />
 		<action name="dispAdContentView" type="view" />
@@ -50,11 +50,11 @@
 		<action name="procAdExtend" type="controller" />
 		<action name="procAdAttachFile" type="controller" />
 
-		<action name="procAdAdminInsertConfig" type="controller" standalone="true" />
-		<action name="procAdAdminInsertModule" type="controller" standalone="true" />
-		<action name="procAdAdminDeleteModule" type="controller" standalone="true" />
-		<action name="procAdAdminDeleteChecked" type="controller" standalone="true" />
-		<action name="procAdAdminNoticeWrite" type="controller" standalone="true" />
-		<action name="procAdAdminDeleteOldConfig" type="controller" standalone="true" />
+		<action name="procAdAdminInsertConfig" type="controller" />
+		<action name="procAdAdminInsertModule" type="controller" />
+		<action name="procAdAdminDeleteModule" type="controller" />
+		<action name="procAdAdminDeleteChecked" type="controller" />
+		<action name="procAdAdminNoticeWrite" type="controller" />
+		<action name="procAdAdminDeleteOldConfig" type="controller" />
 	</actions>
 </module>
