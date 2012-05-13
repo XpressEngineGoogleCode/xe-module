@@ -11,7 +11,15 @@
     {@ $module_info->colorset = 'white'}
     <!--%import("css/white.css")-->
 <!--@end-->
+
 <div class="adXE">
+<!--@if($is_logged && $module_info->display_point != 'N')-->
+{@
+	$oPointModel = &getModel('point');
+	$point = $oPointModel->getPoint($logged_info->member_srl);
+}
+<span class="member_{$logged_info->member_srl}">{$logged_info->nick_name}</span>님의 포인트 : {number_format($point)}
+<!--@end-->
     <ul class="localNavigation">
         <li<!--@if(Context::get('act') == 'dispAdContent' || Context::get('act') == '')--> class="on"<!--@end-->><a href="{getUrl('act','','view_all','')}">{$lang->cmd_homepage}</a></li>
         <!--@if($is_logged)-->
