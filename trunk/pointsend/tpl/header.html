@@ -1,0 +1,18 @@
+<!--%import("./css/style.css")-->
+<h3 class="xeAdmin">{$lang->pointsend} <span class="gray">{$lang->cmd_setup}</span></h3>
+
+{@ $logAct = array('dispPointsendAdminLogList' ,'dispPointsendAdminBatchLogList')}
+<div class="header4">
+    <ul class="localNavigation">
+        <li<!--@if($act=='dispPointsendAdminIndex')--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminIndex')}">{$lang->cmd_setup}</a></li>
+        <li<!--@if(in_array($act, $logAct))--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminLogList')}">{$lang->cmd_pointsend_log_list}</a></li>
+        <li<!--@if($act=='dispPointsendAdminSend')--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminSend')}">{$lang->cmd_batch_pointsend}</a></li>
+    </ul>
+</div>
+
+<!--@if(in_array($act, $logAct))-->
+<ul class="vNavigation">
+    <li><a href="{getUrl('act', 'dispPointsendAdminLogList')}"><!--@if($act == 'dispPointsendAdminLogList')--><strong>회원 포인트 선물</strong><!--@else-->회원 포인트 선물<!--@end--></a></li>
+    <li class="last-child"><a href="{getUrl('act', 'dispPointsendAdminBatchLogList')}"><!--@if($act == 'dispPointsendAdminBatchLogList')--><strong>일괄 포인트 선물</strong><!--@else-->일괄 포인트 선물<!--@end--></a></li>
+</ul>
+<!--@end-->
