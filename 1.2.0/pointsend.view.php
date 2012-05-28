@@ -70,9 +70,6 @@ class pointsendView extends pointsend
 			$template_path = sprintf('%sskins/%s/',$this->module_path, $config->skin);
 		}
 		$this->setTemplatePath($template_path);
-
-		// pointsend module에서 공통으로 쓰이는 js 파일 로드
-		Context::addJsFile($this->module_path.'tpl/js/pointsend.js');
 	}
 
 	/**
@@ -111,9 +108,6 @@ class pointsendView extends pointsend
 		$oPointModel = &getModel('point');
 		$current_point = $oPointModel->getPoint($logged_info->member_srl);
 		Context::set('current_point', $current_point);
-
-		// Javascript Filter 적용
-		Context::addJsFilter($this->module_path.'tpl/filter/','pointsend.xml');
 
 		$this->setLayoutFile('popup_layout');
 		$this->setTemplateFile('PointSend');
