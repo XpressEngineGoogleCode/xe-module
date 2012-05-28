@@ -146,53 +146,58 @@
 					$output = executeQuery('pointsend.getLastloggedIpaddress', $args);
 					if(!$output->toBool()) return $output;
 
-					$current_ip = $output->data->ipaddress;
+					$current_ip = $output->data->ipaddress;
 
 					// 선물 대상 회원의 IP를 구함
 					$args->member_srl = $receiver_srl;
-					$output = executeQuery('pointsend.getLastloggedIpaddress', $args);
+					$output = executeQuery('pointsend.getLastloggedIpaddress', $args);
 					if(!$output->toBool()) return $output;
 
-					$receiver_ip = $output->data->ipaddress;
+					$receiver_ip = $output->data->ipaddress;
 
-					if(($current_ip && $receiver_ip) && $current_ip == $receiver_ip) return new Object('msg_pointgift_sameip_warning');
-				}
-			}
+					if(($current_ip && $receiver_ip) && $current_ip == $receiver_ip) return new Object('msg_pointgift_sameip_warning');
+				}
+			}
 
 			// 수수료에 따른 포인트 계산
-			$fee_per = (int)$config->fee;
-			$fee_apply_point = (int)$config->fee_apply_point;
-			$fee = 0;
-			if($config->use_fee == 'Y' && $fee_per && $point>=$fee_apply_point) $fee = $point * ($config->fee/100);
+			$fee_per = (int)$config->fee;
+			$fee_apply_point = (int)$config->fee_apply_point;
+			$fee = 0;
+			if($config->use_fee == 'Y' && $fee_per && $point>=$fee_apply_point) $fee = $point * ($config->fee/100);
 
-			// 포인트에 수수료 빼기
-			$point -= $fee;
+			// 포인트에 수수료 빼기
+			$point -= $fee;
 
-			// 보내는 이는 포인트 (-), 받는 이는 포인트 (+)
-			$oSender->point -= $real_point;
-			$oReceiver->point = $oPointModel->getPoint($receiver_srl) + $point;
+			// 보내는 이는 포인트 (-), 받는 이는 포인트 (+)
+			$oSender->point -= $real_point;
+			$oReceiver->point = $oPointModel->getPoint($receiver_srl) + $point;
 
-			// 수수료 적용 시 포인트가 소수점이 될 수 있으므로 정수로 만듬
-			$oSender->point = (int)$oSender->point;
-			$oReceiver->point = (int)$oReceiver->point;
+			// 수수료 적용 시 포인트가 소수점이 될 수 있으므로 정수로 만듬
+			$oSender->point = (int)$oSender->point;
+			$oReceiver->point = (int)$oReceiver->point;
 
-			// 포인트 선물
-			$oPointController->setPoint($sender_srl, $oSender->point);
-			$oPointController->setPoint($receiver_srl, $oReceiver->point);
+			// 보내는 이의 포인트를 차감합니다 (음의 포인트를 보내면 차감하지 않습니다)
+			if($point > 0)
+			{
+				$oPointController->setPoint($sender_srl, $oSender->point);
+			}
+			// 포인트 선물
+			$oPointController->setPoint($receiver_srl, $oReceiver->point);
 
 			// 쪽지 보내기
-			if($send_message) {
-				$mtitle = sprintf(Context::getLang('pointsend_title'), $logged_info->nick_name);
-				$mcontent = sprintf(Context::getLang('pointsend_content'), $logged_info->nick_name, $logged_info->user_id, $point, $comment);
-				$oCommunicationController = &getController('communication');
-				$oCommunicationController->sendMessage($sender_srl, $receiver_srl, $mtitle, $mcontent, false);
-			}
+			if($send_message)
+			{
+				$mtitle = sprintf(Context::getLang('pointsend_title'), $logged_info->nick_name);
+				$mcontent = sprintf(Context::getLang('pointsend_content'), $logged_info->nick_name, $logged_info->user_id, $point, $comment);
+				$oCommunicationController = &getController('communication');
+				$oCommunicationController->sendMessage($sender_srl, $receiver_srl, $mtitle, $mcontent, false);
+			}
 
 			// 포인트 선물 내역 기록
-			$this->insertLog($sender_srl, $receiver_srl, $real_point, $comment);
+			$this->insertLog($sender_srl, $receiver_srl, $real_point, $comment);
 
-			return array('send_point' => $real_point, 'received_point' => $point);
-		}
+			return array('send_point' => $real_point, 'received_point' => $point);
+		}
 
 		/**
 		 * @brief 다수의 회원에게 포인트 선물
@@ -410,7 +415,7 @@
 					// 자신이 아니라면 포인트 선물 기능 추가
 					if($logged_info->member_srl != $member_srl) {
 						// 대상 회원의 정보를 가져옴
-						$oMemberModel = &getModel('member'); 
+						$oMemberModel = &getModel('member');
 						$target_member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
 						if(!$target_member_info->member_srl) return;
 
