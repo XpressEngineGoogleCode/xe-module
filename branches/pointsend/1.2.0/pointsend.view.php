@@ -78,24 +78,33 @@ class pointsendView extends pointsend
 	/**
 	 * @brief 포인트 선물 화면 출력
 	 **/
-	function dispPointsend() {
+	function dispPointsend()
+	{
 		// 로그인 정보 구함
 		$logged_info = Context::get('logged_info');
 
 		// 받는이가 없으면 에러
 		$member_srl = Context::get('receiver_srl');
-		//if(!$member_srl) return new Object(-1, 'msg_invalid_request');
+		if(!$member_srl)
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
 
 		// 받는이가 로그인 한 회원과 같으면 에러
-		//if($logged_info->member_srl == $member_srl) return new Object(-1, 'msg_invalid_request');
+		if($logged_info->member_srl == $member_srl)
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
 
 		// 존재 하지 않는 회원이면 에러
 		$oMemberModel = &getModel('member');
 		$member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
-		//if(!$member_info) return new Object(-1, 'msg_not_exists_member');
+		if(!$member_info)
+		{
+			return new Object(-1, 'msg_not_exists_member');
+		}
 
 		// 보내는이와 받는이의 회원 정보를 템플릿에서 쓸 수 있도록 set
-		Context::set('logged_info', $logged_info);
 		Context::set('member_info', $member_info);
 
 		// 현재 포인트 구함
@@ -110,49 +119,57 @@ class pointsendView extends pointsend
 		$this->setTemplateFile('PointSend');
 	}
 
-		/**
-		 * @brief 회원 정보 보기 > 포인트 선물 내역 보기
-		 */
-		function dispPointsendLog() {
-			// 로그인 정보 구함
-			$logged_info = Context::get('logged_info');
-
-			// 로그인이 되어 있지 않으면 오류 표시
-			if(!Context::get('is_logged')) return $this->stop('msg_need_login');
-
-			$oPointsendModel = &getModel('pointsend');
-
-			$log_type = Context::get('log_type');
-			if(!in_array($log_type,array('S','R'))) {
-				$log_type = 'R';
-				Context::set('log_type', 'R');
-			}
-
-			switch($log_type) {
-				case 'S':
-					$args->sender_srl = $logged_info->member_srl;
-					break;
-				case 'R':
-					$args->receiver_srl = $logged_info->member_srl;
-					break;
-			}
-
-			// 포인트 선물 내역 구함
-			$output = $oPointsendModel->getLogList($args);
-			Context::set('total_count', $output->total_count);
-			Context::set('total_page', $output->total_page);
-			Context::set('page', $output->page);
-			Context::set('log_list', $output->data);
-			Context::set('page_navigation', $output->page_navigation);
-
-			$this->setTemplateFile('pointsend_log');
+	/**
+	 * @brief 회원 정보 보기 > 포인트 선물 내역 보기
+	 */
+	function dispPointsendLog()
+	{
+		// 로그인이 되어 있지 않으면 오류 표시
+		if(!Context::get('is_logged'))
+		{
+			return $this->stop('msg_need_login');
 		}
 
-		/**
-		 * @brief 회원 찾기 팝업
-		 **/
-		function dispPointsendFindMember() {
-			$this->setTemplateFile('FindMember');
+		// 로그인 정보 구함
+		$logged_info = Context::get('logged_info');
+
+		$oPointsendModel = &getModel('pointsend');
+
+		$log_type = Context::get('log_type');
+		if(!in_array($log_type, array('S','R')))
+		{
+			$log_type = 'R';
+			Context::set('log_type', 'R');
 		}
+
+		switch($log_type)
+		{
+			case 'S':
+				$args->sender_srl = $logged_info->member_srl;
+				break;
+			case 'R':
+				$args->receiver_srl = $logged_info->member_srl;
+				break;
+		}
+
+		// 포인트 선물 내역 구함
+		$output = $oPointsendModel->getLogList($args);
+		Context::set('total_count', $output->total_count);
+		Context::set('total_page', $output->total_page);
+		Context::set('page', $output->page);
+		Context::set('log_list', $output->data);
+		Context::set('page_navigation', $output->page_navigation);
+
+		$this->setTemplateFile('pointsend_log');
 	}
-?>
+
+	/**
+	 * @brief 회원 찾기 팝업
+	 **/
+	function dispPointsendFindMember()
+	{
+		$this->setTemplateFile('FindMember');
+	}
+}
+/* End of file : pointsend.view.php */
+/* Location : ./modules/pointsend/pointsend.view.php */
