@@ -34,12 +34,15 @@ class pointsendView extends pointsend
 			{
 				$grant->pointsend = false;
 				// 그룹이 하나라도 설정된 권한에 포함되어 있다면 권한이 있음
-				foreach($logged_info->group_list as $key => $val)
+				if(count($logged_info->group_list))
 				{
-					if(in_array($key,$config->grants))
+					foreach($logged_info->group_list as $key => $val)
 					{
-						$grant->pointsend = true;
-						break;
+						if(in_array($key,$config->grants))
+						{
+							$grant->pointsend = true;
+							break;
+						}
 					}
 				}
 			}
