@@ -109,6 +109,9 @@ class pointsendView extends pointsend
 		$current_point = $oPointModel->getPoint($logged_info->member_srl);
 		Context::set('current_point', $current_point);
 
+		// Javascript Filter 적용
+		Context::addJsFilter($this->module_path.'tpl/filter/','pointsend.xml');
+
 		$this->setLayoutFile('popup_layout');
 		$this->setTemplateFile('PointSend');
 	}
