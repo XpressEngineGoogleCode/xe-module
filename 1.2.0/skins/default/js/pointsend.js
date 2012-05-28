@@ -13,20 +13,26 @@
 				$('#popBody a.btnSign').removeClass('active');
 			}
 		});
-		$('#input_send_point').keydown(function(event){
-			if(event.keyCode < 48 || event.keyCode > 57)
+		$('#input_send_point').bind('keydown keyup change', function(event)
+		{
+			if(event.type == 'keydown')
 			{
-				// 8, 13, 116 (백스페이스, 엔터, F5)는 예외
-				if(event.keyCode == 8 || event.keyCode == 13 || event.keyCode == 116)
+				if(event.keyCode < 48 || event.keyCode > 57)
 				{
-				}
-				else
-				{
-				event.preventDefault();
-				return;
+					// 8, 13, 116 (백스페이스, 엔터, F5)는 예외
+					if(event.keyCode == 8 || event.keyCode == 13 || event.keyCode == 116)
+					{
+					}
+					else
+					{
+					event.preventDefault();
+					}
 				}
 			}
-			var point = this.value;
+
+			var point = parseInt(this.value);
+			if(!point) point = 0; 
+
 			if(cf_useFee == 'Y')
 			{
 				var fee = cf_fee / 100;
@@ -48,7 +54,7 @@
 				$('#popBody .curFee').html(feeResult);
 			}
 
-			var remainingPoint = point > 0 ? parseInt(cf_curPoint) - point : parseInt(cf_curPoint);
+			var remainingPoint = parseInt(cf_curPoint) - point;
 			$('#popBody .remainingPoint').html(addCommas(remainingPoint));
 		});
 	});
