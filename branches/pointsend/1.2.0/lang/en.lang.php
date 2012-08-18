@@ -25,7 +25,7 @@
 	$lang->success_pointsend = 'Point Gift Successful';
 
 	$lang->pointsend_title = '[Notice] You received a Point Gift from %s.';
-	$lang->pointsend_content = 'You received a Point Gift from %s (%s).<br /><br /><strong>※ This message was sent automatically.</strong><br /><br />----------------------------<br />Message : <br />%s';
+	$lang->pointsend_content = 'You received a Point Gift from %s.<br /><br /><strong>※ This message was sent automatically.</strong><br /><br />----------------------------<br />Message : <br />%s';
 
 	$lang->about_send_message = 'Send Message';
 	$lang->about_send_group = '<h4 class="xeAdmin">Replacement</h4>

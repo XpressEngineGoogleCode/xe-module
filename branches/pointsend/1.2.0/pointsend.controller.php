@@ -182,9 +182,10 @@
 			$oPointController->setPoint($receiver_srl, $oReceiver->point);
 
 			// 쪽지 보내기
-			if($send_message) {
+			if($send_message)
+			{
 				$mtitle = sprintf(Context::getLang('pointsend_title'), $logged_info->nick_name);
-				$mcontent = sprintf(Context::getLang('pointsend_content'), $logged_info->nick_name, $logged_info->user_id, $point, $comment);
+				$mcontent = sprintf(Context::getLang('pointsend_content'), $logged_info->nick_name, $point, $comment);
 				$oCommunicationController = &getController('communication');
 				$oCommunicationController->sendMessage($sender_srl, $receiver_srl, $mtitle, $mcontent, false);
 			}
