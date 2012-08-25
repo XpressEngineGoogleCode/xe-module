@@ -1,7 +1,7 @@
 <?php
 /**
  * @class loginlogAdminView
- * @author SMaker (admin@funnyxe.com)
+ * @author 퍼니엑스이 (admin@funnyxe.com)
  * @brief loginlog 모듈의 controller class
  **/
 
