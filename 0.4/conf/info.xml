@@ -4,12 +4,12 @@
 	<title xml:lang="zh-TW">登入日誌</title>
 	<description xml:lang="ko">로그인 시 접속한 IP와 시간을 기록하는 모듈입니다.</description>
 	<description xml:lang="zh-TW">可紀錄登入時的 IP 和時間。</description>
-	<version>0.3</version>
+	<version>0.4</version>
 	<date>2012-06-24</date>
 	<category>member</category>
 
 	<author email_address="admin@funnyxe.com" link="http://funnyxe.com">
-		<name xml:lang="ko">SMaker</name>
-		<name xml:lang="zh-TW">SMaker</name>
+		<name xml:lang="ko">퍼니엑스이</name>
+		<name xml:lang="zh-TW">Funnyxe</name>
 	</author>
 </module>
