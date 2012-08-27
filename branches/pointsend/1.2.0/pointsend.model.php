@@ -48,11 +48,6 @@ class pointsendModel extends pointsend
 			$config->deny_group = $config->deny_group ? explode('|@|',$config->deny_group) : array();
 			$config->grants = $config->grants ? explode('|@|',$config->grants) : array();
 
-			unset($config->module);
-			unset($config->act);
-			unset($config->body);
-			unset($config->_filter);
-
 			$logged_info = Context::get('logged_info');
 
 			$tmp_group = array();
@@ -77,7 +72,7 @@ class pointsendModel extends pointsend
 				// 소속된 그룹을 검사하여 그룹에 맞는 수수료를 구함
 				if(!$is_admin)
 				{
-					if(count($tmp_group) && $logged_info->group_list)
+					if(count($tmp_group) && is_array($logged_info->group_list) && count($logged_info->group_list))
 					{
 						foreach($logged_info->group_list as $key => $val)
 						{
@@ -94,7 +89,7 @@ class pointsendModel extends pointsend
 
 					// 최고 관리자이거나 수수료 제외 그룹에 해당하면 수수료 기능 비활성화
 						if($logged_info->is_admin == 'Y') $config->use_fee = 'N';
-						if(count($config->fee_but_group))
+						if(is_array($config->fee_but_group) && count($config->fee_but_group))
 						{
 							foreach($logged_info->group_list as $key => $val)
 							{

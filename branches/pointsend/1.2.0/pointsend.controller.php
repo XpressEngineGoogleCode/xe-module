@@ -63,7 +63,7 @@ class pointsendController extends pointsend
 
 		// 포인트 선물
 		$output = $this->pointsend($sender_srl, $receiver_srl, $point, $obj->content, $config);
-		if(is_object($output) && method_exists($output, 'toBool') && !$output->toBool()) return $output;
+		if(is_object($output)) return $output;
 
 		// 트리거 실행 (after)
 		$triggerOutput = ModuleHandler::triggerCall('pointsend.procPointsend', 'after', $triggerObj);
