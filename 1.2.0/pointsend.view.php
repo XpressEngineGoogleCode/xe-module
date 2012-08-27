@@ -7,7 +7,6 @@
 
 class pointsendView extends pointsend
 {
-
 	/**
 	 * @brief 초기화
 	 **/
