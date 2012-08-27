@@ -69,9 +69,9 @@
 	$lang->msg_not_exists_sender= '보내는이가 존재 하지 않습니다.';
 	$lang->msg_not_exists_receiver = '받는이가 존재 하지 않습니다.';
 	$lang->msg_not_enough_send_point = '보낼 포인트가 현재 보유하고 있는 포인트보다 많습니다.';
-	$lang->msg_invalid_send_point = '보낼 포인트를 올바르게 입력해 주세요.\n\n보낼 포인트는 0 보다 커야 합니다.';
+	$lang->msg_invalid_send_point = '보낼 포인트를 올바르게 입력해 주세요.'."\n\n".'보낼 포인트는 0 보다 커야 합니다.';
 	$lang->msg_not_permitted_pointsend = '포인트 선물 권한이 없습니다.';
-	$lang->msg_pointgift_daily_limit_over = '일일 포인트 선물 제한 (%s 포인트)을 초과하셔서 더 이상 선물을 하실 수 없습니다.';
+	$lang->msg_pointgift_daily_limit_over = '오늘은 더 이상 선물을 하실 수 없습니다.'."\n\n".'(하루에 보낼 수 있는 최대 포인트는 %s 입니다.)';
 	$lang->msg_pointgift_denied_group = '포인트 선물이 제한된 그룹 (%s)에게 포인트 선물을 하실 수 없습니다.';
 	$lang->msg_not_exists_pointgift_log = '포인트 선물 내역이 없습니다.';
 

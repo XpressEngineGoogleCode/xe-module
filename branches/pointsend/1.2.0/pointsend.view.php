@@ -76,6 +76,8 @@ class pointsendView extends pointsend
 	 **/
 	function dispPointsend()
 	{
+		$this->setLayoutFile('popup_layout');
+
 		// 로그인 정보 구함
 		$logged_info = Context::get('logged_info');
 
@@ -100,6 +102,38 @@ class pointsendView extends pointsend
 			return new Object(-1, 'msg_not_exists_member');
 		}
 
+		$config = Context::get('pointsend_config');
+		if($logged_info->is_admin != 'Y')
+		{
+			$oModel = &getModel('pointsend');
+			// 일일 포인트 선물 제한을 설정한 경우 체크
+			$daily_limit = (int)$config->daily_limit;
+			if($daily_limit >0)
+			{
+				$args->member_srl = $logged_info->member_srl;
+				$args->type = 'S';
+				$log = $oModel->getTodayLog($args);
+				if($daily_limit < $log->total)
+				{
+					return new Object(-1, sprintf(Context::getLang('msg_pointgift_daily_limit_over'),$daily_limit));
+				}
+			}
+
+			// 선물 제한 그룹을 설정한 경우 체크
+			$deny_group = $config->deny_group;
+			if(count($deny_group) > 0)
+			{
+				$groups = $oMemberModel->getMemberGroups($receiver_srl);
+				if(count($groups))
+				{
+					foreach($groups as $group_srl => $group_title)
+					{
+						if(in_array($group_srl, $deny_group)) return new Object(-1, sprintf(Context::getLang('msg_pointgift_denied_group'),$group_title));
+					}
+				}
+			}
+		}
+
 		// 보내는이와 받는이의 회원 정보를 템플릿에서 쓸 수 있도록 set
 		Context::set('member_info', $member_info);
 
@@ -111,7 +145,6 @@ class pointsendView extends pointsend
 		// Javascript Filter 적용
 		Context::addJsFilter($this->module_path.'tpl/filter/','pointsend.xml');
 
-		$this->setLayoutFile('popup_layout');
 		$this->setTemplateFile('PointSend');
 	}
 
