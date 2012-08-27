@@ -23,6 +23,7 @@ class pointsendAdminController extends pointsend {
 		unset($config->module);
 		unset($config->act);
 		unset($config->body);
+		unset($config->ruleset);
 		unset($config->_filter);
 
 		// 기본값 지정
