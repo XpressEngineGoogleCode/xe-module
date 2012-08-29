@@ -27,9 +27,13 @@ class pointsendController extends pointsend
 		// 입력 받은 데이터 검사
 		$obj = Context::getRequestVars();
 		$obj->send_point = (int)$obj->send_point;
-		$obj->content = $logged_info->is_admin!='Y'?removeHackTag(trim($obj->content)):trim($obj->content); //< XSS 공격 방지
+		$obj->content = $logged_info->is_admin!='Y' ? removeHackTag(trim($obj->content)) : trim($obj->content); //< XSS 공격 방지
 
-		if($logged_info->is_admin != 'Y') unset($obj->is_subtraction);
+		// 최고관리자가 아니라면 포인트 차감 기능을 사용할 수 없도록 하기
+		if($logged_info->is_admin != 'Y')
+		{
+			unset($obj->is_subtraction);
+		}
 
 		$sender_srl = (int)$obj->sender_srl;
 		$receiver_srl = (int)$obj->receiver_srl;
@@ -37,8 +41,8 @@ class pointsendController extends pointsend
 		$isSubtraction = $obj->is_subtraction;
 
 		// 설정을 구함
-		$oModel = &getModel('pointsend');
-		$config = $oModel->getConfig();
+		$oPointsendModel = &getModel('pointsend');
+		$config = $oPointsendModel->getConfig();
 
 		$triggerObj = new stdClass;
 		$triggerObj->sender_srl = $sender_srl;
@@ -93,17 +97,25 @@ class pointsendController extends pointsend
 		// 로그인 한 회원과 보내는이가 다르면 에러
 		if($logged_info->is_admin != 'Y' && $logged_info->member_srl != $sender_srl) return new Object(-1, 'msg_invalid_request');
 
-		$oModel = &getModel('pointsend');
+		$oPointsendModel = &getModel('pointsend');
 		$oMemberModel = &getModel('member');
 		$oPointModel = &getModel('point');
 		$oPointController = &getController('point');
 
 		// 로그인 한 회원과 보내는이가 다르면 보내는이가 존재하는 지 확인
-		if(!$sender_exists && $logged_info->member_srl != $sender_srl)
+		if(!$sender_exists)
 		{
-			$oSender = $oMemberModel->getMemberInfoByMemberSrl($sender_srl);
-			if(!$oSender) return new Object(-1, 'msg_not_exists_sender');
+			if($logged_info->member_srl == $sender_srl)
+			{
+				$oSender = $logged_info;
+			}
+			else
+			{
+				$oSender = $oMemberModel->getMemberInfoByMemberSrl($sender_srl);
+			}
 		}
+
+		if(!$oSender) return new Object(-1, 'msg_not_exists_sender');
 
 		// 받는이가 존재 하지 않으면 에러
 		if(!$receiver_exists)
@@ -116,22 +128,23 @@ class pointsendController extends pointsend
 		$oSender->point = $oPointModel->getPoint($sender_srl);
 
 		// 보내는이의 포인트가 보낼 포인트보다 작으면 에러
-		if($oSender->point<$point) return new Object(-1, 'msg_not_enough_send_point');
+		if($oSender->is_admin != 'Y' && $oSender->point < $point) return new Object(-1, 'msg_not_enough_send_point');
 
 		$real_point = (int)$point;
 
 		// 설정을 구함
-		if(!$config) $config = $oModel->getConfig();
+		if(!$config) $config = $oPointsendModel->getConfig();
 
+		// 최고관리자가 아닐경우 각종 제한 체크
 		if($logged_info->is_admin != 'Y')
 		{
 			// 일일 포인트 선물 제한을 설정한 경우 체크
 			$daily_limit = (int)$config->daily_limit;
-			if($daily_limit >0)
+			if($daily_limit > 0)
 			{
 				$args->member_srl = $sender_srl;
 				$args->type = 'S';
-				$log = $oModel->getTodayLog($args);
+				$log = $oPointsendModel->getTodayLog($args);
 				if($daily_limit < $log->total)
 				{
 					return new Object(-1, sprintf(Context::getLang('msg_pointgift_daily_limit_over'),$daily_limit));
@@ -142,19 +155,21 @@ class pointsendController extends pointsend
 			$deny_group = $config->deny_group;
 			if(count($deny_group) > 0)
 			{
+				// 받는 회원의 소속 그룹을 구한다
 				$groups = $oMemberModel->getMemberGroups($receiver_srl);
 				if(count($groups))
 				{
+					// loop를 돌면서 선물 제한 그룹에 해당되어있는지 확인한다
 					foreach($groups as $group_srl => $group_title)
 					{
+						// 선물 제한 그룹에 해당되어있다면 에러메시지를 출력
 						if(in_array($group_srl, $deny_group)) return new Object(-1, sprintf(Context::getLang('msg_pointgift_denied_group'),$group_title));
 					}
 				}
 			}
 
 			// 동일 IP 선물 제한
-			// 현재 작동하지 않으니 주석 지우지 말아주세요ㅠㅠ
-			/*if($config->sameip_deny == 'Y') {
+			if($config->sameip_deny == 'Y') {
 				// 현재 로그인 한 IP를 구함
 				$args->member_srl = $logged_info->member_srl;
 				$output = executeQuery('pointsend.getLastloggedIpaddress', $args);
@@ -170,7 +185,7 @@ class pointsendController extends pointsend
 				$receiver_ip = $output->data->ipaddress;
 
 				if(($current_ip && $receiver_ip) && $current_ip == $receiver_ip) return new Object('msg_pointgift_sameip_warning');
-			}*/
+			}
 		}
 
 		// 수수료에 따른 포인트 계산
@@ -189,8 +204,13 @@ class pointsendController extends pointsend
 		// 수수료 적용 시 포인트가 소수점이 될 수 있으므로 정수로 만듬
 		$oReceiver->point = (int)$oReceiver->point;
 
-		// 포인트 선물 (최고 관리자가 포인트 선물하는 경우 차감하지 않습니다)
-		if($oSender->is_admin != 'Y') $oPointController->setPoint($sender_srl, $oSender->point);
+		/**
+		 * 포인트 선물 (최고 관리자가 포인트 선물하는 경우 차감하지 않습니다)
+		 **/
+		if($oSender->is_admin != 'Y') 
+		{
+			$oPointController->setPoint($sender_srl, $oSender->point);
+		}
 		$oPointController->setPoint($receiver_srl, $oReceiver->point);
 
 		// 쪽지 보내기
@@ -418,38 +438,6 @@ class pointsendController extends pointsend
 
 		$output = $this->deleteMemberLogs($member_srl);
 		if(!$output->toBool()) return $output;
-
-		return new Object();
-	}
-
-	function triggerModuleHandlerInit(&$module_info)
-	{
-		$logged_info = Context::get('logged_info');
-		if(!$logged_info) return new Object();
-
-		$oPointsendModel = &getModel('pointsend');
-
-		// 회원 로그인 정보에 메뉴를 추가
-		if($oPointsendModel->isGranted()) {
-			$oMemberController = &getController('member');
-			$oMemberController->addMemberMenu('dispPointsendLog', 'cmd_view_pointsend_log');
-			if(Context::get('act') == 'getMemberMenu')
-			{
-				$member_srl = Context::get('target_srl');
-				$mid = Context::get('cur_mid');
-				// 자신이 아니라면 포인트 선물 기능 추가
-				if($logged_info->member_srl != $member_srl)
-				{
-					// 대상 회원의 정보를 가져옴
-					$oMemberModel = &getModel('member'); 
-					$target_member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
-					if(!$target_member_info->member_srl) return;
-
-					// 포인트 선물
-					$oMemberController->addMemberPopupMenu(getUrl('','module','pointsend','act','dispPointsend','receiver_srl', $member_srl), 'pointsend', '', 'popup');
-				}
-			}
-		}
 
 		return new Object();
 	}
