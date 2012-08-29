@@ -5,54 +5,54 @@
 
 <form method="post" onsubmit="return procFilter(this, group_send)">
 <table class="rowTable">
-    <tr>
-        <th><input type="checkbox" onclick="XE.checkboxToggleAll({ doClick:true }); return false;" /></th>
-        <th>{$lang->image_mark}</th>
-        <th>{$lang->group_title}</th>
+	<tr>
+		<th><input type="checkbox" onclick="XE.checkboxToggleAll({ doClick:true }); return false;" /></th>
+		<th>{$lang->image_mark}</th>
+		<th>{$lang->group_title}</th>
 	</tr>
 	<!--@if(count($group_list))-->
 	<!--@foreach($group_list as $key => $val)-->
 	<tr>
-        <td><input type="checkbox" name="cart" value="{$val->group_srl}" onclick="" /></td>
-        <td><!--@if($val->image_mark)--><img src="{$val->image_mark}" alt="{$val->title}" title="{$lang->image_mark}" /><!--@else-->&nbsp;<!--@end--></td>
-        <td>{$val->title}</td>
-    </tr>
-    <!--@end-->
-    <!--@else-->
-    <tr>
-        <td colspan="3">등록된 그룹이 없습니다.</td>
-    </tr>
-    <!--@end-->
+		<td><input type="checkbox" name="cart" value="{$val->group_srl}" onclick="" /></td>
+		<td><!--@if($val->image_mark)--><img src="{$val->image_mark}" alt="{$val->title}" title="{$lang->image_mark}" /><!--@else-->&nbsp;<!--@end--></td>
+		<td>{$val->title}</td>
+	</tr>
+	<!--@end-->
+	<!--@else-->
+	<tr>
+		<td colspan="3">등록된 그룹이 없습니다.</td>
+	</tr>
+	<!--@end-->
 </table>
 
 <h4 class="xeAdmin">{$lang->cmd_send_message}</h4>
 <table width="100%">
-    <tbody>
-        <tr>
-            <td><label for="title">{$lang->title}</label></td>
-            <td><input type="text" name="title" id="title" value="" class="inputTypeText inputTitle" /></td>
-        </tr>
-        <tr>
-            <td><label for="content" class="lblContent">{$lang->content}</label></td>
-            <td><textarea name="content" id="content" cols="50" rows="10" class="inputTypeText inputContent"></textarea></td>
-        </tr>
-        <tr>
-            <td><label for="send_point">{$lang->send_point}</label></td>
-            <td><input type="text" id="send_point" name="send_point" value="" class="inputTypeText w60" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><span class="button black strong"><input type="submit" value="{$lang->cmd_pointsend}" /></span></td>
-        </tr>
-    </tbody>
+	<tbody>
+		<tr>
+			<td><label for="title">{$lang->title}</label></td>
+			<td><input type="text" name="title" id="title" value="" class="inputTypeText inputTitle" /></td>
+		</tr>
+		<tr>
+			<td><label for="content" class="lblContent">{$lang->content}</label></td>
+			<td><textarea name="content" id="content" cols="50" rows="10" class="inputTypeText inputContent"></textarea></td>
+		</tr>
+		<tr>
+			<td><label for="send_point">{$lang->send_point}</label></td>
+			<td><input type="text" id="send_point" name="send_point" value="" class="inputTypeText w60" /></td>
+		</tr>
+		<tr>
+			<td colspan="2"><span class="button black strong"><input type="submit" value="{$lang->cmd_pointsend}" /></span></td>
+		</tr>
+	</tbody>
 </table>
 </form>
 <p>{$lang->about_send_group}</p>
 
 <script type="text/javascript">
 (function($){
-    $('.inputContent').autoResize({
-        animateDuration : 300,
-        extraSpace : 0,
-    });
+	$('.inputContent').autoResize({
+		animateDuration : 300,
+		extraSpace : 0,
+	});
 })(jQuery);
 </script>
