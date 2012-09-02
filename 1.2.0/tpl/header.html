@@ -5,7 +5,7 @@
 <ul class="localNavigation">
 	<li<!--@if($act=='dispPointsendAdminIndex')--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminIndex')}">{$lang->cmd_setup}</a></li>
 	<li<!--@if(in_array($act, $logAct))--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminLogList')}">{$lang->cmd_pointsend_log_list}</a></li>
-	<li<!--@if($act=='dispPointsendAdminSend')--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminSend')}">{$lang->cmd_batch_pointsend}</a></li>
+	<li<!--@if($act=='dispPointsendAdminSend')--> class="on"<!--@end-->><a href="{getUrl('','module','admin','act','dispPointsendAdminSend')}">{$lang->cmd_pointsend}</a></li>
 </ul>
 
 <ul class="vNavigation" cond="in_array($act, $logAct)">
