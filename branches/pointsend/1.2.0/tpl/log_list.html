@@ -7,10 +7,10 @@
 			<th>{$lang->no}</th>
 			<th>{$lang->sender}</th>
 			<th>{$lang->receiver}</th>
-			<th>{$lang->ipaddress}</th>
-			<th>{$lang->content}</th>
 			<th>{$lang->point}</th>
-			<th>Action</th>
+			<th>{$lang->ipaddress}</th>
+			<th>{$lang->date}</th>
+			<th>&nbsp;</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,10 +25,13 @@
 			<td>{$no}</td>
 			<td><div class="member_{$sender->member_srl}">{$sender->nick_name}</div></td>
 			<td><div class="member_{$receiver->member_srl}">{$receiver->nick_name}</div></td>
-			<td>{$val->ipaddress}</td>
-			<td>{$val->comment}</td>
 			<td>{$val->point}</td>
+			<td>{$val->ipaddress}</td>
+			<td>{zdate($val->regdate)}</td>
 			<td class="center"><a href="{getUrl('act','dispPointsendAdminRollback','log_srl',$val->log_srl)}" title="{$lang->cmd_pointsend_cancle}"><span class="buttonSet buttonDisable"></span></a>&nbsp;&nbsp;<a href="{getUrl('act','dispPointsendAdminDeleteLog','log_srl',$val->log_srl)}" title="{$lang->cmd_delete}" class="buttonSet buttonDelete"><span>{$lang->cmd_delete}</span></a></td>
+		</tr>
+		<tr cond="$val->comment">
+			<td colspan="7">{htmlspecialchars($val->comment)}</td>
 		</tr>
 		<!--@end-->
 		<!--@else-->
