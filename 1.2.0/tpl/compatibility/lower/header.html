@@ -1,0 +1,15 @@
+{{@Context::addCssFile('./modules/pointsend/tpl/css/style.lower.css')}
+<!--// XE 템플릿 엔진 버그로 인해 주석 처리. 차후 버그가 수정되면 위 소스 대신 아래 소스를 사용할 것. -->
+<!--//<load target="./css/style.css" />-->
+<h3 class="xeAdmin">{$lang->pointsend}</h3>
+
+<ul class="localNavigation">
+	<li class="on"|cond="$act=='dispPointsendAdminIndex'"><a href="{getUrl('','module','admin','act','dispPointsendAdminIndex')}">{$lang->cmd_setup}</a></li>
+	<li class="on"|cond="$act=='dispPointsendAdminSend'"><a href="{getUrl('','module','admin','act','dispPointsendAdminSend')}">{$lang->cmd_pointsend}</a></li>
+	<li class="on"|cond="in_array($act, $logAct)"><a href="{getUrl('','module','admin','act','dispPointsendAdminLogList')}">{$lang->cmd_pointsend_log_list}</a></li>
+</ul>
+
+<ul class="vNavigation" cond="in_array($act, $logAct)">
+	<li><a href="{getUrl('act', 'dispPointsendAdminLogList')}"><!--@if($act == 'dispPointsendAdminLogList')--><strong>회원 포인트 선물</strong><!--@else-->회원 포인트 선물<!--@end--></a></li>
+	<li class="last-child"><a href="{getUrl('act', 'dispPointsendAdminBatchLogList')}"><!--@if($act == 'dispPointsendAdminBatchLogList')--><strong>일괄 포인트 선물</strong><!--@else-->일괄 포인트 선물<!--@end--></a></li>
+</ul>

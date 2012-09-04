@@ -1,0 +1,102 @@
+<form method="post" onsubmit="return procFilter(this, insert_config)"  class="form">
+	<div class="table">
+		<h3 class="h3">{$lang->skin}</h3>
+		<table width="100%" border="1" cellspacing="0">
+		<tbody>
+		<tr>
+			<th>{$lang->skin}</th>
+			<td>
+				<select name="skin">
+					<option value="{$key}" selected="selected"|cond="$config->skin==$key ||!$config->skin" loop="$skin_list => $key, $val">{$val->title} ({$key})</option>
+				</select>
+			</td>
+		</tr>
+		</tbody>
+		</table>
+		<h3 class="h3">{$lang->fee}</h3>
+		<table width="100%" border="1" cellspacing="0">
+		<tbody>
+		<tr>
+			<td colspan="2"><input type="checkbox" name="use_fee" id="use_fee" value="Y"<!--@if($config->use_fee == 'Y')--> checked="checked"<!--@end--> /><label for="use_fee">{$lang->use}</label></td>
+		</tr>
+		<tr>
+			<th>{$lang->group}</th>
+			<th>{$lang->fee}</th>
+		</tr>
+		<tr loop="$group_list => $key, $val">
+			<td>{$val->title}</td>
+			<td><input type="text" name="fee_{$key}" value="{$config->fee_[$key]}" class="inputTypeText w40" /> %</td>
+		</tr>
+		<tr>
+			<th>{$lang->fee_apply_point}</th>
+			<td><input type="text" name="fee_apply_point" value="{$config->fee_apply_point}" class="inputTypeText" /></td>
+		</tr>
+		<tr>
+			<th>{$lang->fee_but_group}</th>
+			<td>
+				<block loop="$group_list => $key, $val">
+				<input type="checkbox" name="fee_but_group" id="but_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->fee_but_group)" /> <label for="but_{$key}">{$val->title}</label>
+				</block>
+			</td>
+		</tr>
+		</tbody>
+		</table>
+
+		<h3 class="h3">{$lang->pointgift_limit}</h3>
+		<table width="100%" border="1" cellspacing="0">
+		<tbody>
+		<tr>
+			<th>{$lang->pointgift_denied_group}</th>
+			<td>
+				<block loop="$group_list => $key, $val">
+				<input type="checkbox" name="deny_group" id="deny_{$key}" value="{$key}"<!--@if(in_array($key, $config->deny_group))--> checked="checked"<!--@end--> /> <label for="deny_{$key}">{$val->title}</label>
+				</block>
+				<p>{$lang->about_deny_group}</p>
+			</td>
+		</tr>
+		<tr>
+			<th>{$lang->pointgift_daily_limit}</th>
+			<td><input type="text" name="daily_limit" value="{(int)$config->daily_limit}" class="inputTypeText" /></td>
+		</tr>
+		<tr>
+			<th>{$lang->pointgift_sameip_deny}</th>
+			<td>
+				<label for="sameip_deny"><input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$memberex_installed" /><!--@if($memberex_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
+				<p cond="!$memberex_installed"><strong class="alert">{$lang->about_cannot_use}</strong></p>
+			</td>
+		</tr>
+		</tbody>
+		</table>
+
+		<h3 class="h3">{$lang->cmd_setup_notification_message}</h3>
+		<p>{$lang->about_notification_message}</p>
+		<table width="100%" border="1" cellspacing="0">
+		<tbody>
+		<tr>
+			<th>{$lang->title}</th>
+			<td><input type="text" name="notification_title" id="notification_t" value="{htmlspecialchars($config->notification_title)}" class="inputTypeText w400 lang_code" /></td>
+		</tr>
+		<tr>
+			<th>{$lang->content}</th>
+			<td><textarea name="notification_content" id="notification_c" cols="55" rows="10" class="inputTypeTextArea lang_code">{htmlspecialchars($config->notification_content)}</textarea></td>
+		</tr>
+		</tbody>
+		</table>
+
+		<h3 class="h3">{$lang->grant}</h3>
+		<table width="100%" border="1" cellspacing="0">
+		<tbody>
+		<tr>
+			<th>
+				<block loop="$group_list => $key, $val">
+				<input type="checkbox" name="grants" id="grants_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->grants)" /> <label for="grants_{$key}">{$val->title}</label>
+				</block>
+			</th>
+		</tr>
+		<tr>
+			<td colspan="2"><span class="button black strong"><input type="submit" value="{$lang->cmd_save}" accesskey="s"/></span></td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+</form>
