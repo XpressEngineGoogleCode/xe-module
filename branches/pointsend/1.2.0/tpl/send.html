@@ -1,6 +1,41 @@
 <!--#include("header.html")-->
-<h4 class="xeAdmin">{$lang->cmd_batch_pointsend}</h4>
+<!--%import("./filter/pointsend_by_user_id.xml")-->
+<form action="./" method="post" onsubmit="return procFilter(this, pointsend_by_user_id);">
+	<h4 class="xeAdmin">{$lang->pointsend_by_user_id}</h4>
+	<table width="100%" border="1" cellspacing="0" class="rowTable">
+	<tbody>
+	<tr>
+		<th>{$lang->user_id}</th>
+		<td>
+			<input type="text" name="user_id" value="" class="inputTypeText w200" />
+			<p>{$lang->about_pointsend_by_user_id}</p>
+		</td>
+	</tr>
+	<tr>
+		<th>{$lang->point}</th>
+		<td>
+			<input type="text" name="point" value="" class="inputTypeText w200" />
+		</td>
+	</tr>
+	<tr>
+		<th>{$lang->message_title}</th>
+		<td><input type="text" name="message_title" value="" class="inputTypeText w400" /></td>
+	</tr>
+	<tr>
+		<th>{$lang->message_body}</th>
+		<td>
+		<textarea name="message_body" cols="55" rows="10" class="inputTypeTextArea"></textarea>
+		<p>{$lang->about_notification_message2}</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="button" colspan="2"><span class="btn button black"><input type="submit" value="{$lang->cmd_pointsend}" /></span></td>
+	</tr>
+	</tbody>
+	</table>
+</form>
 
-<a href="{getUrl('act','dispPointsendAdminSendGroup')}" class="button blue"><span>{$lang->cmd_group_pointsend}</span></a>
-<!--//<a href="{getUrl('act','dispPointsendAdminSendMember')}" class="button green"><span>{$lang->cmd_member_pointsend}</span></a>
-<a href="{getUrl('act','dispPointsendAdminSendAll')}" class="button red"><span>{$lang->cmd_all_pointsend}</span></a>-->
+<h4 class="xeAdmin">{$lang->cmd_batch_pointsend}</h4>
+<a href="{getUrl('act','dispPointsendAdminSendGroup')}" class="btn button blue"><span>{$lang->cmd_group_pointsend}</span></a>
+<!--//<a href="{getUrl('act','dispPointsendAdminSendMember')}" class="btn button green"><span>{$lang->cmd_find_member}</span></a>-->
+<!--//<a href="{getUrl('act','dispPointsendAdminSendAll')}" class="button red"><span>{$lang->cmd_all_pointsend}</span></a>-->
