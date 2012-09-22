@@ -7,7 +7,6 @@
 
 class pointsendController extends pointsend
 {
-
 	/**
 	 * @brief 초기화
 	 **/
@@ -27,7 +26,7 @@ class pointsendController extends pointsend
 		// 입력 받은 데이터 검사
 		$obj = Context::getRequestVars();
 		$obj->send_point = (int)$obj->send_point;
-		$obj->content = $logged_info->is_admin!='Y' ? removeHackTag(trim($obj->content)) : trim($obj->content); //< XSS 공격 방지
+		$obj->content = $logged_info->is_admin != 'Y' ? removeHackTag(trim($obj->content)) : trim($obj->content); //< XSS 공격 방지
 
 		// 최고관리자가 아니라면 포인트 차감 기능을 사용할 수 없도록 하기
 		if($logged_info->is_admin != 'Y')
@@ -440,22 +439,6 @@ class pointsendController extends pointsend
 		if(!$output->toBool()) return $output;
 
 		return new Object();
-	}
-
-	/**
-	 * @brief 쪽지 내용에 포함된 치환자를 정리
-	 */
-	function arrangeMessageContent($sender_info, $receiver_info, $point, &$content)
-	{
-		$content = str_replace('%_SENDER_%', sprintf('<span class="member_%s">%s</span>', $sender_info->member_srl ,$sender_info->nick_name), $content);
-		$content = str_replace('%_RECEIVER_%', sprintf('<span class="member_%s">%s</span>', $receiver_info->member_srl ,$receiver_info->nick_name), $content);
-		$content = str_replace('%SENDER%', $sender_info->nick_name, $content);
-		$content = str_replace('%SENDER_ID%', $sender_info->user_id, $content);
-		$content = str_replace('%SENDER_SRL%', $sender_info->member_srl, $content);
-		$content = str_replace('%RECEIVER%', $receiver_info->nick_name, $content);
-		$content = str_replace('%RECEIVER_ID', $receiver_info->user_id, $content);
-		$content = str_replace('%RECEIVER_SRL', $receiver_info->member_srl, $content);
-		$content = str_replace('%POINT%', $point, $content);
 	}
 
 	/**
