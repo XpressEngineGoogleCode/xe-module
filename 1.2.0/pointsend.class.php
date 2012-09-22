@@ -59,6 +59,22 @@ class pointsend extends ModuleObject
 	function recompileCache()
 	{
 	}
+
+	/**
+	 * @brief 쪽지 내용에 포함된 치환자를 정리
+	 */
+	function arrangeMessageContent($sender_info, $receiver_info, $point, &$content)
+	{
+		$content = str_replace('%_SENDER_%', sprintf('<span class="member_%s">%s</span>', $sender_info->member_srl ,$sender_info->nick_name), $content);
+		$content = str_replace('%_RECEIVER_%', sprintf('<span class="member_%s">%s</span>', $receiver_info->member_srl ,$receiver_info->nick_name), $content);
+		$content = str_replace('%SENDER%', $sender_info->nick_name, $content);
+		$content = str_replace('%SENDER_ID%', $sender_info->user_id, $content);
+		$content = str_replace('%SENDER_SRL%', $sender_info->member_srl, $content);
+		$content = str_replace('%RECEIVER%', $receiver_info->nick_name, $content);
+		$content = str_replace('%RECEIVER_ID', $receiver_info->user_id, $content);
+		$content = str_replace('%RECEIVER_SRL', $receiver_info->member_srl, $content);
+		$content = str_replace('%POINT%', $point, $content);
+	}
 }
 
 /* End of file : pointsend.admin.view.php */
