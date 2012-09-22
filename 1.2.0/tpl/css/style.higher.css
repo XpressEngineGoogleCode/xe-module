@@ -6,12 +6,4 @@
 
 #content .inputContent { height:166px; overflow:auto; }
 
-#content .vNavigation { width:105px; margin:0; padding:0; list-style:none; }
-#content .vNavigation li { margin:0; padding:0; list-style:none; border-right:1px #888 solid; position:relative; }
-#content .vNavigation a { color:#555; text-decoration:none; }
-#content .vNavigation strong { color:#27e; }
-#content .vNavigation a:hover,
-#content .vNavigation a:focus { font-weight:700; text-decoration:none !important; }
-#content .vNavigation .last-child { left:115px; top:-15px; border:0 none; }
-
 .rowTable td strong.alert { color:red; }
