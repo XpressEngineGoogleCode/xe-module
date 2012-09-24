@@ -69,11 +69,19 @@ class loginlogController extends loginlog
 			return new Object();
 		}
 
-		$args->member_srl = $member_srl;
-		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
-		$args->is_succeed = 'Y';
-		$args->regdate = date('YmdHis');
-		executeQuery('loginlog.insertLoginlog', $args);
+		// 로그인 기록 모듈의 설정값을 구함
+		$oModel = &getModel('loginlog');
+		$config = $oModel->getModuleConfig();
+
+		// 최고관리자가 아닌 경우에만 로그인 기록을 남깁니다. (설정값에 따라서)
+		if($config->admin_user_log != 'N' && $member_info->is_admin != 'N')
+		{
+			$args->member_srl = $member_srl;
+			$args->ipaddress = $_SERVER['REMOTE_ADDR'];
+			$args->is_succeed = 'Y';
+			$args->regdate = date('YmdHis');
+			executeQuery('loginlog.insertLoginlog', $args);
+		}
 
 		return new Object();
 	}
