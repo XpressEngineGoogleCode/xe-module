@@ -19,7 +19,7 @@ class loginlogAdminController extends loginlog {
 		$oLoginlogModel = &getModel('loginlog');
 		$config = $oLoginlogModel->getModuleConfig();
 
-		$config = Context::gets('delete_logs', 'admin_user_log')
+		$config = Context::gets('delete_logs', 'admin_user_log');
 		if(!$config->delete_logs) $config->delete_logs = 'N';
 		if(!$config->admin_user_log) $config->admin_user_log = 'N';
 
