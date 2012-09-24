@@ -19,8 +19,9 @@ class loginlogAdminController extends loginlog {
 		$oLoginlogModel = &getModel('loginlog');
 		$config = $oLoginlogModel->getModuleConfig();
 
-		$config->delete_logs = Context::get('delete_logs');
+		$config = Context::gets('delete_logs', 'admin_user_log')
 		if(!$config->delete_logs) $config->delete_logs = 'N';
+		if(!$config->admin_user_log) $config->admin_user_log = 'N';
 
 		unset($config->body);
 		unset($config->_filter);
@@ -67,7 +68,6 @@ class loginlogAdminController extends loginlog {
 		$msg_code = 'success_reset';
 
 		$output = executeQuery('loginlog.initLoginlogs', $args);
-		debugPrint(Context::getRequestVars());
 		if(!$output->toBool()) $msg_code = 'msg_failed_reset_logs';
 
 		$this->setMessage($msg_code);

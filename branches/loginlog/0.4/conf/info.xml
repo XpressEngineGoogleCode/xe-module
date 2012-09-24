@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="0.2">
 	<title xml:lang="ko">로그인 기록</title>
+	<title xml:lang="en">Sign-in History</title>
 	<title xml:lang="zh-TW">登入日誌</title>
 	<description xml:lang="ko">로그인 시 접속한 IP와 시간을 기록하는 모듈입니다.</description>
+	<description xml:lang="ko">Whenever sign-in, it records connected ip and time.</description>
 	<description xml:lang="zh-TW">可紀錄登入時的 IP 和時間。</description>
 	<version>0.4</version>
 	<date>2012-06-24</date>
@@ -10,6 +12,7 @@
 
 	<author email_address="admin@funnyxe.com" link="http://funnyxe.com">
 		<name xml:lang="ko">퍼니엑스이</name>
+		<name xml:lang="en">Funnyxe</name>
 		<name xml:lang="zh-TW">Funnyxe</name>
 	</author>
 </module>

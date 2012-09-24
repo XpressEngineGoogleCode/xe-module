@@ -24,6 +24,8 @@ class loginlogModel extends loginlog
 		{
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('loginlog');
+
+			if(!$config->admin_user_log) $config->admin_user_log = 'N';
 		}
 
 		return $config;
