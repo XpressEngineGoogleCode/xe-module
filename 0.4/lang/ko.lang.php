@@ -22,3 +22,5 @@ $lang->is_succeed = '성공';
 $lang->is_failed = '실패';
 
 $lang->cmd_yes = '예';
+
+$lang->cmd_cancle = '취소';

@@ -22,3 +22,4 @@ $lang->is_succeed = 'Succeed';
 $lang->is_failed = 'Failed';
 
 $lang->cmd_yes = 'Yes';
+$lang->cmd_cancle = 'Cancle';
