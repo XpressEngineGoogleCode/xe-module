@@ -6,7 +6,7 @@
 	<description xml:lang="ko">로그인 시 접속한 IP와 시간을 기록하는 모듈입니다.</description>
 	<description xml:lang="ko">Whenever sign-in, it records connected ip and time.</description>
 	<description xml:lang="zh-TW">可紀錄登入時的 IP 和時間。</description>
-	<version>0.4</version>
+	<version>0.4.1</version>
 	<date>2012-06-24</date>
 	<category>member</category>
 
