@@ -1,0 +1,111 @@
+<include target="header.html" />
+
+<load target="./filter/saveListSetting.xml" />
+<form action="" method="post" onsubmit="return procFilter(this, saveListSetting);">
+	[표시 항목]<br /><br />
+	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.user_name', $loginlog_config->listSetting)" value="member.user_name" /> 이름
+	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.nick_name', $loginlog_config->listSetting)" value="member.nick_name" /> 닉네임
+	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.user_id', $loginlog_config->listSetting)" value="member.user_id" /> 아이디
+	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.email_address', $loginlog_config->listSetting)" value="member.email_address" /> 이메일 주소
+	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('loginlog.ipaddress', $loginlog_config->listSetting)" value="loginlog.ipaddress" /> IP 주소
+	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('loginlog.regdate', $loginlog_config->listSetting)" value="loginlog.regdate" /> 날짜
+	<span class="button small"><input type="submit" value="저장" /></span>
+</form>
+<div class="search">
+	<form action="{Context::getRequestUri()}" method="get" style="float:right;">
+		<input type="hidden" name="module" value="admin" />
+		<input type="hidden" name="act" value="dispLoginlogAdminList" />
+		<select name="search_target">
+			<option value="user_id" selected="selected"|cond="$search_target == 'user_id'">{$lang->user_id}</option>
+			<option value="user_name" selected="selected"|cond="$search_target == 'user_name'">{$lang->user_name}</option>
+			<option value="nick_name" selected="selected"|cond="$search_target == 'nick_name'">{$lang->nick_name}</option>
+			<option value="ipaddress" selected="selected"|cond="$search_target == 'ipaddress'">{$lang->ipaddress}</option>
+			<option value="member_srl" selected="selected"|cond="$search_target == 'member_srl'">{$lang->member_no}</option>
+			<option value="regdate" selected="selected"|cond="$search_target == 'regdate'">{$lang->date}</option>
+		</select>
+		<input type="text" name="search_keyword" value="{$search_keyword}" class="inputTypeText" />
+		<span class="btn button blue"><input type="submit" value="{$lang->cmd_search}" /></span>
+		<span class="btn button"><a href="{getUrl('search_target', '', 'search_keyword', '')}">{$lang->cmd_cancle}</a></span>
+	</form>
+</div>
+
+{@
+	$listSettingUserName = in_array('member.user_name', $loginlog_config->listSetting);
+	$listSettingNickName = in_array('member.nick_name', $loginlog_config->listSetting);
+	$listSettingUserId = in_array('member.user_id', $loginlog_config->listSetting);
+	$listSettingEmail = in_array('member.email_address', $loginlog_config->listSetting);
+	$listSettingIP = in_array('loginlog.ipaddress', $loginlog_config->listSetting);
+	$listSettingDate = in_array('loginlog.regdate', $loginlog_config->listSetting);
+}
+<!-- 목록 -->
+<table cellspacing="0" class="rowTable clear">
+<caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+<thead>
+	<tr>
+		<th class="center" scope="col">{$lang->no}</th>
+		<th class="center" scope="col">{$lang->category}</th>
+		<th scope="col" cond="$listSettingUserName">{$lang->user_name}</th>
+		<th scope="col" cond="$listSettingNickName || $listSettingUserId">
+			<block cond="$listSettingNickName && $listSettingUserId">
+			{$lang->nick_name} ({$lang->user_id})
+			</block>
+			<block cond="$listSettingNickName && !$listSettingUserId">
+			{$lang->nick_name}
+			</block>
+			<block cond="!$listSettingNickName && $listSettingUserId">
+			{$lang->user_id}
+			</block>
+		</th>
+		<th scope="col" cond="$listSettingEmail">{$lang->email_address}</th>
+		<th scope="col" cond="$listSettingIP">{$lang->ipaddress}</th>
+		<th scope="col" cond="$listSettingDate">{$lang->date}</th>
+	</tr>
+</thead>
+<tbody>
+	<!--@if(count($log_list))-->
+	<!--@foreach($log_list as $no => $log)-->
+	<tr>
+		<td class="number center">{$no}</td>
+		<td class="center">
+			<strong class="succeed" cond="$log->is_succeed == 'Y'">[{$lang->is_succeed}]</strong>
+			<strong class="failed" cond="$log->is_succeed == 'N'">[{$lang->is_failed}]</strong>
+		</td>
+		<td cond="$listSettingUserName">
+			<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">{$log->user_name}</a>
+		</td>
+		<td cond="$listSettingNickName || $listSettingUserId">
+			<block cond="$listSettingNickName && $listSettingUserId">
+				<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}"><span class="member_{$log->member_srl}">{$log->nick_name}</span> </a>
+				<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">({$log->user_id})</a>
+			</block>
+			<block cond="$listSettingNickName && !$listSettingUserId">
+				<span class="member_{$log->member_srl}">{$log->nick_name}</span> 
+			</block>
+			<block cond="!$listSettingNickName && $listSettingUserId">
+				<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">{$log->user_id}</a>
+			</block>
+		</td>
+		<td cond="$listSettingEmail">
+			<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">{$log->email_address}</a>
+		</td>
+		<td cond="$listSettingIP"><a href="{getUrl('search_target', 'ipaddress', 'search_keyword', $log->ipaddress)}">{$log->ipaddress}</a></td>
+		<td class="date" cond="$listSettingDate">{zdate($log->regdate, 'Y-m-d H:i:s')}</td>
+	</tr>
+	<!--@end-->
+	<!--@end-->
+</tbody>
+</table>
+
+<div class="search">
+	<div class="pagination a1">
+		<a href="{getUrl('page','','module_srl',$module_srl)}" class="prevEnd direction">« FIRST</a> 
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+			<!--@if($page == $page_no)-->
+				<strong>{$page_no}</strong> 
+			<!--@else-->
+				<a href="{getUrl('page',$page_no,'module_srl',$module_srl)}">{$page_no}</a> 
+			<!--@end-->
+		<!--@end-->
+		<a href="{getUrl('page',$page_navigation->last_page,'module_srl',$module_srl)}" class="nextEnd direction">LAST »</a>
+	</div>
+</div>
