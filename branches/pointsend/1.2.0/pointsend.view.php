@@ -85,7 +85,7 @@ class pointsendView extends pointsend
 		$member_srl = Context::get('receiver_srl');
 		if(!$member_srl)
 		{
-			return new Object(-1, 'msg_invalid_request');
+			return new Object(-1, 'msg_not_exists_receiver');
 		}
 
 		// 받는이가 로그인 한 회원과 같으면 에러
