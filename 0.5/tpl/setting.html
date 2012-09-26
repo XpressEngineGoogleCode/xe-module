@@ -1,0 +1,25 @@
+<include target="./header.html" />
+
+<load target="./filter/insert_config.xml" />
+
+<form action="{Context::getRequestUri()}" method="post" onsubmit="return procFilter(this, insert_config)">
+<table cellspacing="0" class="rowTable">
+<tbody>
+	<tr>
+		<th>{$lang->delete_login_logs}</td>
+		<td><input type="checkbox" id="delete_logs_y" name="delete_logs" value="Y" checked="checked"|cond="$config->delete_logs == 'Y'" /><label for="delete_logs_y">{$lang->cmd_yes}</label></td>
+	</tr>
+</tbody>
+<tbody>
+	<tr>
+		<th>{$lang->admin_user_log}</td>
+		<td>
+			<input type="checkbox" id="admin_user_log_y" name="admin_user_log" value="Y" checked="checked"|cond="$config->admin_user_log == 'Y'" /><label for="admin_user_log_y">{$lang->cmd_yes}</label>
+			<p>{$lang->about_admin_user_log}</p>
+		</td>
+	</tr>
+</tbody>
+</table>
+	<div class="btnArea fr"><span class="button black strong"><input type="submit" value="{$lang->cmd_save}" /></span></div>
+	<div class="clear"></div>
+</form>

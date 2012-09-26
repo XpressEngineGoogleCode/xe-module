@@ -1,0 +1,6 @@
+<table name="member_loginlog">
+	<column name="member_srl" type="number" size="11" notnull="notnull" index="member_srl" />
+	<column name="ipaddress" type="varchar" size="128" notnull="notnull" index="idx_ipaddress" />
+	<column name="is_succeed" type="char" size="1" notnull="notnull" default="Y" index="idx_is_succeed" />
+	<column name="regdate" type="date" index="idx_regdate" />
+</table>
