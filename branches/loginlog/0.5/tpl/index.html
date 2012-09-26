@@ -1,15 +1,17 @@
 <include target="header.html" />
 
 <load target="./filter/saveListSetting.xml" />
-<form action="" method="post" onsubmit="return procFilter(this, saveListSetting);">
-	[표시 항목]<br /><br />
-	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.user_name', $loginlog_config->listSetting)" value="member.user_name" /> 이름
-	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.nick_name', $loginlog_config->listSetting)" value="member.nick_name" /> 닉네임
-	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.user_id', $loginlog_config->listSetting)" value="member.user_id" /> 아이디
-	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('member.email_address', $loginlog_config->listSetting)" value="member.email_address" /> 이메일 주소
-	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('loginlog.ipaddress', $loginlog_config->listSetting)" value="loginlog.ipaddress" /> IP 주소
-	<input type="checkbox" name="listSetting[]" checked="checked"|cond="in_array('loginlog.regdate', $loginlog_config->listSetting)" value="loginlog.regdate" /> 날짜
-	<span class="button small"><input type="submit" value="저장" /></span>
+<form action="./" method="post" onsubmit="return procFilter(this, saveListSetting);">
+	<fieldset style="display:block">
+		<legend style="display:block;">[{$lang->display_items}]</legend>
+		<input type="checkbox" id="listSetting_user_name" name="listSetting[]" checked="checked"|cond="in_array('member.user_name', $loginlog_config->listSetting)" value="member.user_name" /> <label for="listSetting_user_name">{$lang->user_name}</label>
+		<input type="checkbox" id="listSetting_nick_name" name="listSetting[]" checked="checked"|cond="in_array('member.nick_name', $loginlog_config->listSetting)" value="member.nick_name" /> <label for="listSetting_nick_name">{$lang->nick_name}</label>
+		<input type="checkbox" id="listSetting_user_id" name="listSetting[]" checked="checked"|cond="in_array('member.user_id', $loginlog_config->listSetting)" value="member.user_id" /> <label for="listSetting_user_id">{$lang->user_id}</label>
+		<input type="checkbox" id="listSetting_email_address" name="listSetting[]" checked="checked"|cond="in_array('member.email_address', $loginlog_config->listSetting)" value="member.email_address" /> <label for="listSetting_email_address">{$lang->email_address}</label>
+		<input type="checkbox" id="listSetting_ipaddress" name="listSetting[]" checked="checked"|cond="in_array('loginlog.ipaddress', $loginlog_config->listSetting)" value="loginlog.ipaddress" /> <label for="listSetting_ipaddress">{$lang->ipaddress}</label>
+		<input type="checkbox" id="listSetting_date" name="listSetting[]" checked="checked"|cond="in_array('loginlog.regdate', $loginlog_config->listSetting)" value="loginlog.regdate" /> <label for="listSetting_date">{$lang->date}</label>
+		<span class="btn button small"><input type="submit" value="{$lang->cmd_save}" /></span>
+	</fieldset>
 </form>
 <div class="search">
 	<form action="{Context::getRequestUri()}" method="get" style="float:right;">
@@ -62,9 +64,10 @@
 	</tr>
 </thead>
 <tbody>
-	<!--@if(count($log_list))-->
-	<!--@foreach($log_list as $no => $log)-->
-	<tr>
+	<tr cond="!$total_count">
+		<td colspan="7">로그인 기록이 없습니다.</td>
+	</tr>
+	<tr loop="$log_list => $no, $log">
 		<td class="number center">{$no}</td>
 		<td class="center">
 			<strong class="succeed" cond="$log->is_succeed == 'Y'">[{$lang->is_succeed}]</strong>
@@ -91,14 +94,12 @@
 		<td cond="$listSettingIP"><a href="{getUrl('search_target', 'ipaddress', 'search_keyword', $log->ipaddress)}">{$log->ipaddress}</a></td>
 		<td class="date" cond="$listSettingDate">{zdate($log->regdate, 'Y-m-d H:i:s')}</td>
 	</tr>
-	<!--@end-->
-	<!--@end-->
 </tbody>
 </table>
 
 <div class="search">
 	<div class="pagination a1">
-		<a href="{getUrl('page','','module_srl',$module_srl)}" class="prevEnd direction">« FIRST</a> 
+		<a href="{getUrl('page','','module_srl',$module_srl)}" class="prevEnd direction">« {$lang->first_page}</a> 
 		<!--@while($page_no = $page_navigation->getNextPage())-->
 			<!--@if($page == $page_no)-->
 				<strong>{$page_no}</strong> 
@@ -106,6 +107,6 @@
 				<a href="{getUrl('page',$page_no,'module_srl',$module_srl)}">{$page_no}</a> 
 			<!--@end-->
 		<!--@end-->
-		<a href="{getUrl('page',$page_navigation->last_page,'module_srl',$module_srl)}" class="nextEnd direction">LAST »</a>
+		<a href="{getUrl('page',$page_navigation->last_page,'module_srl',$module_srl)}" class="nextEnd direction">{$lang->last_page} »</a>
 	</div>
 </div>
