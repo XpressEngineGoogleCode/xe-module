@@ -1,8 +1,10 @@
-<include target="header.html" />
-<h2 class="h2">{$lang->cmd_pointsend_log_list}</h2>
+<h4 class="xeAdmin">{$lang->cmd_pointsend_log_list}</h4>
+<ul class="localNavigation" cond="in_array($act, $logAct)">
+	<li class="on"|cond="$act == 'dispPointsendAdminLogList'"><a href="{getUrl('act', 'dispPointsendAdminLogList')}">회원 포인트 선물</a></li>
+	<li class="on"|cond="$act == 'dispPointsendAdminBatchLogList'"><a href="{getUrl('act', 'dispPointsendAdminBatchLogList')}">일괄 포인트 선물</a></li>
+</ul>
 
-<div class="table">
-<table cellspacing="0">
+<table cellspacing="0" class="rowTable clear">
 	<thead>
 		<tr>
 			<th>{$lang->no}</th>
@@ -42,7 +44,6 @@
 		<!--@end-->
 	</tbody>
 </table>
-</div>
 
 <!-- 페이지 네비게이션 -->
 <div class="pagination a1">

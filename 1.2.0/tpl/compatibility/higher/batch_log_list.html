@@ -1,0 +1,66 @@
+<h2 class="h2">{$lang->cmd_pointsend_log_list}</h2>
+<div class="cnb" cond="in_array($act, $logAct)">
+	<ul>
+		<li class="active"|cond="$act == 'dispPointsendAdminLogList'"><a href="{getUrl('act', 'dispPointsendAdminLogList')}">회원 포인트 선물</a></li>
+		<li class="active"|cond="$act == 'dispPointsendAdminBatchLogList'"><a href="{getUrl('act', 'dispPointsendAdminBatchLogList')}">일괄 포인트 선물</a></li>
+	</ul>
+</div>
+
+<div class="table">
+	<table cellspacing="0">
+		<thead>
+			<tr>
+				<th>{$lang->no}</th>
+				<th>{$lang->sender}</th>
+				<th>{$lang->receiver}</th>
+				<th>{$lang->title}</th>
+				<th>{$lang->content}</th>
+				<th>{$lang->point}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--@if(count($log_list))-->
+			{@ $oMemberModel = &getModel('member')}
+			<!--@foreach($log_list as $no => $val)-->
+			{@ $sender = $oMemberModel->getMemberInfoByMemberSrl($val->sender_srl)}
+			{@ $_receivers = explode(',', $val->target_srls)}
+			<tr>
+				<td>{$no}</td>
+				<td><div class="member_{$sender->member_srl}">{$sender->nick_name}</div></td>
+				<td>
+					<!--@foreach($_receivers as $k => $v)-->
+						<!--@if($val->target == 'group')-->
+						{@
+							$group_info = $oMemberModel->getGroup($v);
+							$receivers[] = $group_info->title;
+						}
+						<!--@end-->
+					<!--@end-->
+					{implode(',', $receivers)}
+				</td>
+				<td>{htmlspecialchars($val->title)}</td>
+				<td>{$val->comment}</td>
+				<td>{$val->point}</td>
+			</tr>
+			<!--@end-->
+			<!--@else-->
+			<tr>
+				<td colspan="7">{$lang->msg_not_exists_pointgift_log}</td>
+			</tr>
+			<!--@end-->
+		</tbody>
+	</table>
+</div>
+
+<!-- 페이지 네비게이션 -->
+<div class="pagination a1">
+	<a href="{getUrl('page','')}" class="prevEnd">{$lang->first_page}</a> 
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		<!--@if($page == $page_no)-->
+			<strong>{$page_no}</strong> 
+		<!--@else-->
+			<a href="{getUrl('page',$page_no)}">{$page_no}</a> 
+		<!--@end-->
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+</div>
