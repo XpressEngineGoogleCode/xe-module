@@ -48,11 +48,7 @@ class loginlogController extends loginlog
 		}
 
 		// 비밀번호가 틀렸다면 기록
-		$args->member_srl = $output->data->member_srl;
-		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
-		$args->is_succeed = 'N';
-		$args->regdate = date('YmdHis');
-		executeQuery('loginlog.insertLoginlog', $args);
+		$this->insertLoginlog($member_srl, $_SERVER['REMOTE_ADDR'], 'N');
 
 		return new Object();
 	}
@@ -77,11 +73,7 @@ class loginlogController extends loginlog
 		if($config->admin_user_log != 'Y' && $member_info->is_admin == 'Y') return new Object();
 
 		// 로그인 기록을 남깁니다
-		$args->member_srl = $member_srl;
-		$args->ipaddress = $_SERVER['REMOTE_ADDR'];
-		$args->is_succeed = 'Y';
-		$args->regdate = date('YmdHis');
-		executeQuery('loginlog.insertLoginlog', $args);
+		$this->insertLoginlog($member_srl, $_SERVER['REMOTE_ADDR'], 'Y');
 
 		return new Object();
 	}
@@ -91,6 +83,12 @@ class loginlogController extends loginlog
 	 */
 	function triggerDeleteMember(&$obj)
 	{
+		$member_srl = $obj->member_srl;
+		if(!$member_srl)
+		{
+			return new Object();
+		}
+
 		$oModel = &getModel('loginlog');
 		$config = $oModel->getModuleConfig();
 
@@ -99,15 +97,19 @@ class loginlogController extends loginlog
 			return new Object();
 		}
 
-		$member_srl = $obj->member_srl;
-		if(!$member_srl)
-		{
-			return new Object();
-		}
 
 		executeQuery('loginlog.deleteMemberLoginlogs', $obj);
 
 		return new Object();
+	}
+
+	function insertLoginlog($member_srl, $ipaddress, $is_succeed)
+	{
+		$args->member_srl = $member_srl;
+		$args->ipaddres = $ipaddress ? $ipaddress : $_SERVER['REMOTE_ADDR'];
+		$args->is_succeed = $is_succeed;
+		$args->regdate = date('YmdHis');
+		return executeQuery('loginlog.insertLoginlog', $args);
 	}
 }
 
