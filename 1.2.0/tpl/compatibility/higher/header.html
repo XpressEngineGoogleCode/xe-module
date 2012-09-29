@@ -10,10 +10,3 @@
 		<li class="active"|cond="in_array($act, $logAct)"><a href="{getUrl('','module','admin','act','dispPointsendAdminLogList')}">{$lang->cmd_pointsend_log_list}</a></li>
 	</ul>
 </div>
-
-<div class="cnb" cond="in_array($act, $logAct)">
-	<ul>
-		<li class="active"|cond="$act == 'dispPointsendAdminLogList'"><a href="{getUrl('act', 'dispPointsendAdminLogList')}">회원 포인트 선물</a></li>
-		<li class="active"|cond="$act == 'dispPointsendAdminBatchLogList'"><a href="{getUrl('act', 'dispPointsendAdminBatchLogList')}">일괄 포인트 선물</a></li>
-	</ul>
-</div>
