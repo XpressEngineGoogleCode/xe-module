@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module>
-	<grants />
-	<permissions />
-	<actions>
-		<action name="dispPointsendAdminIndex" type="view" admin_index="true" />
-		<action name="dispPointsendAdminSend" type="view" />
-		<action name="dispPointsendAdminSendGroup" type="view" />
-		<action name="dispPointsendAdminSendMember" type="view" />
-		<action name="dispPointsendAdminSendAll" type="view" />
-		<action name="dispPointsendAdminLogList" type="view" />
-		<action name="dispPointsendAdminBatchLogList" type="view" />
-		<action name="dispPointsendAdminRollback" type="view" />
-		<action name="dispPointsendAdminDeleteLog" type="view" />
-
-		<action name="procPointsendAdminInsertConfig" type="controller" />
-		<action name="procPointsendAdminDeleteLog" type="controller" />
-		<action name="procPointsendAdminRollback" type="controller" />
-		<action name="procPointsendAdminSendGroup" type="controller" />
-		<action name="procPointsendAdminSendMember" type="controller" />
-		<action name="procPointsendAdminSendAll" type="controller" />
-
-		<action name="dispPointsend" type="view" index="true" />
-		<action name="dispPointsendLog" type="view" />
-		<action name="dispPointsendFindMember" type="view" />
-
-		<action name="procPointsend" type="controller" />
-	</actions>
-</module>
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<grants />
+	<permissions />
+	<actions>
+		<action name="dispPointsendAdminIndex" type="view" admin_index="true" />
+		<action name="dispPointsendAdminSend" type="view" />
+		<action name="dispPointsendAdminSendToGroup" type="view" />
+		<action name="dispPointsendAdminSendToMember" type="view" />
+		<action name="dispPointsendAdminSendToAll" type="view" />
+		<action name="dispPointsendAdminLogList" type="view" />
+		<action name="dispPointsendAdminBatchLogList" type="view" />
+		<action name="dispPointsendAdminRollback" type="view" />
+		<action name="dispPointsendAdminDeleteLog" type="view" />
+
+		<action name="procPointsendAdminInsertConfig" type="controller" />
+		<action name="procPointsendAdminDeleteLog" type="controller" />
+		<action name="procPointsendAdminRollback" type="controller" />
+		<action name="procPointsendAdminSendGroup" type="controller" />
+		<action name="procPointsendAdminSendMember" type="controller" />
+		<action name="procPointsendAdminSendAll" type="controller" />
+
+		<action name="dispPointsend" type="view" index="true" />
+		<action name="dispPointsendLog" type="view" />
+
+		<action name="procPointsend" type="controller" />
+		<action name="procPointsendAdminSendToMember" type="controller" ruleset="pointsendByUserId" />
+	</actions>
+</module>

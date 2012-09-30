@@ -87,6 +87,46 @@ class pointsendAdminController extends pointsend {
 		executeQuery('pointsend.deletePointsendLog',$args);
 	}
 
+	function procPointsendAdminSendToMember()
+	{
+		$obj = Context::gets('user_id', 'member_srls', 'point', 'message_title', 'message_body');
+
+		$member_srls = array();
+
+		if(!$obj->member_srls && $obj->user_id)
+		{
+			$oMemberModel = &getModel('member');
+
+			$user_ids = explode(',', $obj->user_id);
+			array_walk($user_ids, create_function('&$val', '$val = trim($val);'));
+
+			$args->user_id = $user_id;
+			$output = executeQueryArray('pointsend.getMemberSrlByUserId', $args);
+			if(!$output->toBool()) return $output;
+			if(!$output->data) continue;
+
+			foreach($output->data as $key => $val)
+			{
+				$member_srls[] = $val->member_srl;
+			}
+			$member_srls = implode(',', $member_srls);
+
+			$obj->member_srls = $member_srls;
+		}
+
+		if(!$obj->member_srls)
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
+
+		$oController = &getController('pointsend');
+		$output = $oController->pointsendToMember($obj->member_srls, $obj->point, $obj->message_title, $obj->message_body);
+		if(!$output->toBool()) return $output;
+
+		$msg = sprintf(Context::getLang('success_group_pointgift'), $total, $success, $failed, $ignore);
+		$this->setMessage($msg);
+	}
+
 	/**
 	 * @brief 일괄 포인트 선물 - 그룹별
 	 */
