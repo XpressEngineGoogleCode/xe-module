@@ -31,19 +31,49 @@
 	</form>
 </div>
 
+{@ $column = 2;}
+<block cond="in_array('member.user_name', $loginlog_config->listSetting)">
 {@
-	$listSettingUserName = in_array('member.user_name', $loginlog_config->listSetting);
-	$listSettingNickName = in_array('member.nick_name', $loginlog_config->listSetting);
-	$listSettingUserId = in_array('member.user_id', $loginlog_config->listSetting);
-	$listSettingEmail = in_array('member.email_address', $loginlog_config->listSetting);
-	$listSettingIP = in_array('loginlog.ipaddress', $loginlog_config->listSetting);
-	$listSettingDate = in_array('loginlog.regdate', $loginlog_config->listSetting);
+	$listSettingUserName = true;
+	$column++;
 }
+</block>
+<block cond="in_array('member.nick_name', $loginlog_config->listSetting)">
+{@
+	$listSettingNickName = true;
+	$column++;
+}
+</block>
+<block cond="in_array('member.user_id', $loginlog_config->listSetting)">
+{@
+	$listSettingUserId = true;
+	$column++;
+}
+</block>
+<block cond="in_array('member.email_address', $loginlog_config->listSetting)">
+{@
+	$listSettingEmail = true;
+	$column++;
+}
+</block>
+<block cond="in_array('loginlog.ipaddress', $loginlog_config->listSetting)">
+{@
+	$listSettingIP = true;
+	$column++;
+}
+</block>
+<block cond="in_array('loginlog.regdate', $loginlog_config->listSetting)">
+{@
+	$listSettingDate = true;
+	$column++;
+}
+</block>
 <!-- 목록 -->
 <table cellspacing="0" class="rowTable clear">
 <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
 <thead>
 	<tr>
+		<th><input type="checkbox" /></th>
 		<th class="center" scope="col">{$lang->no}</th>
 		<th class="center" scope="col">{$lang->category}</th>
 		<th scope="col" cond="$listSettingUserName">{$lang->user_name}</th>
@@ -61,13 +91,15 @@
 		<th scope="col" cond="$listSettingEmail">{$lang->email_address}</th>
 		<th scope="col" cond="$listSettingIP">{$lang->ipaddress}</th>
 		<th scope="col" cond="$listSettingDate">{$lang->date}</th>
+		<th scope="col">&nbsp;</th>
 	</tr>
 </thead>
 <tbody>
 	<tr cond="!$total_count">
-		<td colspan="7">로그인 기록이 없습니다.</td>
+		<td colspan="{$column}">로그인 기록이 없습니다.</td>
 	</tr>
 	<tr loop="$log_list => $no, $log">
+		<td><input type="checkbox" name="cart" value="{$log->log_srl}" /></td>
 		<td class="number center">{$no}</td>
 		<td class="center">
 			<strong class="succeed" cond="$log->is_succeed == 'Y'">[{$lang->is_succeed}]</strong>
@@ -82,7 +114,7 @@
 				<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">({$log->user_id})</a>
 			</block>
 			<block cond="$listSettingNickName && !$listSettingUserId">
-				<span class="member_{$log->member_srl}">{$log->nick_name}</span> 
+				<span class="member_{$log->member_srl}">{$log->nick_name}</span> <a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">[검색]</a>
 			</block>
 			<block cond="!$listSettingNickName && $listSettingUserId">
 				<a href="{getUrl('search_target', 'member_srl', 'search_keyword', $log->member_srl)}">{$log->user_id}</a>
@@ -93,6 +125,7 @@
 		</td>
 		<td cond="$listSettingIP"><a href="{getUrl('search_target', 'ipaddress', 'search_keyword', $log->ipaddress)}">{$log->ipaddress}</a></td>
 		<td class="date" cond="$listSettingDate">{zdate($log->regdate, 'Y-m-d H:i:s')}</td>
+		<td><a href="{getUrl('act', 'dispLoginlogAdminDeleteLog', 'log_srl', $log->log_srl)}">{$lang->cmd_delete}</a></td>
 	</tr>
 </tbody>
 </table>
