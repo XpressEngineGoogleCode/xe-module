@@ -61,3 +61,21 @@
 	<!--@end-->
 	<a href="{getUrl('page',$page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
 </div>
+
+<form action="./" method="get" class="adminSearch">
+	<input type="hidden" name="module" value="admin" />
+	<input type="hidden" name="act" value="dispPointsendAdminLogList" />
+	<select name="search_target">
+		<option value="">{$lang->search_target}</option>
+		<option value="s_nick_name" selected="selected"|cond="$search_target == 's_nick_name'">{$lang->sender} ({$lang->nick_name})</option>
+		<option value="s_user_id" selected="selected"|cond="$search_target == 's_user_id'">{$lang->sender} ({$lang->user_id})</option>
+		<option value="r_nick_name" selected="selected"|cond="$search_target == 'r_nick_name'">{$lang->receiver} ({$lang->nick_name})</option>
+		<option value="r_user_id" selected="selected"|cond="$search_target == 'r_user_id'">{$lang->receiver} ({$lang->user_id})</option>
+		<option value="point_more" selected="selected"|cond="$search_target == 'point_more'">{$lang->point} (이상)</option>
+		<option value="point_less" selected="selected"|cond="$search_target == 'point_less'">{$lang->point} (이하)</option>
+		<option value="regdate_more" selected="selected"|cond="$search_target == 'regdate_more'">{$lang->date} (이상)</option>
+		<option value="regdate_less" selected="selected"|cond="$search_target == 'regdate_less'">{$lang->date} (이하)</option>
+		<option value="ipaddress" selected="selected"|cond="$search_target == 'ipaddress'">{$lang->ipaddress}</option>
+	</select> 
+	<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" /> <input type="submit" value="{$lang->cmd_search}" /> <a href="{getUrl('act', 'dispPointsendAdminLogList', 'search_target', '', 'search_keyword', '')}">{$lang->cmd_cancle}</a>
+</form>
