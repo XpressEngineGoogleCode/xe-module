@@ -66,7 +66,7 @@ class pointsendController extends pointsend
 
 		// 포인트 선물
 		$output = $this->pointsend($sender_srl, $receiver_srl, $point, $obj->content, $config);
-		if(is_object($output)) return $output;
+		if(!$output->toBool()) return $output;
 
 		// 트리거 실행 (after)
 		$triggerOutput = ModuleHandler::triggerCall('pointsend.procPointsend', 'after', $triggerObj);
@@ -183,7 +183,7 @@ class pointsendController extends pointsend
 
 				$receiver_ip = $output->data->ipaddress;
 
-				if(($current_ip && $receiver_ip) && $current_ip == $receiver_ip) return new Object('msg_pointgift_sameip_warning');
+				if(($current_ip && $receiver_ip) && $current_ip == $receiver_ip) return new Object(-1, 'msg_pointgift_sameip_warning');
 			}
 		}
 
@@ -224,7 +224,10 @@ class pointsendController extends pointsend
 		// 포인트 선물 내역 기록
 		$this->insertLog($sender_srl, $receiver_srl, $real_point, $comment);
 
-		return array('send_point' => $real_point, 'received_point' => $point);
+		$this->add('send_point', $real_point);
+		$this->add('received_point', $point);
+
+		return new Object();
 	}
 
 	/**
@@ -254,6 +257,9 @@ class pointsendController extends pointsend
 		// communication 모듈의 controller 객체
 		$oCommunicationController = &getController('communication');
 
+		// point 모듈의 controller 객체
+		$oPointController = &getController('point');
+
 		foreach($target_members as $key => $member_srl)
 		{
 			$mtitle = $title;
@@ -275,6 +281,10 @@ class pointsendController extends pointsend
 
 		// 포인트 선물 내역 기록
 		$this->insertBatchLog('member', $logged_info->member_srl, $member_srls, $point, $title, $comment);
+
+		$this->add('member_count', $member_count;
+
+		return new Object();
 	}
 
 	/**
@@ -377,15 +387,16 @@ class pointsendController extends pointsend
 		$this->add('success_group', $success);
 		$this->add('failed_group', $failed);
 		$this->add('ignore_group', $ignore);
+
+		return new Object();
 	}
 
 	/**
-	 * @brief 모든 회원에게 포인트 선물 (한 번에 보내면 부하가 발생할 수 있으니 끊어서 보내야 함)
+	 * [TODO] 모든 회원에게 포인트 선물 (한 번에 보내면 부하가 발생할 수 있으니 끊어서 보내야 함)
 	 */
 	function pointsendToAll($unit_number, $point, $title, $content)
 	{
-		// working...
-		return;
+		return new Object();
 	}
 
 	/**

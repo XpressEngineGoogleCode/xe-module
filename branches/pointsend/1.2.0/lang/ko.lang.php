@@ -102,7 +102,8 @@ $lang->msg_not_exists_pointgift_log = '포인트 선물 내역이 없습니다.'
 $lang->msg_pointgift_sameip_warning = '경고! 동일 IP간의 포인트 선물은 제한되어 있습니다.';
 
 $lang->success_pointsend = '정상적으로 포인트가 선물 되었습니다.';
-$lang->success_group_pointgift = '총 %s개의 그룹에게 포인트 선물을 완료하였습니다.\n\n(성공 : %s, 실패 : %s, 무시 : %s)';
+$lang->success_member_pointgift = '총 %s명의 회원에게 포인트 선물을 완료하였습니다.';
+$lang->success_group_pointgift = '총 %s개의 그룹에게 포인트 선물을 완료하였습니다.'."\n\n".'(성공 : %s, 실패 : %s, 무시 : %s)';
 
 $lang->subtraction = '차감';
 
