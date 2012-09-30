@@ -282,7 +282,7 @@ class pointsendController extends pointsend
 		// 포인트 선물 내역 기록
 		$this->insertBatchLog('member', $logged_info->member_srl, $member_srls, $point, $title, $comment);
 
-		$this->add('member_count', $member_count;
+		$this->add('member_count', $member_count);
 
 		return new Object();
 	}
