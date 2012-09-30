@@ -191,14 +191,6 @@ class pointsendView extends pointsend
 
 		$this->setTemplateFile('pointsend_log');
 	}
-
-	/**
-	 * @brief 회원 찾기 팝업
-	 **/
-	function dispPointsendFindMember()
-	{
-		$this->setTemplateFile('FindMember');
-	}
 }
 /* End of file : pointsend.view.php */
 /* Location : ./modules/pointsend/pointsend.view.php */
