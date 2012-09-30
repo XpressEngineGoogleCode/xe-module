@@ -15,23 +15,25 @@
 		});
 		$('#input_send_point').bind('keydown keyup change', function(event)
 		{
-			if(event.type == 'keydown')
+			var pass = false;
+			// 키보드 상단에 있는 숫자키 허용
+			if(event.keyCode >= 48 && event.keyCode <= 57) {
+				pass = true;
+			} else if(event.keyCode >= 96 && event.keyCode <= 105) {
+				// 키보드 우측에 있는 숫자키 허용
+				pass = true;
+			} else if(event.keyCode == 8 || event.keyCode == 13 || event.keyCode == 116)
 			{
-				if(event.keyCode < 48 || event.keyCode > 57)
-				{
-					// 8, 13, 116 (백스페이스, 엔터, F5)는 예외
-					if(event.keyCode == 8 || event.keyCode == 13 || event.keyCode == 116)
-					{
-					}
-					else
-					{
-					event.preventDefault();
-					}
-				}
+				// 백스페이스, 엔터, F5키 허용
+				pass = true;
+			}
+
+			if(!pass) {
+				event.preventDefault();
 			}
 
 			var point = parseInt(this.value);
-			if(!point) point = 0; 
+			if(!point) point = 0;
 
 			if(cf_useFee == 'Y')
 			{
