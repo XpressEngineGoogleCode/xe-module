@@ -160,12 +160,42 @@ class pointsendModel extends pointsend
 	function getLogList($obj = null) {
 		$args->sender_srl = $obj->sender_srl;
 		$args->receiver_srl = $obj->receiver_srl;
-		$args->sort_index = $obj->sort_index?$obj->sort_index:'regdate';
+		$args->sort_index = $obj->sort_index?$obj->sort_index:'log.regdate';
 		$args->order_type = $obj->order_type?$obj->order_type:'desc';
 		$args->list_count = $obj->list_count?$obj->list_count:20;
 		$args->page_count = $obj->page_count?$obj->page_count:10;
 		$args->page = $obj->page?$obj->page:1;
-		return executeQuery('pointsend.getPointsendLogList',$args);
+
+		$query_id = 'pointsend.getPointsendLogList';
+
+		if($obj->search_keyword)
+		{
+			$search_target = $obj->search_target;
+			$search_keyword = $obj->search_keyword;
+
+			switch($search_target)
+			{
+				case 's_nick_name':
+				case 's_user_id':
+					$query_id = 'pointsend.getPointsendLogListWithinMemberS';
+					$args->{'s_'.$search_target} = $search_keyword;
+				case 'r_nick_name':
+				case 'r_user_id':
+					$query_id = 'pointsend.getPointsendLogListWithinMemberR';
+					$args->{'s_'.$search_target} = $search_keyword;
+					break;
+				case 'point_more':
+				case 'point_less':
+				case 'regdate_more':
+				case 'regdate_less':
+				case 'ipaddress':
+					$args->{'s_'.$search_target} = $search_keyword;
+					break;
+			}
+		}
+
+		$output = executeQuery($query_id,$args);
+		return $output;
 	}
 
 	/**
