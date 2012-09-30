@@ -27,7 +27,7 @@
 	$lang->success_pointsend = '正常にポイントがプレゼントされました.';
 
 	$lang->pointsend_title = '[お知らせ] %s様からポイントをプレゼントされました.';
-	$lang->pointsend_content = '%s 様から %s ポイントをプレゼントされました.<br /><br /><strong>※ このメッセージは自動に発送されたメッセージです.</strong><br /><br />----------------------------<br />メッセージ内容 : <br />%s';
+	$lang->pointsend_content = '%s (%s) 様から %s ポイントをプレゼントされました.<br /><br /><strong>※ このメッセージは自動に発送されたメッセージです.</strong><br /><br />----------------------------<br />メッセージ内容 : <br />%s';
 
 	$lang->about_send_message = '포인트 선물 성공 시 쪽지를 보냅니다.';
 	$lang->about_send_group = '{sender} : 보내는이 닉네임<br />
