@@ -100,7 +100,7 @@ class pointsendAdminController extends pointsend {
 			$user_ids = explode(',', $obj->user_id);
 			array_walk($user_ids, create_function('&$val', '$val = trim($val);'));
 
-			$args->user_id = $user_id;
+			$args->user_id = $obj->user_id;
 			$output = executeQueryArray('pointsend.getMemberSrlByUserId', $args);
 			if(!$output->toBool()) return $output;
 			if(!$output->data) continue;
@@ -123,7 +123,7 @@ class pointsendAdminController extends pointsend {
 		$output = $oController->pointsendToMember($obj->member_srls, $obj->point, $obj->message_title, $obj->message_body);
 		if(!$output->toBool()) return $output;
 
-		$msg = sprintf(Context::getLang('success_group_pointgift'), $total, $success, $failed, $ignore);
+		$msg = sprintf(Context::getLang('success_member_pointgift'), $this->get('member_count'));
 		$this->setMessage($msg);
 	}
 
