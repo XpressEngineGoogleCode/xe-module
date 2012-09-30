@@ -93,6 +93,8 @@ class pointsendAdminView extends pointsend
 
 		$args->page = Context::get('page');
 		$args->list_count = 30;
+		$args->search_target = Context::get('search_target');
+		$args->search_keyword = Context::get('search_keyword');
 
 		$output = $oPointsendModel->getBatchLogList($args);
 		Context::set('total_count', $output->total_count);
