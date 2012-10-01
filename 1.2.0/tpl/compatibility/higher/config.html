@@ -1,4 +1,10 @@
-<form method="post" onsubmit="return procFilter(this, insert_config)"  class="form">
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form ruleset="insertConfig" action="./" method="post" class="form">
+	<input type="hidden" name="module" value="pointsend" />
+	<input type="hidden" name="act" value="procPointsendAdminInsertConfig" />
 	<div class="table">
 		<h2 class="h2">{$lang->skin}</h2>
 		<table width="100%" border="1" cellspacing="0">
@@ -61,13 +67,14 @@
 		<tr>
 			<th>{$lang->pointgift_sameip_deny}</th>
 			<td>
-				<label for="sameip_deny"><input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$memberex_installed" /><!--@if($memberex_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
-				<p cond="!$memberex_installed"><strong class="alert">{$lang->about_cannot_use}</strong></p>
+				<input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$loginlog_installed" /> <label for="sameip_deny"><!--@if($loginlog_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
+				<p cond="!$loginlog_installed"><strong class="alert">{$lang->about_cannot_use}</strong></p>
 			</td>
 		</tr>
 		</tbody>
 		</table>
 
+		<block cond="False">
 		<h2 class="h2">{$lang->cmd_setup_notification_message}</h2>
 		<p>{$lang->about_notification_message}</p>
 		<table width="100%" border="1" cellspacing="0">
@@ -82,19 +89,20 @@
 		</tr>
 		</tbody>
 		</table>
+		</block>
 
 		<h2 class="h2">{$lang->grant}</h2>
 		<table width="100%" border="1" cellspacing="0">
 		<tbody>
 		<tr>
-			<th>
+			<td>
 				<block loop="$group_list => $key, $val">
-				<input type="checkbox" name="grants" id="grants_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->grants)" /> <label for="grants_{$key}">{$val->title}</label>
+				<input type="checkbox" name="grants" id="grants_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->deny_group)" /> <label for="grants_{$key}">{$val->title}</label>
 				</block>
-			</th>
+			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><span class="button black strong"><input type="submit" value="{$lang->cmd_save}" accesskey="s"/></span></td>
+			<td colspan="2"><span class="btn"><input type="submit" value="{$lang->cmd_save}" accesskey="s"/></span></td>
 		</tr>
 		</tbody>
 		</table>

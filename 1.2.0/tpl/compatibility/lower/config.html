@@ -1,3 +1,4 @@
+<load target="../../filter/insert_config.xml" />
 <h4 class="xeAdmin">{$lang->skin}</h4>
 <form method="post" onsubmit="return procFilter(this, insert_config)">
 	<table cellspacing="0" class="rowTable">
@@ -61,13 +62,14 @@
 	<tr>
 		<th>{$lang->pointgift_sameip_deny}</th>
 		<td>
-			<label for="sameip_deny"><input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$memberex_installed" /><!--@if($memberex_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
-			<p cond="!$memberex_installed"><strong class="alert">{$lang->about_cannot_use}</strong></p>
+			<input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$memberex_installed" /> <label for="sameip_deny"><!--@if($loginlog_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
+			<p cond="!$loginlog_installed"><strong class="alert">{$lang->about_cannot_use}</strong></p>
 		</td>
 	</tr>
 	</tbody>
 	</table>
 
+	<block cond="False">
 	<h4 class="xeAdmin">{$lang->cmd_setup_notification_message}</h4>
 	<p>{$lang->about_notification_message}</p>
 	<table cellspacing="0" class="rowTable">
@@ -82,6 +84,7 @@
 	</tr>
 	</tbody>
 	</table>
+	</block>
 
 	<h4 class="xeAdmin">{$lang->grant}</h4>
 	<table cellspacing="0" class="rowTable">
@@ -94,7 +97,7 @@
 		</th>
 	</tr>
 	<tr>
-		<td colspan="2"><span class="button black strong"><input type="submit" value="{$lang->cmd_save}" accesskey="s"/></span></td>
+		<td><span class="button black strong"><input type="submit" value="{$lang->cmd_save}" accesskey="s"/></span></td>
 	</tr>
 	</tbody>
 	</table>

@@ -15,9 +15,10 @@ $lang->pointgift_limit = '포인트 선물 제한';
 $lang->pointgift_denied_group = '선물 제한 그룹';
 $lang->pointgift_daily_limit = '일일 포인트 선물 제한';
 $lang->pointgift_sameip_deny = '동일 IP 선물 차단';
+$lang->daily_limit = '일일 포인트 선물 제한';
 
 $lang->cannot_use = '사용 불가';
-$lang->about_cannot_use = '회원 관리 확장 모듈이 설치되어 있지 않아 사용할 수 없는 기능입니다.';
+$lang->about_cannot_use = '로그인 기록 모듈이 설치되어 있지 않아 사용할 수 없는 기능입니다.';
 
 $lang->send_point = '보낼 포인트';
 $lang->current_point = '현재 포인트';

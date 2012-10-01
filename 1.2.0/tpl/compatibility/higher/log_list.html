@@ -36,7 +36,7 @@
 			<td>{$val->ipaddress}</td>
 			<td>{zdate($val->regdate)}</td>
 			<td class="center">
-				<a href="{getUrl('act','dispPointsendAdminRollback','log_srl',$val->log_srl)}" title="{$lang->cmd_pointsend_cancle}"><span class="buttonSet buttonDisable"></span></a>&nbsp;&nbsp;<a href="{getUrl('act','dispPointsendAdminDeleteLog','log_srl',$val->log_srl)}" title="{$lang->cmd_delete}" class="buttonSet buttonDelete"><span>{$lang->cmd_delete}</span></a>
+				<a href="{getUrl('act','dispPointsendAdminRevert','log_srl',$val->log_srl)}" title="{$lang->cmd_revert_pointgift}"><span class="buttonSet buttonDisable"></span></a>&nbsp;&nbsp;<a href="{getUrl('act','dispPointsendAdminDeleteLog','log_srl',$val->log_srl)}" title="{$lang->cmd_delete}" class="buttonSet buttonDelete"><span>{$lang->cmd_delete}</span></a>
 			</td>
 		</tr>
 		<tr cond="$val->comment">

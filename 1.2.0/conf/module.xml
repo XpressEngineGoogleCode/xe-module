@@ -10,20 +10,19 @@
 		<action name="dispPointsendAdminSendToAll" type="view" />
 		<action name="dispPointsendAdminLogList" type="view" />
 		<action name="dispPointsendAdminBatchLogList" type="view" />
-		<action name="dispPointsendAdminRollback" type="view" />
+		<action name="dispPointsendAdminRevert" type="view" />
 		<action name="dispPointsendAdminDeleteLog" type="view" />
 
-		<action name="procPointsendAdminInsertConfig" type="controller" />
+		<action name="procPointsendAdminInsertConfig" type="controller" ruleset="insertConfig" />
 		<action name="procPointsendAdminDeleteLog" type="controller" />
-		<action name="procPointsendAdminRollback" type="controller" />
-		<action name="procPointsendAdminSendGroup" type="controller" />
-		<action name="procPointsendAdminSendMember" type="controller" />
-		<action name="procPointsendAdminSendAll" type="controller" />
+		<action name="procPointsendAdminRevert" type="controller" />
+		<action name="procPointsendAdminSendToGroup" type="controller" ruleset="pointsendToGroup" />
+		<action name="procPointsendAdminSendToMember" type="controller" ruleset="pointsendByUserId" />
+		<action name="procPointsendAdminSendToAll" type="controller" />
 
 		<action name="dispPointsend" type="view" index="true" />
 		<action name="dispPointsendLog" type="view" />
 
 		<action name="procPointsend" type="controller" />
-		<action name="procPointsendAdminSendToMember" type="controller" ruleset="pointsendByUserId" />
 	</actions>
 </module>

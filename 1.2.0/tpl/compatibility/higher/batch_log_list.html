@@ -33,10 +33,17 @@
 						{@
 							$group_info = $oMemberModel->getGroup($v);
 							$receivers[] = $group_info->title;
+							$receiver_target = Context::getLang('group');
+						}
+						<!--@elseif($val->target == 'member')-->
+						{@
+							$receiver = $oMemberModel->getMemberInfoByMemberSrl($v);
+							$receivers[] = $receiver->nick_name;
+							$receiver_target = Context::getLang('member');
 						}
 						<!--@end-->
 					<!--@end-->
-					{implode(',', $receivers)}
+					{implode(',', $receivers)} ({$receiver_target})
 				</td>
 				<td>{htmlspecialchars($val->title)}</td>
 				<td>{$val->comment}</td>
