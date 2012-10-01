@@ -9,6 +9,7 @@
 		<column name="target_srls" var="target_srls" notnull="notnull" />
 		<column name="point" var="point" filter="number" notnull="notnull" />
 		<column name="regdate" var="regdate" default="curdate()" />
+		<column name="title" var="title" />
 		<column name="comment" var="comment" />
 	</columns>
 </query>

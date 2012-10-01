@@ -1,4 +1,4 @@
-<!--#include("header.html")-->
+<load target="../../js/autoresize.jquery.min.js" />
 <!--%import("../../filter/pointsend_by_user_id.xml")-->
 <form action="./" method="post" onsubmit="return procFilter(this, pointsend_by_user_id);">
 	<h4 class="xeAdmin">{$lang->pointsend_by_user_id}</h4>
@@ -29,13 +29,20 @@
 		</td>
 	</tr>
 	<tr>
-		<td class="button" colspan="2"><span class="btn button black"><input type="submit" value="{$lang->cmd_pointsend}" /></span></td>
+		<td class="button" colspan="2"><span class="button black"><input type="submit" value="{$lang->cmd_pointsend}" /></span></td>
 	</tr>
 	</tbody>
 	</table>
 </form>
 
 <h4 class="xeAdmin">{$lang->cmd_batch_pointsend}</h4>
-<a href="{getUrl('act','dispPointsendAdminSendGroup')}" class="btn button blue"><span>{$lang->cmd_group_pointsend}</span></a>
-<!--//<a href="{getUrl('act','dispPointsendAdminSendMember')}" class="btn button green"><span>{$lang->cmd_find_member}</span></a>-->
-<!--//<a href="{getUrl('act','dispPointsendAdminSendAll')}" class="button red"><span>{$lang->cmd_all_pointsend}</span></a>-->
+<a href="{getUrl('act','dispPointsendAdminSendToGroup')}" class="btn button blue"><span>{$lang->cmd_group_pointsend}</span></a>
+
+<script type="text/javascript">
+(function($){
+	$('.inputContent').autoResize({
+		animateDuration : 300,
+		extraSpace : 0,
+	});
+})(jQuery);
+</script>

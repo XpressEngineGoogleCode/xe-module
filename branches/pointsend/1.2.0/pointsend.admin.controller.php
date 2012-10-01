@@ -5,17 +5,20 @@
  * @brief  pointsend 모듈의 Admin Controller class
  **/
 
-class pointsendAdminController extends pointsend {
+class pointsendAdminController extends pointsend
+{
 	/**
 	 * @brief 초기화
 	 **/
-	function init() {
+	function init()
+	{
 	}
 
 	/**
 	 * @brief 설정 저장
 	 */ 
-	function procPointsendAdminInsertConfig() {
+	function procPointsendAdminInsertConfig()
+	{
 		// 입력받은 설정 항목을 구함
 		$config = Context::getRequestVars();
 
@@ -35,12 +38,18 @@ class pointsendAdminController extends pointsend {
 		$oModuleController->insertModuleConfig('pointsend', $config);
 
 		$this->setMessage('success_saved');
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminIndex');
+			$this->setRedirectUrl($returnUrl);
+		}
 	}
 
 	/**
 	 * @brief 포인트 선물 취소 (관리자용)
 	 */
-	function procPointsendAdminRollback() {
+	function procPointsendAdminRevert() {
 		$log_srl = (int)Context::get('log_srl');
 		if(!$log_srl) return new Object(-1, 'msg_invalid_request');
 
@@ -85,6 +94,12 @@ class pointsendAdminController extends pointsend {
 
 		$args->log_srl = $log_srl;
 		executeQuery('pointsend.deletePointsendLog',$args);
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminIndex');
+			$this->setRedirectUrl($returnUrl);
+		}
 	}
 
 	function procPointsendAdminSendToMember()
@@ -123,14 +138,20 @@ class pointsendAdminController extends pointsend {
 		$output = $oController->pointsendToMember($obj->member_srls, $obj->point, $obj->message_title, $obj->message_body);
 		if(!$output->toBool()) return $output;
 
-		$msg = sprintf(Context::getLang('success_member_pointgift'), $this->get('member_count'));
+		$msg = sprintf(Context::getLang('success_member_pointgift'), $output->get('member_count'));
 		$this->setMessage($msg);
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminSend');
+			$this->setRedirectUrl($returnUrl);
+		}
 	}
 
 	/**
 	 * @brief 일괄 포인트 선물 - 그룹별
 	 */
-	function procPointsendAdminSendGroup() {
+	function procPointsendAdminSendToGroup() {
 		$cart = Context::get('cart');
 		if(!$cart) return new Object(-1, 'msg_invalid_request');
 
@@ -140,12 +161,12 @@ class pointsendAdminController extends pointsend {
 		$content = Context::get('content');
 
 		$oController = &getController('pointsend');
-		$oController->pointsendToGroup($group_srls, $send_point, $title, $content);
+		$output = $oController->pointsendToGroup($group_srls, $send_point, $title, $content);
 
-		$total = $this->get('group_count');
-		$success = $this->get('success_group');
-		$failed = $this->get('failed_group');
-		$ignore = $this->get('ignore_group');
+		$total = $output->get('group_count');
+		$success = $ouput->get('success_group');
+		$failed = $output->get('failed_group');
+		$ignore = $output->get('ignore_group');
 
 		$msg = sprintf(Context::getLang('success_group_pointgift'), $total, $success, $failed, $ignore);
 		$this->setMessage($msg);
@@ -167,6 +188,12 @@ class pointsendAdminController extends pointsend {
 
 		// 메시지 지정
 		$this->setMessage('success_deleted');
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminLogList');
+			$this->setRedirectUrl($returnUrl);
+		}
 	}
 }
 

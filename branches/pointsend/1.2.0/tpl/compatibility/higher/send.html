@@ -1,3 +1,5 @@
+<load target="../../js/autoresize.jquery.min.js" />
+
 <div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
@@ -29,7 +31,7 @@
 		<tr>
 			<th>{$lang->message_body}</th>
 			<td>
-				<textarea name="message_body" cols="55" rows="10"></textarea>
+				<textarea name="message_body" cols="55" rows="10" class="inputContent"></textarea>
 				<p>{$lang->about_notification_message2}</p>
 			</td>
 		</tr>
@@ -42,5 +44,13 @@
 </form>
 
 <h2 class="h2">{$lang->cmd_batch_pointsend}</h2>
+<a href="{getUrl('act','dispPointsendAdminSendToGroup')}" class="btn"><span>{$lang->cmd_group_pointsend}</span></a>
 
-<a href="{getUrl('act','dispPointsendAdminSendGroup')}" class="btn"><span>{$lang->cmd_group_pointsend}</span></a>
+<script type="text/javascript">
+(function($){
+	$('.inputContent').autoResize({
+		animateDuration : 300,
+		extraSpace : 0,
+	});
+})(jQuery);
+</script>

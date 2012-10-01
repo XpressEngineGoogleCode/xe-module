@@ -64,7 +64,7 @@
 
 <form action="./" method="get" class="adminSearch">
 	<input type="hidden" name="module" value="admin" />
-	<input type="hidden" name="act" value="dispPointsendAdminLogList" />
+	<input type="hidden" name="act" value="dispPointsendAdminBatchLogList" />
 	<select name="search_target">
 		<option value="">{$lang->search_target}</option>
 		<option value="nick_name" selected="selected"|cond="$search_target == 'nick_name'">{$lang->receiver} ({$lang->nick_name})</option>
@@ -75,5 +75,5 @@
 		<option value="regdate_less" selected="selected"|cond="$search_target == 'regdate_less'">{$lang->date} (이하)</option>
 		<option value="ipaddress" selected="selected"|cond="$search_target == 'ipaddress'">{$lang->ipaddress}</option>
 	</select> 
-	<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" /> <input type="submit" value="{$lang->cmd_search}" /> <a href="{getUrl('act', 'dispPointsendAdminLogList', 'search_target', '', 'search_keyword', '')}">{$lang->cmd_cancle}</a>
+	<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" /> <input type="submit" value="{$lang->cmd_search}" /> <a href="{getUrl('search_target', '', 'search_keyword', '')}">{$lang->cmd_cancle}</a>
 </form>

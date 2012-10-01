@@ -38,12 +38,9 @@ class pointsendAdminView extends pointsend
 		$group_list = $oMemberModel->getGroups();
 		Context::set('group_list', $group_list);
 
-		// 회원 관리 확장 모듈이 설치되어 있는지 검사
-		$oMemberEx = &getClass('memberex');
-		Context::set('memberex_installed', is_object($oMemberEx) ? true : false);
-
-		// Javascript Filter 적용
-		Context::addJsFilter($this->module_path.'tpl/filter/','insert_config.xml');
+		// 로그인 기록 모듈이 설치되어 있는지 검사
+		$oLoginlog = &getClass('loginlog');
+		Context::set('loginlog_installed', is_object($oLoginlog) ? true : false);
 
 		// 템플릿 파일 지정
 		$this->setTemplateFile('config');
@@ -55,7 +52,7 @@ class pointsendAdminView extends pointsend
 		$this->setTemplateFile('send');
 	}
 
-	function dispPointsendAdminSendGroup()
+	function dispPointsendAdminSendToGroup()
 	{
 		// 생성된 그룹 목록 구함
 		$oMemberModel = &getModel('member');
@@ -107,10 +104,10 @@ class pointsendAdminView extends pointsend
 		$this->setTemplateFile('batch_log_list');
 	}
 
-	function dispPointsendAdminRollback()
+	function dispPointsendAdminRevert()
 	{
 		// 템플릿 파일 지정
-		$this->setTemplateFile('rollback');
+		$this->setTemplateFile('revert');
 	}
 
 	function dispPointsendAdminDeleteLog()
