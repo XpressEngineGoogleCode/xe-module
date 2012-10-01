@@ -38,10 +38,10 @@ $lang->cmd_view_log = array(
 	'R' => '받은 포인트',
 	'S' => '보낸 포인트'
 );
-$lang->cmd_pointsend_cancle = '포인트 선물 취소';
+$lang->cmd_pointsend_revert = '포인트 선물 취소';
 
 $lang->pointsend_title = '[알림] %s님으로 부터 포인트를 선물 받았습니다.';
-$lang->pointsend_content = '%s 님으로 부터 %s 포인트를 선물 받았습니다.<br /><br /><strong>※ 이 쪽지는 자동으로 발송된 쪽지입니다.</strong><br /><br />----------------------------<br />남김말 : <br />%s';
+$lang->pointsend_content = '%s 님으로 부터 %s 포인트를 선물 받았습니다.<br /><br /><strong>※ 이 쪽지는 자동으로 발송된 쪽지입니다.</strong><br /><br />----------------------------<br />남긴말 : <br />%s';
 $lang->pointsendc_title = '[알림] 포인트 선물이 관리자에 의해 취소되었습니다.';
 $lang->pointsendc_content = '%s 님으로 부터 받은 포인트 선물이 관리자에 의해 취소되어 %s 포인트가 차감되었습니다';
 $lang->pointsendc_content2 = '%s 님에게 보낸 포인트 선물이 관리자에 의해 취소되어 %s 포인트가 적립되었습니다';
@@ -62,8 +62,8 @@ $lang->about_send_group = '<h4 class="xeAdmin">치환자</h4>
 </ul>';
 $lang->about_deny_group = '특정 그룹에게 포인트 선물을 하지 못하도록 제한합니다.';
 $lang->about_delete_log = '정말 포인트 선물 내역을 삭제하시겠습니까?<br /><br />';
-$lang->about_pointsend_cancle = '정말 포인트 선물을 취소하시겠습니까?<br />
-선물을 취소하시면 보낸이와 받는이에게 선물 취소 알림 쪽지가 발송됩니다.<br /><br />';
+$lang->about_pointsend_revert = '정말 포인트 선물을 취소하시겠습니까?<br />
+포인트 선물을 취소하시면 보낸이와 받는이에게 알림 쪽지가 발송됩니다.<br /><br />';
 $lang->about_notification_message = '<strong>[치환자]</strong>
 <div class="infoText">치환자를 사용하여 다수의 회원에게 동일한 형식의 쪽지를 보내실 수 있습니다.</div>
 <ul>
