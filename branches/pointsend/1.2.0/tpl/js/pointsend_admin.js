@@ -9,8 +9,8 @@ function completeInsertConfig(ret_obj, response_tags) {
 	location.href = url;
 }
 
-/* 선물 취소 후 */
-function completeRollback() {
+/* 선물 되돌리기 후 */
+function completeRevert() {
 	var url = current_url.setQuery('act','dispPointsendAdminLogList');
 	location.href = url;
 }
