@@ -249,7 +249,7 @@ class pointsendController extends pointsend
 		$member_count = count($target_members);
 
 		// 보낼 회원이 없으면 에러
-		if($member_count < 0) return new Object(-1, 'msg_invalid_request');
+		if($member_count < 1) return new Object(-1, 'msg_invalid_request');
 
 		// member 모듈의 model 객체
 		$oMemberModel = &getModel('member');
@@ -309,7 +309,7 @@ class pointsendController extends pointsend
 		$ignore = 0;
 
 		// 보낼 그룹이 없으면 에러
-		if($group_count < 0) return new Object(-1, 'msg_invalid_request');
+		if($group_count < 1) return new Object(-1, 'msg_invalid_request');
 
 		// member 모듈의 model 객체
 		$oMemberModel = &getModel('member');
@@ -392,7 +392,7 @@ class pointsendController extends pointsend
 	}
 
 	/**
-	 * [TODO] 모든 회원에게 포인트 선물 (한 번에 보내면 부하가 발생할 수 있으니 끊어서 보내야 함)
+	 * [TODO] 모든 회원에게 포인트 선물 (포인트 선물 도중 접속이 끊기지 않도록 연결을 지속시킬 수 있는 방법이 필요함)
 	 */
 	function pointsendToAll($unit_number, $point, $title, $content)
 	{
