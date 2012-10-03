@@ -13,7 +13,7 @@
 		<action name="dispPointsendAdminRevert" type="view" />
 		<action name="dispPointsendAdminDeleteLog" type="view" />
 
-		<action name="procPointsendAdminInsertConfig" type="controller" ruleset="insertConfig" />
+		<action name="procPointsendAdminInsertConfig" type="controller" ruleset="insertPointgiftConfig" />
 		<action name="procPointsendAdminDeleteLog" type="controller" />
 		<action name="procPointsendAdminRevert" type="controller" />
 		<action name="procPointsendAdminSendToGroup" type="controller" ruleset="pointsendToGroup" />

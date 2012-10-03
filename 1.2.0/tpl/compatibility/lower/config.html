@@ -62,7 +62,7 @@
 	<tr>
 		<th>{$lang->pointgift_sameip_deny}</th>
 		<td>
-			<input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$memberex_installed" /> <label for="sameip_deny"><!--@if($loginlog_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
+			<input type="checkbox" id="sameip_deny" name="sameip_deny" value="Y" checked="checked"|cond="$config->sameip_deny == 'Y'" disabled="disabled"|cond="!$loginlog_installed" /> <label for="sameip_deny"><!--@if($loginlog_installed)-->{$lang->use}<!--@else-->{$lang->cannot_use}<!--@end--></label>
 			<p cond="!$loginlog_installed"><strong class="alert">{$lang->about_cannot_use}</strong></p>
 		</td>
 	</tr>

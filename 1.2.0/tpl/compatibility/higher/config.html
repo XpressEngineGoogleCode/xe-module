@@ -41,7 +41,7 @@
 			<th>{$lang->fee_but_group}</th>
 			<td>
 				<block loop="$group_list => $key, $val">
-				<input type="checkbox" name="fee_but_group" id="but_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->fee_but_group)" /> <label for="but_{$key}">{$val->title}</label>
+				<input type="checkbox" name="fee_but_group[]" id="but_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->fee_but_group)" /> <label for="but_{$key}">{$val->title}</label>
 				</block>
 			</td>
 		</tr>
@@ -55,7 +55,7 @@
 			<th>{$lang->pointgift_denied_group}</th>
 			<td>
 				<block loop="$group_list => $key, $val">
-				<input type="checkbox" name="deny_group" id="deny_{$key}" value="{$key}"<!--@if(in_array($key, $config->deny_group))--> checked="checked"<!--@end--> /> <label for="deny_{$key}">{$val->title}</label>
+				<input type="checkbox" name="deny_group[]" id="deny_{$key}" value="{$key}"<!--@if(in_array($key, $config->deny_group))--> checked="checked"<!--@end--> /> <label for="deny_{$key}">{$val->title}</label>
 				</block>
 				<p>{$lang->about_deny_group}</p>
 			</td>
@@ -97,7 +97,7 @@
 		<tr>
 			<td>
 				<block loop="$group_list => $key, $val">
-				<input type="checkbox" name="grants" id="grants_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->deny_group)" /> <label for="grants_{$key}">{$val->title}</label>
+				<input type="checkbox" name="grants[]" id="grants_{$key}" value="{$key}" checked="checked"|cond="in_array($key, $config->grants)" /> <label for="grants_{$key}">{$val->title}</label>
 				</block>
 			</td>
 		</tr>
