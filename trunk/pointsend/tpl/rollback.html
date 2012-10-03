@@ -1,9 +1,0 @@
-<!--%import("filter/rollback.xml")-->
-<!--#include("header.html")-->
-<h4 class="xeAdmin">{$lang->cmd_pointsend_cancle}</h4>
-
-<form action="./" method="post" onsubmit="return procFilter(this, rollback)">
-    <input type="hidden" name="log_srl" value="{$log_srl}" />
-    {$lang->about_pointsend_cancle}
-    <span class="button black strong"><input type="submit" value="{$lang->cmd_continue}" /></span> <a href="{getUrl('act','dispPointsendAdminLogList','log_srl','')}" class="button"><span >{$lang->cmd_back}</span></a>
-</form>

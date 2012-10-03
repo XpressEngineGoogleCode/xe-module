@@ -1,22 +1,12 @@
-<filter name="insert_config" module="pointsend" act="procPointsendAdminInsertConfig" confirm_msg_code="confirm_save">
-    <form>
-        <node target="fee" maxlength="3" filter="number" />
-        <node target="fee_apply_point" filter="number" />
-        <node target="daily_limit" filter="number" />
-    </form>
-    <parameter>
-        <param name="skin" target="skin" />
-        <param name="use_fee" target="use_fee" />
-        <param name="fee" target="fee" />
-        <param name="fee_apply_point" target="fee_apply_point" />
-        <param name="fee_but_group" target="fee_but_group" />
-        <param name="deny_group" target="deny_group" />
-        <param name="daily_limit" target="daily_limit" />
-        <param name="sameip_deny" target="sameip_deny" />
-        <param name="grants" target="grants" />
-    </parameter>
-    <response callback_func="completeInsertConfig">
-        <tag name="error" />
-        <tag name="message" />
-    </response>
+<filter name="insert_config" module="pointsend" act="procPointsendAdminInsertConfig" confirm_msg_code="confirm_save">
+	<form>
+		<node target="fee" maxlength="3" filter="number" />
+		<node target="fee_apply_point" filter="number" />
+		<node target="daily_limit" filter="number" />
+	</form>
+	<parameter />
+	<response callback_func="completeInsertConfig">
+		<tag name="error" />
+		<tag name="message" />
+	</response>
 </filter>

@@ -1,6 +1,4 @@
-<!--#include("header.html")-->
-<h4 class="xeAdmin">{$lang->cmd_batch_pointsend}</h4>
+<include target="header.html" />
 
-<a href="{getUrl('act','dispPointsendAdminSendGroup')}" class="button blue"><span>{$lang->cmd_group_pointsend}</span></a>
-<!--//<a href="{getUrl('act','dispPointsendAdminSendMember')}" class="button green"><span>{$lang->cmd_member_pointsend}</span></a>
-<a href="{getUrl('act','dispPointsendAdminSendAll')}" class="button red"><span>{$lang->cmd_all_pointsend}</span></a>-->
+<include target="./compatibility/higher/send.html" cond="$higherVersion" />
+<include target="./compatibility/lower/send.html" cond="$lowerVersion" />
