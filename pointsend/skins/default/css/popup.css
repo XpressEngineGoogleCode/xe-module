@@ -1,0 +1,3 @@
+.btnSign { width:18px; height:18px; background:url(../img/btnSign.png) no-repeat; display:inline-block; vertical-align:middle; }
+.btnSign.active { background-position:right; }
+.btnSign span { display:block; display:none; }

@@ -1,120 +1,201 @@
 <?php
-    /**
-     * @class  pointsendAdminController
-     * @author SMaker (dowon2308@paran.com)
-     * @brief  pointsend 모듈의 Admin Controller class
-     **/
+/**
+ * @class  pointsendAdminController
+ * @author 퍼니엑스이 (admin@funnyxe.com)
+ * @brief  pointsend 모듈의 Admin Controller class
+ **/
 
-    class pointsendAdminController extends pointsend {
+class pointsendAdminController extends pointsend
+{
+	/**
+	 * @brief 초기화
+	 **/
+	function init()
+	{
+	}
 
-        /**
-        * @brief 초기화
-        **/
-        function init() {
-        }
+	/**
+	 * @brief 설정 저장
+	 */ 
+	function procPointsendAdminInsertConfig()
+	{
+		// 입력받은 설정 항목을 구함
+		$config = Context::getRequestVars();
 
-        function procPointsendAdminInsertConfig() {
-            $config = Context::getRequestVars();
-            if(!$config->skin) $config->skin = 'default';
-            if(!$config->use_fee) $config->use_fee = 'N';
-            if(!$config->sameip_deny) $config->sameip_deny = 'N';
+		// 불필요한 항목 제외
+		unset($config->module);
+		unset($config->act);
+		unset($config->body);
+		unset($config->ruleset);
+		unset($config->_filter);
 
-            $oModuleController = &getController('module');
-            $oModuleController->insertModuleConfig('pointsend', $config);
+		// 기본값 지정
+		if(!$config->skin) $config->skin = 'default';
+		if(!$config->use_fee) $config->use_fee = 'N';
+		if(!$config->sameip_deny) $config->sameip_deny = 'N';
 
-            $this->setMessage('success_saved');
-        }
+		$oModuleController = &getController('module');
+		$oModuleController->insertModuleConfig('pointsend', $config);
 
-        /**
-         * @brief 포인트 선물 취소 (취소라기 보다는.... 압수가 맞는건가;;)
-         */
-        function procPointsendAdminRollback() {
-            $log_srl = (int)Context::get('log_srl');
-            if(!$log_srl) return new Object(-1, 'msg_invalid_request');
+		$this->setMessage('success_saved');
 
-            $oPointsendModel = &getModel('pointsend');
-            $log_info = $oPointsendModel->getLogInfoByLogSrl($log_srl);
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminIndex');
+			$this->setRedirectUrl($returnUrl);
+		}
+	}
 
-            $sender_srl = (int)$log_info->sender_srl;
-            $receiver_srl = (int)$log_info->receiver_srl;
+	/**
+	 * @brief 포인트 선물 취소 (관리자용)
+	 */
+	function procPointsendAdminRevert() {
+		$log_srl = (int)Context::get('log_srl');
+		if(!$log_srl) return new Object(-1, 'msg_invalid_request');
 
-            if(!$sender_srl || !$receiver_srl) return new Object(-1, 'msg_invalid_request');
+		$oPointsendModel = &getModel('pointsend');
+		$log_info = $oPointsendModel->getLogInfoByLogSrl($log_srl);
 
-            $oMemberModel = &getModel('member');
-            $config = $oPointsendModel->getConfig();
+		$sender_srl = (int)$log_info->sender_srl;
+		$receiver_srl = (int)$log_info->receiver_srl;
 
-            $point = $log_info->point;
-            $sender_point = $point;
-            $receiver_point = $point;
+		if(!$sender_srl || !$receiver_srl) return new Object(-1, 'msg_invalid_request');
 
-            $sender_info = $oMemberModel->getMemberInfoByMemberSrl($sender_srl);
-            $receiver_info = $oMemberModel->getMemberInfoByMemberSrl($receiver_srl);
+		$oMemberModel = &getModel('member');
+		$config = $oPointsendModel->getConfig();
 
-            // 수수료에 따른 포인트 계산
-            $fee_per = (int)$config->fee;
-            $fee_apply_point = (int)$config->fee_apply_point;
-            $fee = 0;
-            if($config->use_fee == 'Y' && $fee_per && $point>=$fee_apply_point) $fee = $point * ($config->fee/100);
+		$point = $log_info->point;
+		$sender_point = $point;
+		$receiver_point = $point;
 
-            $receiver_point -= $fee;
+		$sender_info = $oMemberModel->getMemberInfoByMemberSrl($sender_srl);
+		$receiver_info = $oMemberModel->getMemberInfoByMemberSrl($receiver_srl);
 
-            $oPointController = &getController('point');
-            $oPointController->setPoint($sender_srl, $sender_point, 'add');
-            $oPointController->setPoint($receiver_srl, $receiver_point, 'minus');
+		// 수수료에 따른 포인트 계산
+		$fee_per = (int)$config->fee;
+		$fee_apply_point = (int)$config->fee_apply_point;
+		$fee = 0;
+		if($config->use_fee == 'Y' && $fee_per && $point>=$fee_apply_point) $fee = $point * ($config->fee/100);
 
-            // 쪽지 보내기
-            $title = Context::getLang('pointsendc_title');
-            $content = sprintf(Context::getLang('pointsendc_content2'), $sender_info->nick_name, $sender_info->user_id, $receiver_point);
-            $content2 = sprintf(Context::getLang('pointsendc_content'), $receiver_info->nick_name, $receiver_info->user_id, $sender_point);
+		$receiver_point -= $fee;
 
-            $oCommunicationController = &getController('communication');
-            $oCommunicationController->sendMessage($sender_srl, $receiver_srl, $title, $content, false);
-            $oCommunicationController->sendMessage($receiver_srl, $sender_srl, $title, $content2, false);
+		$oPointController = &getController('point');
+		$oPointController->setPoint($sender_srl, $sender_point, 'add');
+		$oPointController->setPoint($receiver_srl, $receiver_point, 'minus');
 
-            $args->log_srl = $log_srl;
-            executeQuery('pointsend.deletePointsendLog',$args);
-        }
+		// 쪽지 보내기
+		$title = Context::getLang('pointsendc_title');
+		$content = sprintf(Context::getLang('pointsendc_content2'), $sender_info->nick_name, $sender_info->user_id, $receiver_point);
+		$content2 = sprintf(Context::getLang('pointsendc_content'), $receiver_info->nick_name, $receiver_info->user_id, $sender_point);
 
-        /**
-         * @brief 일괄 포인트 선물 - 그룹별
-         */
-        function procPointsendAdminSendGroup() {
-            $cart = Context::get('cart');
-            if(!$cart) return new Object(-1, 'msg_invalid_request');
+		$oCommunicationController = &getController('communication');
+		$oCommunicationController->sendMessage($sender_srl, $receiver_srl, $title, $content, false);
+		$oCommunicationController->sendMessage($receiver_srl, $sender_srl, $title, $content2, false);
 
-            $group_srls = str_replace('|@|', ',', Context::get('cart'));
-            $send_point = Context::get('send_point');
-            $title = Context::get('title');
-            $content = Context::get('content');
+		$args->log_srl = $log_srl;
+		executeQuery('pointsend.deletePointsendLog',$args);
 
-            $oController = &getController('pointsend');
-            $oController->pointsendToGroup($group_srls, $send_point, $title, $content);
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminIndex');
+			$this->setRedirectUrl($returnUrl);
+		}
+	}
 
-            $total = $this->get('group_count');
-            $success = $this->get('success_group');
-            $failed = $this->get('failed_group');
-            $ignore = $this->get('ignore_group');
+	function procPointsendAdminSendToMember()
+	{
+		$obj = Context::gets('user_id', 'member_srls', 'point', 'message_title', 'message_body');
 
-            $msg = sprintf(Context::getLang('success_group_pointgift'), $total, $success, $failed, $ignore);
-            $this->setMessage($msg);
-        }
+		$member_srls = array();
 
-        /**
-         * @brief 포인트 선물 내역 삭제
-         */
-        function procPointsendAdminDeleteLog() {
-            $log_srl = Context::get('log_srl');
-            if(!$log_srl) return new Object(-1, 'msg_invalid_request');
+		if(!$obj->member_srls && $obj->user_id)
+		{
+			$oMemberModel = &getModel('member');
 
-            // 삭제
-            $oController = &getController('pointsend');
-            $output = $oController->deleteLog($log_srl);
+			$user_ids = explode(',', $obj->user_id);
+			array_walk($user_ids, create_function('&$val', '$val = trim($val);'));
 
-            // 에러가 발생하면
-            if(!$output->toBool()) return $output;
+			$args->user_id = $obj->user_id;
+			$output = executeQueryArray('pointsend.getMemberSrlByUserId', $args);
+			if(!$output->toBool()) return $output;
+			if(!$output->data) continue;
 
-            // 메시지 지정
-            $this->setMessage('success_deleted');
-        }
-    }
-?>
+			foreach($output->data as $key => $val)
+			{
+				$member_srls[] = $val->member_srl;
+			}
+			$member_srls = implode(',', $member_srls);
+
+			$obj->member_srls = $member_srls;
+		}
+
+		if(!$obj->member_srls)
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
+
+		$oController = &getController('pointsend');
+		$output = $oController->pointsendToMember($obj->member_srls, $obj->point, $obj->message_title, $obj->message_body);
+		if(!$output->toBool()) return $output;
+
+		$msg = sprintf(Context::getLang('success_member_pointgift'), $output->get('member_count'));
+		$this->setMessage($msg);
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminSend');
+			$this->setRedirectUrl($returnUrl);
+		}
+	}
+
+	/**
+	 * @brief 일괄 포인트 선물 - 그룹별
+	 */
+	function procPointsendAdminSendToGroup() {
+		$cart = Context::get('cart');
+		if(!$cart) return new Object(-1, 'msg_invalid_request');
+
+		$group_srls = str_replace('|@|', ',', Context::get('cart'));
+		$send_point = Context::get('send_point');
+		$title = Context::get('title');
+		$content = Context::get('content');
+
+		$oController = &getController('pointsend');
+		$output = $oController->pointsendToGroup($group_srls, $send_point, $title, $content);
+
+		$total = $output->get('group_count');
+		$success = $ouput->get('success_group');
+		$failed = $output->get('failed_group');
+		$ignore = $output->get('ignore_group');
+
+		$msg = sprintf(Context::getLang('success_group_pointgift'), $total, $success, $failed, $ignore);
+		$this->setMessage($msg);
+	}
+
+	/**
+	 * @brief 포인트 선물 내역 삭제
+	 */
+	function procPointsendAdminDeleteLog() {
+		$log_srl = Context::get('log_srl');
+		if(!$log_srl) return new Object(-1, 'msg_invalid_request');
+
+		// 삭제
+		$oController = &getController('pointsend');
+		$output = $oController->deleteLog($log_srl);
+
+		// 에러가 발생하면
+		if(!$output->toBool()) return $output;
+
+		// 메시지 지정
+		$this->setMessage('success_deleted');
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminLogList');
+			$this->setRedirectUrl($returnUrl);
+		}
+	}
+}
+
+/* End of file : pointsend.admin.controller.php */
+/* Location : ./modules/pointsend/pointsend.admin.controller.php */

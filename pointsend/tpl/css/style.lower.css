@@ -1,0 +1,9 @@
+#xeAdmin .section label { vertical-align:middle; }
+#xeAdmin .section .lblContent { padding:0 0 166px 0; vertical-align:top; }
+
+#xeAdmin .inputTitle,
+#xeAdmin .inputContent { width:50%; }
+
+#xeAdmin .inputContent { height:166px; overflow:auto; }
+
+.rowTable td strong.alert { color:red; }

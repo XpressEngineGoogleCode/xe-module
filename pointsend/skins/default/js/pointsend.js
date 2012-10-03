@@ -1,37 +1,66 @@
-function doUpdateFee(obj){
-    (function($){
-        var el = $(obj);
-        var fee = $('input[name=fee]').val() / 100;
-        var fee_apply_point = $('input[name=fee_apply_point]').val();
-        var point = el.val();
-        if(point) {
-            var cur_fee = 0;
-            if(fee_apply_point) {
-                if(point >= fee_apply_point) {
-                    cur_fee = point * fee;
-                }
-            } else {
-                cur_fee = point * fee;
-            }
-            $('#cur_fee').html(addCommas(parseInt(cur_fee)));
-		} else {
-			$('#cur_fee').html(0);
-		}
-	})(jQuery);
-}
+(function($) {
+	$(document).ready(function(){
+		$('#popBody a.btnSign').click(function(event){
+			$('#subtraction').click();
+			event.preventDefault();
+		});
+		$('#subtraction').change(function(event){
+			if(this.checked){
+				$(subtractMessage).slideDown(100);
+				$('#popBody a.btnSign').addClass('active');
+			} else{
+				$(subtractMessage).slideUp(100);
+				$('#popBody a.btnSign').removeClass('active');
+			}
+		});
+		$('#input_send_point').bind('keydown keyup change', function(event)
+		{
+			var pass = false;
+			// 키보드 상단에 있는 숫자키 허용
+			if(event.keyCode >= 48 && event.keyCode <= 57) {
+				pass = true;
+			} else if(event.keyCode >= 96 && event.keyCode <= 105) {
+				// 키보드 우측에 있는 숫자키 허용
+				pass = true;
+			} else if(event.keyCode == 8 || event.keyCode == 13 || event.keyCode == 116)
+			{
+				// 백스페이스, 엔터, F5키 허용
+				pass = true;
+			}
 
-function doUpdateRemainingPoint(obj){
-    (function($){
-        var el = $(obj);
-        var cur_point = $('input[name=cur_point]').val();
-        if(parseInt(el.val())>0) {
-            var point = parseInt(cur_point) - parseInt(obj.value);
-            $('#remaining_point').html(addCommas(point));
-        } else {
-            $('#remaining_point').html(addCommas(cur_point));
-        }
-    })(jQuery);
-}
+			if(!pass) {
+				event.preventDefault();
+			}
+
+			var point = parseInt(this.value);
+			if(!point) point = 0;
+
+			if(cf_useFee == 'Y')
+			{
+				var fee = cf_fee / 100;
+				var fee_point = parseInt(cf_feePoint);
+				var cur_fee = 0;
+
+				if(point) {
+					if(fee_point)
+					{
+						cur_fee = (point >= fee_point) ? point * fee: 0;
+					}
+					else
+					{
+						cur_fee = point * fee;
+					}
+				}
+
+				var feeResult = point ? addCommas(parseInt(cur_fee)) : 0;
+				$('#popBody .curFee').html(feeResult);
+			}
+
+			var remainingPoint = parseInt(cf_curPoint) - point;
+			$('#popBody .remainingPoint').html(addCommas(remainingPoint));
+		});
+	});
+})(jQuery);
 
 function addCommas(number) {
 	number += '';

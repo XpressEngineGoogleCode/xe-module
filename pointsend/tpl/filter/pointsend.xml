@@ -1,19 +1,19 @@
-<filter name="pointsend" module="pointsend" act="procPointsend" confirm_msg_code="confirm_pointsend">
-	<form>
-		<node target="sender_srl" required="true" filter="number" />
-		<node target="receiver_srl" required="true" filter="number" />
-		<node target="send_point" required="true" filter="number" />
-		<node target="content" maxlength="250" />
-	</form>
-	<parameter>
-		<param name="sender_srl" target="sender_srl" />
-		<param name="receiver_srl" target="receiver_srl" />
-		<param name="send_point" target="send_point" />
-		<param name="send_message" target="send_message" />
-		<param name="content" target="content" />
-  </parameter>
-  <response callback_func="completePointSend">
-      <tag name="error" />
-      <tag name="message" />
-  </response>
+<filter name="pointsend" module="pointsend" act="procPointsend" confirm_msg_code="confirm_pointsend">
+	<form>
+		<node target="sender_srl" required="true" filter="number" />
+		<node target="receiver_srl" required="true" filter="number" />
+		<node target="send_point" required="true" filter="number" />
+		<node target="content" maxlength="250" />
+	</form>
+	<parameter>
+		<param name="sender_srl" target="sender_srl" />
+		<param name="receiver_srl" target="receiver_srl" />
+		<param name="send_point" target="send_point" />
+		<param name="send_message" target="send_message" />
+		<param name="content" target="content" />
+	</parameter>
+	<response callback_func="completePointSend">
+		<tag name="error" />
+		<tag name="message" />
+	</response>
 </filter>

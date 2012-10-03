@@ -1,0 +1,56 @@
+<load target="../../js/autoresize.jquery.min.js" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form ruleset="pointsendByUserId" action="./" method="post" class="form">
+	<input type="hidden" name="module" value="pointsend" />
+	<input type="hidden" name="act" value="procPointsendAdminSendToMember"/>
+	<h2 class="h2">{$lang->pointsend_by_user_id}</h2>
+	<div class="table">
+		<table width="100%" border="1" cellspacing="0">
+		<tbody>
+		<tr>
+			<th>{$lang->user_id}</th>
+			<td>
+				<input type="text" name="user_id" value="" style="width:200px;" />
+				<p>{$lang->about_pointsend_by_user_id}</p>
+			</td>
+		</tr>
+		<tr>
+			<th>{$lang->point}</th>
+			<td>
+				<input type="text" name="point" value="" style="width:200px;" />
+			</td>
+		</tr>
+		<tr>
+			<th>{$lang->message_title}</th>
+			<td><input type="text" name="message_title" value="" style="width:400px;" /></td>
+		</tr>
+		<tr>
+			<th>{$lang->message_body}</th>
+			<td>
+				<textarea name="message_body" cols="55" rows="10" class="inputContent"></textarea>
+				<p>{$lang->about_notification_message2}</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="button" colspan="2"><span class="btn"><input type="submit" value="{$lang->cmd_pointsend}" /></span></td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+</form>
+
+<h2 class="h2">{$lang->cmd_batch_pointsend}</h2>
+<a href="{getUrl('act','dispPointsendAdminSendToGroup')}" class="btn"><span>{$lang->cmd_group_pointsend}</span></a>
+
+<script type="text/javascript">
+(function($){
+	$('.inputContent').autoResize({
+		animateDuration : 300,
+		extraSpace : 0,
+	});
+})(jQuery);
+</script>
