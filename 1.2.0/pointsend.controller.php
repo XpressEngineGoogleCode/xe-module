@@ -26,7 +26,7 @@ class pointsendController extends pointsend
 		// 입력 받은 데이터 검사
 		$obj = Context::getRequestVars();
 		$obj->send_point = (int)$obj->send_point;
-		$obj->content = $logged_info->is_admin != 'Y' ? removeHackTag(trim($obj->content)) : trim($obj->content); //< XSS 공격 방지
+		$obj->gift_message = $logged_info->is_admin != 'Y' ? removeHackTag(trim($obj->gift_message)) : trim($obj->gift_message); //< XSS 공격 방지
 
 		// 최고관리자가 아니라면 포인트 차감 기능을 사용할 수 없도록 하기
 		if($logged_info->is_admin != 'Y')
@@ -65,7 +65,7 @@ class pointsendController extends pointsend
 		if($isSubtraction == 'Y') $point *= -1;
 
 		// 포인트 선물
-		$output = $this->pointsend($sender_srl, $receiver_srl, $point, $obj->content, $config);
+		$output = $this->pointsend($sender_srl, $receiver_srl, $point, $obj->gift_message, $config);
 		if(!$output->toBool()) return $output;
 
 		// 트리거 실행 (after)
@@ -141,12 +141,10 @@ class pointsendController extends pointsend
 			$daily_limit = (int)$config->daily_limit;
 			if($daily_limit > 0)
 			{
-				$args->member_srl = $sender_srl;
-				$args->type = 'S';
-				$log = $oPointsendModel->getTodayLog($args);
-				if($daily_limit < $log->total)
+				$total_point = $oPointsendModel->getTodayReceivedPoint($sender_srl);
+				if($daily_limit < $total_point)
 				{
-					return new Object(-1, sprintf(Context::getLang('msg_pointgift_daily_limit_over'),$daily_limit));
+					return new Object(-1, sprintf(Context::getLang('msg_pointgift_daily_limit_over'), $daily_limit));
 				}
 			}
 

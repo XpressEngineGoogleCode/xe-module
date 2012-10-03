@@ -168,6 +168,7 @@ class pointsendModel extends pointsend
 
 		$query_id = 'pointsend.getPointsendLogList';
 
+		// 검색어를 입력한 경우 처리
 		if($obj->search_keyword)
 		{
 			$search_target = $obj->search_target;
@@ -237,30 +238,27 @@ class pointsendModel extends pointsend
 	}
 
 	/**
-	 * @brief 오늘 보낸/받은 포인트 총 합계를 구함
+	 * @brief 금일 받은 포인트의 합계를 구합니다
 	 */
-	function getTodayLog($obj) {
-		if(!$obj || !$obj->member_srl) return;
-		if(!in_array($obj->type,array('S','R'))) $obj->type = 'S';
-
-		$member_srl = $obj->member_srl;
-		$type = $obj->type;
-
-		switch($type) {
-			case 'S':
-				$args->sender_srl = $member_srl;
-				break;
-			case 'R':
-				$args->receiver_srl = $member_srl;
-				break;
-		}
-
+	function getTodayReceivedPoint($member_srl)
+	[
+		$args->receiver_srl = $member_srl;
 		$args->start_date = date('YmdHis',mktime(0,0,0));
 		$args->end_date = date('YmdHis',mktime(24,59,59));
+		$output = executeQuery('pointsend.getTotalPoint',$args);
+		return $output->data->total_point;
+	}
 
-		$output = executeQuery('pointsend.getTodayPointsend',$args);
-
-		return $output->data;
+	/**
+	 * @brief 금일 보낸 포인트의 합계를 구합니다
+	 */
+	function getTodaySentPoint($member_srl)
+	[
+		$args->sender_srl = $member_srl;
+		$args->start_date = date('YmdHis',mktime(0,0,0));
+		$args->end_date = date('YmdHis',mktime(24,59,59));
+		$output = executeQuery('pointsend.getTotalPoint',$args);
+		return $output->data->total_point;
 	}
 
 	/**
