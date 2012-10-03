@@ -44,9 +44,18 @@ class pointsendModel extends pointsend
 			$config = $oModuleModel->getModuleConfig('pointsend');
 			$config->skin = !$config->skin ? 'default' : $config->skin;
 			$config->use_fee = $config->use_fee == 'Y' ? 'Y' : 'N';
-			$config->fee_but_group = $config->fee_but_group ? explode('|@|',$config->fee_but_group) : array();
-			$config->deny_group = $config->deny_group ? explode('|@|',$config->deny_group) : array();
-			$config->grants = $config->grants ? explode('|@|',$config->grants) : array();
+			if(!is_array($config->deny_group))
+			{
+				$config->fee_but_group = $config->fee_but_group ? explode('|@|',$config->fee_but_group) : array();
+			}
+			if(!is_array($config->deny_group))
+			{
+				$config->deny_group = $config->deny_group ? explode('|@|', $config->deny_group) : array();
+			}
+			if(!is_array($config->grants))
+			{
+				$config->grants = $config->grants ? explode('|@|',$config->grants) : array();
+			}
 
 			$logged_info = Context::get('logged_info');
 
@@ -241,7 +250,7 @@ class pointsendModel extends pointsend
 	 * @brief 금일 받은 포인트의 합계를 구합니다
 	 */
 	function getTodayReceivedPoint($member_srl)
-	[
+	{
 		$args->receiver_srl = $member_srl;
 		$args->start_date = date('YmdHis',mktime(0,0,0));
 		$args->end_date = date('YmdHis',mktime(24,59,59));
@@ -253,7 +262,7 @@ class pointsendModel extends pointsend
 	 * @brief 금일 보낸 포인트의 합계를 구합니다
 	 */
 	function getTodaySentPoint($member_srl)
-	[
+	{
 		$args->sender_srl = $member_srl;
 		$args->start_date = date('YmdHis',mktime(0,0,0));
 		$args->end_date = date('YmdHis',mktime(24,59,59));
