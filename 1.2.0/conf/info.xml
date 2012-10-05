@@ -6,7 +6,7 @@
 	<description xml:lang="ko">회원이 포인트를 선물 할 수 있게 해주는 모듈입니다.</description>
 	<description xml:lang="en">회원이 포인트를 선물 할 수 있게 해주는 모듈입니다.</description>
 	<description xml:lang="jp">会員がポイントをプレゼントすることができるようにしてくれるモジュールです.</description>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
 	<date>2012-10-03</date>
 	<category>member</category>
 
