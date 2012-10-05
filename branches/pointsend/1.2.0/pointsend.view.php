@@ -110,10 +110,8 @@ class pointsendView extends pointsend
 			$daily_limit = (int)$config->daily_limit;
 			if($daily_limit >0)
 			{
-				$args->member_srl = $logged_info->member_srl;
-				$args->type = 'S';
-				$log = $oModel->getTodayLog($args);
-				if($daily_limit < $log->total)
+				$total_point = $oModel->getTodaySentPoint($logged_info->member_srl);
+				if($daily_limit < $total_point)
 				{
 					return new Object(-1, sprintf(Context::getLang('msg_pointgift_daily_limit_over'),$daily_limit));
 				}
