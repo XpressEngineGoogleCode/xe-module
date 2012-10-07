@@ -11,7 +11,7 @@
 		<param name="message_title" target="message_title" />
 		<param name="message_body" target="message_body" />
 	</parameter>
-	<response callback_func="completeSendToMember">
+	<response callback_func="completeSend">
 		<tag name="error" />
 		<tag name="message" />
 	</response>

@@ -10,24 +10,22 @@ function completeInsertConfig(ret_obj, response_tags) {
 }
 
 /* 선물 되돌리기 후 */
-function completeRevert() {
-	var url = current_url.setQuery('act','dispPointsendAdminLogList');
-	location.href = url;
-}
-
-function completeSendGroup(ret_obj) {
-	var message = ret_obj['message'];
-
-	alert(message);
-
-	location.reload();
-}
-
+function completeRevert() {
+	var url = current_url.setQuery('act','dispPointsendAdminLogList');
+	location.href = url;
+}
+
+function completeSend(ret_obj) {
+	var message = ret_obj['message'];
+	alert(message);
+	location.reload();
+}
+
 function completeDeleteLog(ret_obj) {
-	var message = ret_obj['message'];
+	var message = ret_obj['message'];
 
-	alert(message);
+	alert(message);
 
-	var url = current_url.setQuery('act','dispPointsendAdminLogList', 'log_srl', '');
-	location.href = url;
+	var url = current_url.setQuery('act','dispPointsendAdminLogList', 'log_srl', '');
+	location.href = url;
 }
