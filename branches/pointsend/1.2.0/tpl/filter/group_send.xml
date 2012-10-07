@@ -11,7 +11,7 @@
 		<param name="content" target="content" />
 		<param name="send_point" target="send_point" />
 	</parameter>
-	<response callback_func="completeSendGroup">
+	<response callback_func="completeSend">
 		<tag name="error" />
 		<tag name="message" />
 	</response>
