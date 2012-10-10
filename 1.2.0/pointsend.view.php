@@ -91,7 +91,7 @@ class pointsendView extends pointsend
 		// 받는이가 로그인 한 회원과 같으면 에러
 		if($logged_info->member_srl == $member_srl)
 		{
-			return new Object(-1, 'msg_invalid_request');
+			return new Object(-1, 'msg_cannot_send_for_myself');
 		}
 
 		// 존재 하지 않는 회원이면 에러

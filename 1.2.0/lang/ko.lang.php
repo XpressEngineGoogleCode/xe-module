@@ -93,6 +93,7 @@ $lang->msg_need_login = '로그인이 필요합니다.';
 $lang->msg_not_exists_member = '존재하지 않는 회원입니다.';
 $lang->msg_not_exists_sender= '보내는이가 존재하지 않습니다.';
 $lang->msg_not_exists_receiver = '받는이가 존재하지 않습니다.';
+$lang->msg_cannot_send_for_myself = '자기 자신에게 선물할 수 없습니다.';
 $lang->msg_not_enough_send_point = '보낼 포인트가 현재 보유하고 있는 포인트보다 많습니다.';
 $lang->msg_invalid_send_point = '보낼 포인트를 올바르게 입력해 주세요.'."\n\n".'보낼 포인트는 0 보다 커야 합니다.';
 $lang->msg_not_permitted_pointsend = '포인트 선물 권한이 없습니다.';
