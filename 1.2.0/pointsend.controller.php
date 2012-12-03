@@ -141,8 +141,8 @@ class pointsendController extends pointsend
 			$daily_limit = (int)$config->daily_limit;
 			if($daily_limit > 0)
 			{
-				$total_point = $oPointsendModel->getTodayReceivedPoint($sender_srl);
-				if($daily_limit < $total_point)
+				$total_point = $oPointsendModel->getTodaySentPoint($sender_srl);
+				if(($total_point + $point) > $daily_limit)
 				{
 					return new Object(-1, sprintf(Context::getLang('msg_pointgift_daily_limit_over'), $daily_limit));
 				}

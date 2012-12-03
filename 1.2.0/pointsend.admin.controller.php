@@ -156,20 +156,27 @@ class pointsendAdminController extends pointsend
 		if(!$cart) return new Object(-1, 'msg_invalid_request');
 
 		$group_srls = str_replace('|@|', ',', Context::get('cart'));
-		$send_point = Context::get('send_point');
-		$title = Context::get('title');
-		$content = Context::get('content');
+		$send_point = Context::get('point');
+		$title = Context::get('message_title');
+		$content = Context::get('message_body');
 
 		$oController = &getController('pointsend');
 		$output = $oController->pointsendToGroup($group_srls, $send_point, $title, $content);
 
 		$total = $output->get('group_count');
-		$success = $ouput->get('success_group');
+		$success = $output->get('success_group');
 		$failed = $output->get('failed_group');
 		$ignore = $output->get('ignore_group');
 
 		$msg = sprintf(Context::getLang('success_group_pointgift'), $total, $success, $failed, $ignore);
 		$this->setMessage($msg);
+
+
+		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
+		{
+			$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('', 'module', 'admin', 'act', 'dispPointsendAdminSendToGroup');
+			$this->setRedirectUrl($returnUrl);
+		}
 	}
 
 	/**

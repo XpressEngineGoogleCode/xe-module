@@ -1,15 +1,15 @@
 <filter name="group_send" module="pointsend" act="procPointsendAdminSendGroup" confirm_msg_code="confirm_pointsend">
 	<form>
 		<node target="cart" required="true" />
-		<node target="title" required="true" maxlength="250" />
-		<node target="content" required="true" maxlength="250" />
-		<node target="send_point" required="true" filter="number" />
+		<node target="messag_title" required="true" maxlength="250" />
+		<node target="message_body" required="true" maxlength="250" />
+		<node target="point" required="true" filter="number" />
 	</form>
 	<parameter>
 		<param name="cart" target="cart" />
-		<param name="title" target="title" />
-		<param name="content" target="content" />
-		<param name="send_point" target="send_point" />
+		<param name="message_title" target="message_title" />
+		<param name="message_body" target="message_body" />
+		<param name="point" target="point" />
 	</parameter>
 	<response callback_func="completeSend">
 		<tag name="error" />
